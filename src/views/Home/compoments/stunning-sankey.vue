@@ -17,13 +17,12 @@ import { CanvasRenderer } from "echarts/renderers";
 import { SankeyChart } from "echarts/charts";
 import {
   TooltipComponent,
-  LegendComponent,
   TitleComponent
 } from "echarts/components";
 import VChart from "vue-echarts";
 import { ref } from "vue";
 
-use([CanvasRenderer, SankeyChart, TooltipComponent, LegendComponent, TitleComponent]);
+use([CanvasRenderer, SankeyChart, TooltipComponent, TitleComponent]);
 
 const option = ref({
   tooltip: {
@@ -64,79 +63,80 @@ const option = ref({
   },
   series: [
     {
+      name: '数据流向',
       type: 'sankey',
       layout: 'none',
       emphasis: {
         focus: 'adjacency'
       },
       data: [
-        { 
-          name: '首页', 
-          itemStyle: { 
+        {
+          name: '首页',
+          itemStyle: {
             color: 'rgba(102, 126, 234, 0.9)',
             shadowBlur: 20,
             shadowColor: 'rgba(102, 126, 234, 0.5)'
           }
         },
-        { 
-          name: '产品页', 
-          itemStyle: { 
+        {
+          name: '产品页',
+          itemStyle: {
             color: 'rgba(79, 172, 254, 0.8)',
             shadowBlur: 15,
             shadowColor: 'rgba(79, 172, 254, 0.4)'
           }
         },
-        { 
-          name: '购物车', 
-          itemStyle: { 
+        {
+          name: '购物车',
+          itemStyle: {
             color: 'rgba(240, 147, 251, 0.8)',
             shadowBlur: 15,
             shadowColor: 'rgba(240, 147, 251, 0.4)'
           }
         },
-        { 
-          name: '支付页', 
-          itemStyle: { 
+        {
+          name: '支付页',
+          itemStyle: {
             color: 'rgba(245, 87, 108, 0.8)',
             shadowBlur: 15,
             shadowColor: 'rgba(245, 87, 108, 0.4)'
           }
         },
-        { 
-          name: '订单完成', 
-          itemStyle: { 
+        {
+          name: '订单完成',
+          itemStyle: {
             color: 'rgba(67, 233, 123, 0.8)',
             shadowBlur: 15,
             shadowColor: 'rgba(67, 233, 123, 0.4)'
           }
         },
-        { 
-          name: '帮助中心', 
-          itemStyle: { 
+        {
+          name: '帮助中心',
+          itemStyle: {
             color: 'rgba(254, 225, 64, 0.8)',
             shadowBlur: 15,
             shadowColor: 'rgba(254, 225, 64, 0.4)'
           }
         },
-        { 
-          name: '关于我们', 
-          itemStyle: { 
+        {
+          name: '关于我们',
+          itemStyle: {
             color: 'rgba(161, 140, 209, 0.8)',
             shadowBlur: 15,
             shadowColor: 'rgba(161, 140, 209, 0.4)'
           }
         },
-        { 
-          name: '博客', 
-          itemStyle: { 
+        {
+          name: '博客',
+          itemStyle: {
             color: 'rgba(255, 159, 67, 0.8)',
             shadowBlur: 15,
             shadowColor: 'rgba(255, 159, 67, 0.4)'
           }
         },
-        { 
-          name: '联系客服', 
-          itemStyle: { 
+        {
+          name: '联系客服',
+          itemStyle: {
             color: 'rgba(45, 212, 191, 0.8)',
             shadowBlur: 15,
             shadowColor: 'rgba(45, 212, 191, 0.4)'
@@ -149,9 +149,7 @@ const option = ref({
         { source: '首页', target: '关于我们', value: 500 },
         { source: '首页', target: '博客', value: 400 },
         { source: '产品页', target: '购物车', value: 2400 },
-        { source: '产品页', target: '帮助中心', value: 300 },
         { source: '购物车', target: '支付页', value: 1800 },
-        { source: '购物车', target: '产品页', value: 200 },
         { source: '支付页', target: '订单完成', value: 1500 },
         { source: '支付页', target: '联系客服', value: 150 },
         { source: '帮助中心', target: '联系客服', value: 400 },
@@ -161,7 +159,7 @@ const option = ref({
       lineStyle: {
         color: 'source',
         curveness: 0.5,
-        opacity: 0.3,
+        opacity: 0.4,
         shadowBlur: 10,
         shadowColor: 'rgba(0, 0, 0, 0.3)'
       },
@@ -180,68 +178,9 @@ const option = ref({
         textShadowBlur: 10,
         textShadowColor: 'rgba(0, 0, 0, 0.5)'
       },
-      levels: [
-        {
-          depth: 0,
-          itemStyle: {
-            color: 'rgba(102, 126, 234, 0.9)',
-            shadowBlur: 20,
-            shadowColor: 'rgba(102, 126, 234, 0.5)'
-          },
-          lineStyle: {
-            color: 'source',
-            opacity: 0.4
-          }
-        },
-        {
-          depth: 1,
-          itemStyle: {
-            color: 'rgba(79, 172, 254, 0.8)',
-            shadowBlur: 15,
-            shadowColor: 'rgba(79, 172, 254, 0.4)'
-          },
-          lineStyle: {
-            color: 'source',
-            opacity: 0.35
-          }
-        },
-        {
-          depth: 2,
-          itemStyle: {
-            color: 'rgba(240, 147, 251, 0.8)',
-            shadowBlur: 15,
-            shadowColor: 'rgba(240, 147, 251, 0.4)'
-          },
-          lineStyle: {
-            color: 'source',
-            opacity: 0.3
-          }
-        },
-        {
-          depth: 3,
-          itemStyle: {
-            color: 'rgba(245, 87, 108, 0.8)',
-            shadowBlur: 15,
-            shadowColor: 'rgba(245, 87, 108, 0.4)'
-          },
-          lineStyle: {
-            color: 'source',
-            opacity: 0.3
-          }
-        },
-        {
-          depth: 4,
-          itemStyle: {
-            color: 'rgba(67, 233, 123, 0.8)',
-            shadowBlur: 15,
-            shadowColor: 'rgba(67, 233, 123, 0.4)'
-          },
-          lineStyle: {
-            color: 'source',
-            opacity: 0.25
-          }
-        }
-      ]
+      nodeWidth: 20,
+      nodeGap: 8,
+      draggable: true
     }
   ]
 });
