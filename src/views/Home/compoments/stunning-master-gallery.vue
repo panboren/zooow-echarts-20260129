@@ -6,7 +6,7 @@
         <span class="title-icon">🎨</span>
         <span>ECharts 精美图表现场</span>
       </h1>
-      <p class="gallery-subtitle">16个超酷炫图表组件 - 完整展示</p>
+      <p class="gallery-subtitle">20个超酷炫图表组件 - 完整展示</p>
     </div>
 
     <!-- 统计卡片 -->
@@ -14,8 +14,8 @@
       <div class="stat-card stat-card-1">
         <div class="stat-icon">📊</div>
         <div class="stat-content">
-          <div class="stat-value">16</div>
-          <div class="stat-label">图表组件</div>
+        <div class="stat-value">20</div>
+        <div class="stat-label">图表组件</div>
         </div>
       </div>
       <div class="stat-card stat-card-2">
@@ -63,6 +63,16 @@
           <StunningPiePremium />
         </div>
       </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningPieMultilayer />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningPieArtistic />
+        </div>
+      </div>
     </div>
 
     <!-- 第二批：高级图表 -->
@@ -80,6 +90,16 @@
         </div>
         <div class="chart-card">
           <StunningGauge />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningBarArtistic />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningLineArtistic />
         </div>
       </div>
     </div>
@@ -160,6 +180,10 @@ import StunningPie from './stunning-pie.vue';
 import StunningLine from './stunning-line.vue';
 import StunningBar from './stunning-bar.vue';
 import StunningPiePremium from './stunning-pie-premium.vue';
+import StunningPieMultilayer from './stunning-pie-multilayer.vue';
+import StunningPieArtistic from './stunning-pie-artistic.vue';
+import StunningBarArtistic from './stunning-bar-artistic.vue';
+import StunningLineArtistic from './stunning-line-artistic.vue';
 import StunningRadar from './stunning-radar.vue';
 import StunningScatter from './stunning-scatter.vue';
 import StunningGauge from './stunning-gauge.vue';

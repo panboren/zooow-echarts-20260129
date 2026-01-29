@@ -326,7 +326,7 @@ defineExpose({
   background: linear-gradient(135deg, rgba(15, 15, 35, 0.98) 0%, rgba(26, 26, 46, 0.98) 100%);
   border-radius: 24px;
   padding: 20px;
-  box-shadow: 
+  box-shadow:
     0 25px 80px rgba(0, 0, 0, 0.8),
     0 0 60px rgba(102, 126, 234, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
