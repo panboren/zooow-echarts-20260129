@@ -62,7 +62,7 @@ const option = ref({
   },
   legend: {
     data: ['访问', '咨询', '订单', '点击', '展现'],
-    top: 80,
+    top: 100,
     textStyle: {
       color: '#ffffff',
       fontSize: 14,
@@ -77,7 +77,7 @@ const option = ref({
       name: '漏斗图',
       type: 'funnel',
       left: '10%',
-      top: 100,
+      top: 140,
       bottom: 60,
       width: '80%',
       min: 0,

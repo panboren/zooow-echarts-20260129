@@ -6,7 +6,7 @@
         <span class="title-icon">🎨</span>
         <span>ECharts 精美图表现场</span>
       </h1>
-      <p class="gallery-subtitle">15个超酷炫图表组件 - 完整展示</p>
+      <p class="gallery-subtitle">16个超酷炫图表组件 - 完整展示</p>
     </div>
 
     <!-- 统计卡片 -->
@@ -14,7 +14,7 @@
       <div class="stat-card stat-card-1">
         <div class="stat-icon">📊</div>
         <div class="stat-content">
-          <div class="stat-value">15</div>
+          <div class="stat-value">16</div>
           <div class="stat-label">图表组件</div>
         </div>
       </div>
@@ -56,6 +56,11 @@
         </div>
         <div class="chart-card">
           <StunningBar />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningPiePremium />
         </div>
       </div>
     </div>
@@ -154,6 +159,7 @@
 import StunningPie from './stunning-pie.vue';
 import StunningLine from './stunning-line.vue';
 import StunningBar from './stunning-bar.vue';
+import StunningPiePremium from './stunning-pie-premium.vue';
 import StunningRadar from './stunning-radar.vue';
 import StunningScatter from './stunning-scatter.vue';
 import StunningGauge from './stunning-gauge.vue';

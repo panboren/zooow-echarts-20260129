@@ -44,7 +44,7 @@ const option = ref({
     text: '销售额分层分析',
     subtext: '2025年各层级数据',
     left: 'center',
-    top: 20,
+    top: 15,
     textStyle: {
       color: '#ffffff',
       fontSize: 32,
