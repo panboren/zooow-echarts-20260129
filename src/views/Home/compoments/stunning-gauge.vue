@@ -53,8 +53,8 @@ const option = ref({
     {
       name: '性能指标',
       type: 'gauge',
-      radius: '85%',
-      center: ['50%', '60%'],
+      radius: '82%',
+      center: ['50%', '58%'],
       startAngle: 200,
       endAngle: -20,
       min: 0,
@@ -161,7 +161,7 @@ const option = ref({
       data: [
         {
           value: currentValue.value,
-          name: 'CPU使用率'
+          name: 'CPU使用率',
         }
       ]
     }
