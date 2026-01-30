@@ -95,14 +95,16 @@ const option = ref({
       color: '#ffffff',
       fontSize: 30,
       fontWeight: '900',
-      fontFamily: 'Arial, sans-serif',
-      textShadow: '0 0 45px rgba(255, 255, 255, 0.7), 0 0 90px rgba(102, 126, 234, 0.5)'
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+      textShadow: '0 0 45px rgba(255, 255, 255, 0.7), 0 0 90px rgba(102, 126, 234, 0.5)',
+      letterSpacing: '0.5px'
     },
     subtextStyle: {
       color: 'rgba(255, 255, 255, 0.85)',
       fontSize: 13,
       fontWeight: 'bold',
-      textShadow: '0 0 35px rgba(102, 126, 234, 0.6)'
+      textShadow: '0 0 35px rgba(102, 126, 234, 0.6)',
+      letterSpacing: '1px'
     }
   },
   tooltip: {
@@ -217,17 +219,40 @@ const option = ref({
       symbolSize: 12,
       data: [32500, 38400, 42800, 45800, 41600, 39200, 44350],
       lineStyle: {
-        width: 5,
-        shadowColor: 'rgba(255, 107, 157, 0.95)',
-        shadowBlur: 30,
+        width: 4,
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [
+            { offset: 0, color: 'rgba(102, 126, 234, 1)' },
+            { offset: 0.5, color: 'rgba(118, 75, 162, 0.95)' },
+            { offset: 1, color: 'rgba(240, 147, 251, 1)' }
+          ]
+        },
+        shadowColor: 'rgba(102, 126, 234, 0.9)',
+        shadowBlur: 25,
         shadowOffsetX: 0,
         shadowOffsetY: 10
       },
       itemStyle: {
         color: 'rgba(255, 255, 255, 0.95)',
-        borderColor: 'rgba(255, 107, 157, 1)',
-        borderWidth: 4,
-        shadowColor: 'rgba(255, 107, 157, 0.95)',
+        borderColor: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [
+            { offset: 0, color: '#667eea' },
+            { offset: 0.5, color: '#764ba2' },
+            { offset: 1, color: '#f093fb' }
+          ]
+        },
+        borderWidth: 3,
+        shadowColor: 'rgba(102, 126, 234, 0.95)',
         shadowBlur: 25
       },
       areaStyle: {
@@ -238,15 +263,10 @@ const option = ref({
           x2: 0,
           y2: 1,
           colorStops: [
-            { offset: 0, color: 'rgba(255, 255, 255, 0.6)' },
-            { offset: 0.08, color: 'rgba(255, 107, 157, 0.65)' },
-            { offset: 0.2, color: 'rgba(255, 157, 107, 0.68)' },
-            { offset: 0.35, color: 'rgba(255, 207, 107, 0.66)' },
-            { offset: 0.5, color: 'rgba(255, 107, 157, 0.7)' },
-            { offset: 0.65, color: 'rgba(255, 157, 107, 0.72)' },
-            { offset: 0.8, color: 'rgba(255, 107, 157, 0.68)' },
-            { offset: 0.92, color: 'rgba(255, 107, 157, 0.64)' },
-            { offset: 1, color: 'rgba(255, 107, 157, 0.5)' }
+            { offset: 0, color: 'rgba(102, 126, 234, 0.5)' },
+            { offset: 0.3, color: 'rgba(118, 75, 162, 0.35)' },
+            { offset: 0.7, color: 'rgba(240, 147, 251, 0.2)' },
+            { offset: 1, color: 'rgba(102, 126, 234, 0)' }
           ]
         }
       },
@@ -254,7 +274,7 @@ const option = ref({
         focus: 'series',
         itemStyle: {
           shadowBlur: 45,
-          shadowColor: 'rgba(255, 107, 157, 1)',
+          shadowColor: 'rgba(102, 126, 234, 1)',
           scale: true,
           scaleSize: 25
         }
@@ -268,17 +288,40 @@ const option = ref({
       symbolSize: 12,
       data: [28400, 33800, 37600, 40200, 36500, 34400, 38900],
       lineStyle: {
-        width: 5,
-        shadowColor: 'rgba(78, 205, 196, 0.95)',
-        shadowBlur: 30,
+        width: 4,
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [
+            { offset: 0, color: 'rgba(245, 87, 108, 1)' },
+            { offset: 0.5, color: 'rgba(255, 159, 67, 0.95)' },
+            { offset: 1, color: 'rgba(250, 112, 154, 1)' }
+          ]
+        },
+        shadowColor: 'rgba(245, 87, 108, 0.9)',
+        shadowBlur: 25,
         shadowOffsetX: 0,
         shadowOffsetY: 10
       },
       itemStyle: {
         color: 'rgba(255, 255, 255, 0.95)',
-        borderColor: 'rgba(78, 205, 196, 1)',
-        borderWidth: 4,
-        shadowColor: 'rgba(78, 205, 196, 0.95)',
+        borderColor: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [
+            { offset: 0, color: '#f5576c' },
+            { offset: 0.5, color: '#ff9f43' },
+            { offset: 1, color: '#fa709a' }
+          ]
+        },
+        borderWidth: 3,
+        shadowColor: 'rgba(245, 87, 108, 0.95)',
         shadowBlur: 25
       },
       areaStyle: {
@@ -289,15 +332,10 @@ const option = ref({
           x2: 0,
           y2: 1,
           colorStops: [
-            { offset: 0, color: 'rgba(255, 255, 255, 0.6)' },
-            { offset: 0.08, color: 'rgba(78, 205, 196, 0.65)' },
-            { offset: 0.2, color: 'rgba(85, 98, 112, 0.68)' },
-            { offset: 0.35, color: 'rgba(78, 205, 196, 0.66)' },
-            { offset: 0.5, color: 'rgba(196, 77, 255, 0.7)' },
-            { offset: 0.65, color: 'rgba(78, 205, 196, 0.72)' },
-            { offset: 0.8, color: 'rgba(85, 98, 112, 0.68)' },
-            { offset: 0.92, color: 'rgba(78, 205, 196, 0.64)' },
-            { offset: 1, color: 'rgba(78, 205, 196, 0.5)' }
+            { offset: 0, color: 'rgba(245, 87, 108, 0.5)' },
+            { offset: 0.3, color: 'rgba(255, 159, 67, 0.35)' },
+            { offset: 0.7, color: 'rgba(250, 112, 154, 0.2)' },
+            { offset: 1, color: 'rgba(245, 87, 108, 0)' }
           ]
         }
       },
@@ -305,7 +343,7 @@ const option = ref({
         focus: 'series',
         itemStyle: {
           shadowBlur: 45,
-          shadowColor: 'rgba(78, 205, 196, 1)',
+          shadowColor: 'rgba(245, 87, 108, 1)',
           scale: true,
           scaleSize: 25
         }
@@ -319,17 +357,42 @@ const option = ref({
       symbolSize: 12,
       data: [35200, 41500, 46200, 49500, 44800, 42100, 47600],
       lineStyle: {
-        width: 5,
-        shadowColor: 'rgba(255, 230, 109, 0.95)',
-        shadowBlur: 30,
+        width: 4,
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [
+            { offset: 0, color: 'rgba(79, 172, 254, 0.9)' },
+            { offset: 0.3, color: 'rgba(0, 242, 254, 0.8)' },
+            { offset: 0.7, color: 'rgba(67, 233, 123, 0.7)' },
+            { offset: 1, color: 'rgba(79, 172, 254, 0.6)' }
+          ]
+        },
+        shadowColor: 'rgba(79, 172, 254, 0.7)',
+        shadowBlur: 20,
         shadowOffsetX: 0,
         shadowOffsetY: 10
       },
       itemStyle: {
         color: 'rgba(255, 255, 255, 0.95)',
-        borderColor: 'rgba(255, 230, 109, 1)',
-        borderWidth: 4,
-        shadowColor: 'rgba(255, 230, 109, 0.95)',
+        borderColor: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [
+            { offset: 0, color: '#4facfe' },
+            { offset: 0.3, color: '#00f2fe' },
+            { offset: 0.7, color: '#43e97b' },
+            { offset: 1, color: '#4facfe' }
+          ]
+        },
+        borderWidth: 3,
+        shadowColor: 'rgba(79, 172, 254, 0.95)',
         shadowBlur: 25
       },
       areaStyle: {
@@ -340,15 +403,11 @@ const option = ref({
           x2: 0,
           y2: 1,
           colorStops: [
-            { offset: 0, color: 'rgba(255, 255, 255, 0.6)' },
-            { offset: 0.08, color: 'rgba(255, 230, 109, 0.65)' },
-            { offset: 0.2, color: 'rgba(255, 107, 107, 0.68)' },
-            { offset: 0.35, color: 'rgba(255, 157, 107, 0.66)' },
-            { offset: 0.5, color: 'rgba(255, 230, 109, 0.7)' },
-            { offset: 0.65, color: 'rgba(255, 107, 107, 0.72)' },
-            { offset: 0.8, color: 'rgba(255, 230, 109, 0.68)' },
-            { offset: 0.92, color: 'rgba(255, 230, 109, 0.64)' },
-            { offset: 1, color: 'rgba(255, 230, 109, 0.5)' }
+            { offset: 0, color: 'rgba(79, 172, 254, 0.5)' },
+            { offset: 0.25, color: 'rgba(0, 242, 254, 0.4)' },
+            { offset: 0.5, color: 'rgba(67, 233, 123, 0.35)' },
+            { offset: 0.75, color: 'rgba(0, 242, 254, 0.4)' },
+            { offset: 1, color: 'rgba(79, 172, 254, 0)' }
           ]
         }
       },
@@ -356,7 +415,7 @@ const option = ref({
         focus: 'series',
         itemStyle: {
           shadowBlur: 45,
-          shadowColor: 'rgba(255, 230, 109, 1)',
+          shadowColor: 'rgba(79, 172, 254, 1)',
           scale: true,
           scaleSize: 25
         }
@@ -417,7 +476,7 @@ defineExpose({
   height: 500px;
   top: -200px;
   right: -150px;
-  background: radial-gradient(circle, rgba(102, 126, 234, 0.35) 0%, transparent 80%);
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.38) 0%, transparent 80%);
   animation-delay: 0s;
 }
 
@@ -426,7 +485,7 @@ defineExpose({
   height: 550px;
   bottom: -220px;
   left: -180px;
-  background: radial-gradient(circle, rgba(79, 172, 254, 0.32) 0%, transparent 80%);
+  background: radial-gradient(circle, rgba(79, 172, 254, 0.35) 0%, transparent 80%);
   animation-delay: -12s;
 }
 
@@ -436,7 +495,7 @@ defineExpose({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(240, 147, 251, 0.28) 0%, transparent 80%);
+  background: radial-gradient(circle, rgba(245, 87, 108, 0.32) 0%, transparent 80%);
   animation-delay: -24s;
 }
 
@@ -508,30 +567,30 @@ defineExpose({
 .aurora-1 {
   top: -100px;
   background: linear-gradient(90deg, 
-    rgba(102, 126, 234, 0.6) 0%, 
-    rgba(79, 172, 254, 0.5) 33%, 
-    rgba(240, 147, 251, 0.6) 66%, 
-    rgba(102, 126, 234, 0.6) 100%);
+    rgba(102, 126, 234, 0.65) 0%, 
+    rgba(79, 172, 254, 0.55) 33%, 
+    rgba(245, 87, 108, 0.65) 66%, 
+    rgba(102, 126, 234, 0.65) 100%);
   animation-delay: 0s;
 }
 
 .aurora-2 {
   top: -150px;
   background: linear-gradient(90deg, 
-    rgba(240, 147, 251, 0.6) 0%, 
-    rgba(245, 87, 108, 0.5) 33%, 
-    rgba(254, 225, 64, 0.6) 66%, 
-    rgba(240, 147, 251, 0.6) 100%);
+    rgba(245, 87, 108, 0.65) 0%, 
+    rgba(67, 233, 123, 0.55) 33%, 
+    rgba(79, 172, 254, 0.65) 66%, 
+    rgba(245, 87, 108, 0.65) 100%);
   animation-delay: -13s;
 }
 
 .aurora-3 {
   top: -200px;
   background: linear-gradient(90deg, 
-    rgba(67, 233, 123, 0.6) 0%, 
-    rgba(79, 172, 254, 0.5) 33%, 
-    rgba(254, 225, 64, 0.6) 66%, 
-    rgba(67, 233, 123, 0.6) 100%);
+    rgba(79, 172, 254, 0.65) 0%, 
+    rgba(102, 126, 234, 0.55) 33%, 
+    rgba(67, 233, 123, 0.65) 66%, 
+    rgba(79, 172, 254, 0.65) 100%);
   animation-delay: -26s;
 }
 
@@ -561,7 +620,7 @@ defineExpose({
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 0;
+  min-height: 400px;
 }
 
 .chart {
@@ -617,7 +676,7 @@ defineExpose({
 }
 
 .dash-primary {
-  border: 1px solid rgba(102, 126, 234, 0.45);
+  border: 1px solid rgba(102, 126, 234, 0.5);
   box-shadow: 
     0 18px 50px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
@@ -625,7 +684,7 @@ defineExpose({
 }
 
 .dash-secondary {
-  border: 1px solid rgba(240, 147, 251, 0.45);
+  border: 1px solid rgba(240, 147, 251, 0.5);
   box-shadow: 
     0 18px 50px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
@@ -633,7 +692,7 @@ defineExpose({
 }
 
 .dash-accent {
-  border: 1px solid rgba(79, 172, 254, 0.45);
+  border: 1px solid rgba(79, 172, 254, 0.5);
   box-shadow: 
     0 18px 50px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.15),

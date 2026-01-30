@@ -102,14 +102,16 @@ const option = ref({
       color: '#ffffff',
       fontSize: 32,
       fontWeight: '900',
-      fontFamily: 'Arial, sans-serif',
-      textShadow: '0 0 40px rgba(255, 255, 255, 0.6), 0 0 80px rgba(102, 126, 234, 0.5)'
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+      textShadow: '0 0 40px rgba(255, 255, 255, 0.6), 0 0 80px rgba(102, 126, 234, 0.5)',
+      letterSpacing: '0.5px'
     },
     subtextStyle: {
       color: 'rgba(255, 255, 255, 0.8)',
       fontSize: 14,
       fontWeight: 'bold',
-      textShadow: '0 0 30px rgba(102, 126, 234, 0.6)'
+      textShadow: '0 0 30px rgba(102, 126, 234, 0.6)',
+      letterSpacing: '1px'
     }
   },
   tooltip: {
@@ -186,7 +188,8 @@ const option = ref({
           textShadowBlur: 40,
           textShadowColor: 'rgba(0, 0, 0, 0.95)',
           textShadowOffsetX: 5,
-          textShadowOffsetY: 5
+          textShadowOffsetY: 5,
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif'
         },
         itemStyle: {
           shadowBlur: 80,

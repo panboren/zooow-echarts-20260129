@@ -100,12 +100,14 @@ const option = ref({
       color: '#ffffff',
       fontSize: 32,
       fontWeight: 'bold',
-      fontFamily: 'Arial, sans-serif',
-      textShadow: '0 0 25px rgba(102, 126, 234, 0.8)'
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+      textShadow: '0 0 25px rgba(102, 126, 234, 0.8)',
+      letterSpacing: '0.5px'
     },
     subtextStyle: {
       color: 'rgba(255, 255, 255, 0.5)',
-      fontSize: 16
+      fontSize: 16,
+      letterSpacing: '1px'
     }
   },
   tooltip: {
@@ -192,7 +194,7 @@ const option = ref({
       axisLabel: {
         color: 'rgba(255, 255, 255, 0.6)',
         fontSize: 13,
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
         margin: 15
       }
     }
@@ -208,7 +210,7 @@ const option = ref({
         formatter: '{value}',
         color: 'rgba(255, 255, 255, 0.6)',
         fontSize: 13,
-        fontFamily: 'Arial, sans-serif'
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif'
       },
       axisLine: {
         lineStyle: {
@@ -239,7 +241,7 @@ const option = ref({
         formatter: '{value}%',
         color: 'rgba(255, 255, 255, 0.6)',
         fontSize: 13,
-        fontFamily: 'Arial, sans-serif'
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif'
       },
       axisLine: {
         lineStyle: {

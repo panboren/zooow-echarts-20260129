@@ -90,13 +90,15 @@ const option = ref({
       color: '#ffffff',
       fontSize: 30,
       fontWeight: 'bold',
-      fontFamily: 'Arial, sans-serif',
-      textShadow: '0 0 30px rgba(102, 126, 234, 0.9), 0 0 60px rgba(79, 172, 254, 0.6)'
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+      textShadow: '0 0 30px rgba(102, 126, 234, 0.9), 0 0 60px rgba(79, 172, 254, 0.6)',
+      letterSpacing: '0.5px'
     },
     subtextStyle: {
       color: 'rgba(255, 255, 255, 0.7)',
       fontSize: 14,
-      textShadow: '0 0 20px rgba(102, 126, 234, 0.5)'
+      textShadow: '0 0 20px rgba(102, 126, 234, 0.5)',
+      letterSpacing: '1px'
     }
   },
   tooltip: {
@@ -170,7 +172,8 @@ const option = ref({
           textShadowBlur: 30,
           textShadowColor: 'rgba(0, 0, 0, 0.9)',
           textShadowOffsetX: 3,
-          textShadowOffsetY: 3
+          textShadowOffsetY: 3,
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif'
         },
         itemStyle: {
           shadowBlur: 70,
@@ -620,6 +623,7 @@ defineExpose({
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 400px;
 }
 
 .chart {

@@ -6,7 +6,7 @@
         <span class="title-icon">🎨</span>
         <span>ECharts 精美图表现场</span>
       </h1>
-      <p class="gallery-subtitle">20个超酷炫图表组件 - 完整展示</p>
+      <p class="gallery-subtitle">31个超酷炫图表组件 - 完整展示</p>
     </div>
 
     <!-- 统计卡片 -->
@@ -14,7 +14,7 @@
       <div class="stat-card stat-card-1">
         <div class="stat-icon">📊</div>
         <div class="stat-content">
-        <div class="stat-value">20</div>
+        <div class="stat-value">31</div>
         <div class="stat-label">图表组件</div>
         </div>
       </div>
@@ -71,6 +71,19 @@
       <div class="row">
         <div class="chart-card full-width">
           <StunningPieArtistic />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card">
+          <StunningPieGalaxy />
+        </div>
+        <div class="chart-card">
+          <StunningPieNature />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningPieCyber />
         </div>
       </div>
     </div>
@@ -165,11 +178,68 @@
       </div>
     </div>
 
+    <!-- 第六批：全息宇宙系列 -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="title-badge">06</span>
+        全息宇宙系列
+      </h2>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningHolographic />
+        </div>
+      </div>
+    </div>
+
+    <!-- 第七批：多层透明叠加系列 -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="title-badge">07</span>
+        多层透明叠加系列
+      </h2>
+      <div class="row">
+        <div class="chart-card">
+          <StunningLineMultilayer />
+        </div>
+        <div class="chart-card">
+          <StunningBarMultilayer />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card">
+          <StunningPieMultilayerNew />
+        </div>
+        <div class="chart-card">
+          <StunningRadarMultilayer />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningHybridMultilayer />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningAreaMultilayer />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningGaugeMultilayer />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningScatterMultilayer />
+        </div>
+      </div>
+    </div>
+
     <!-- 底部信息 -->
     <div class="gallery-footer">
       <div class="footer-info">
         <p class="footer-text">使用 ECharts + Vue 3 构建</p>
-        <p class="footer-text">包含多层渐变、发光效果、玻璃拟态等高级视觉技术</p>
+        <p class="footer-text">包含多层渐变、发光效果、玻璃拟态、全息投影、透明叠加等高级视觉技术</p>
       </div>
     </div>
   </div>
@@ -182,6 +252,9 @@ import StunningBar from './stunning-bar.vue';
 import StunningPiePremium from './stunning-pie-premium.vue';
 import StunningPieMultilayer from './stunning-pie-multilayer.vue';
 import StunningPieArtistic from './stunning-pie-artistic.vue';
+import StunningPieGalaxy from './stunning-pie-galaxy.vue';
+import StunningPieNature from './stunning-pie-nature.vue';
+import StunningPieCyber from './stunning-pie-cyber.vue';
 import StunningBarArtistic from './stunning-bar-artistic.vue';
 import StunningLineArtistic from './stunning-line-artistic.vue';
 import StunningRadar from './stunning-radar.vue';
@@ -196,6 +269,15 @@ import StunningSunburst from './stunning-sunburst.vue';
 import StunningSankey from './stunning-sankey.vue';
 import StunningWordcloud from './stunning-wordcloud.vue';
 import StunningRose from './stunning-rose.vue';
+import StunningHolographic from './stunning-holographic.vue';
+import StunningLineMultilayer from './stunning-line-multilayer.vue';
+import StunningBarMultilayer from './stunning-bar-multilayer.vue';
+import StunningHybridMultilayer from './stunning-hybrid-multilayer.vue';
+import StunningPieMultilayerNew from './stunning-pie-multilayer-new.vue';
+import StunningRadarMultilayer from './stunning-radar-multilayer.vue';
+import StunningAreaMultilayer from './stunning-area-multilayer.vue';
+import StunningGaugeMultilayer from './stunning-gauge-multilayer.vue';
+import StunningScatterMultilayer from './stunning-scatter-multilayer.vue';
 </script>
 
 <style scoped>
@@ -239,20 +321,20 @@ import StunningRose from './stunning-rose.vue';
   align-items: center;
   justify-content: center;
   gap: 16px;
-  text-shadow: 
+  text-shadow:
     0 0 20px rgba(102, 126, 234, 0.5),
     0 0 40px rgba(102, 126, 234, 0.3);
   animation: glow 3s ease-in-out infinite;
 }
 
 @keyframes glow {
-  0%, 100% { 
-    text-shadow: 
+  0%, 100% {
+    text-shadow:
       0 0 20px rgba(102, 126, 234, 0.5),
       0 0 40px rgba(102, 126, 234, 0.3);
   }
-  50% { 
-    text-shadow: 
+  50% {
+    text-shadow:
       0 0 30px rgba(102, 126, 234, 0.8),
       0 0 60px rgba(102, 126, 234, 0.5);
   }
@@ -420,7 +502,7 @@ import StunningRose from './stunning-rose.vue';
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
   overflow: hidden;
-  min-height: 600px;
+  min-height: 700px;
   display: flex;
   flex-direction: column;
 }
@@ -433,7 +515,7 @@ import StunningRose from './stunning-rose.vue';
 
 .chart-card.full-width {
   grid-column: 1 / -1;
-  min-height: 700px;
+  min-height: 750px;
 }
 
 /* 底部信息 */
@@ -468,7 +550,7 @@ import StunningRose from './stunning-rose.vue';
   .row {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .stats-row {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -478,21 +560,25 @@ import StunningRose from './stunning-rose.vue';
   .row {
     grid-template-columns: 1fr;
   }
-  
+
   .stats-row {
     grid-template-columns: 1fr;
   }
-  
+
   .gallery-title {
     font-size: 36px;
   }
-  
+
   .master-gallery {
     padding: 20px;
   }
-  
+
   .chart-card {
-    min-height: 500px;
+    min-height: 600px;
+  }
+
+  .chart-card.full-width {
+    min-height: 650px;
   }
 }
 </style>

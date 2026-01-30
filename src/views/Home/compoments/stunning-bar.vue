@@ -174,12 +174,12 @@ const option = ref({
     axisTick: {
       show: false
     },
-    axisLabel: {
-      color: 'rgba(255, 255, 255, 0.6)',
-      fontSize: 14,
-      fontFamily: 'Arial, sans-serif',
-      margin: 20
-    }
+      axisLabel: {
+        color: 'rgba(255, 255, 255, 0.6)',
+        fontSize: 14,
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+        margin: 20
+      }
   },
   yAxis: {
     type: 'value',
@@ -187,7 +187,7 @@ const option = ref({
       formatter: '{value}',
       color: 'rgba(255, 255, 255, 0.6)',
       fontSize: 14,
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif'
     },
     axisLine: {
       lineStyle: {
