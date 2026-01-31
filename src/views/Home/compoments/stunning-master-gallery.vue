@@ -6,7 +6,7 @@
         <span class="title-icon">🎨</span>
         <span>ECharts 精美图表现场</span>
       </h1>
-      <p class="gallery-subtitle">38个超酷炫图表组件 - 完整展示</p>
+      <p class="gallery-subtitle">46个超酷炫图表组件 - 完整展示</p>
     </div>
 
     <!-- 统计卡片 -->
@@ -14,7 +14,7 @@
       <div class="stat-card stat-card-1">
         <div class="stat-icon">📊</div>
         <div class="stat-content">
-        <div class="stat-value">38</div>
+        <div class="stat-value">46</div>
         <div class="stat-label">图表组件</div>
         </div>
       </div>
@@ -236,7 +236,7 @@
     </div>
 
     <!-- 第八批：下一代图表系列 -->
-    <div class="section">
+    <div v-if="show" class="section">
       <h2 class="section-title">
         <span class="title-badge">08</span>
         下一代图表系列
@@ -264,7 +264,7 @@
     </div>
 
     <!-- 第九批：未来科技系列 -->
-    <div class="section">
+    <div  class="section">
       <h2 class="section-title">
         <span class="title-badge">09</span>
         未来科技系列
@@ -282,6 +282,46 @@
       <div class="row">
         <div class="chart-card full-width">
           <StunningQuantumEntanglement />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningHolographicGlobe />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningNeuralMetaverse />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningEnergyField />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningDNAHelix />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningQuantumWave />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningHolographicCosmos />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningRealtimeDataflow />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningGlassmorphismDashboard />
         </div>
       </div>
     </div>
@@ -336,6 +376,14 @@ import StunningScatterMultilayer from './stunning-scatter-multilayer.vue';
 import StunningHolographicTunnel from './stunning-holographic-tunnel.vue';
 import StunningNeuralNetwork from './stunning-neural-network.vue';
 import StunningQuantumEntanglement from './stunning-quantum-entanglement.vue';
+import StunningHolographicGlobe from './stunning-holographic-globe.vue';
+import StunningNeuralMetaverse from './stunning-neural-metaverse.vue';
+import StunningEnergyField from './stunning-energy-field.vue';
+import StunningDNAHelix from './stunning-dna-helix.vue';
+import StunningQuantumWave from './stunning-quantum-wave.vue';
+import StunningHolographicCosmos from './stunning-holographic-cosmos.vue';
+import StunningRealtimeDataflow from './stunning-realtime-dataflow.vue';
+import StunningGlassmorphismDashboard from './stunning-glassmorphism-dashboard.vue';
 
 let show = ref(false)
 </script>
