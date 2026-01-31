@@ -25,7 +25,7 @@
       <div class="stat-card">
         <div class="stat-icon">🎯</div>
         <div class="stat-info">
-          <div class="stat-value">{{ overallScore }}</div>
+          <div class="stat-value">{{ overallScore.toFixed(1) }}</div>
           <div class="stat-label">综合评分</div>
         </div>
       </div>
@@ -39,7 +39,7 @@
       <div class="stat-card">
         <div class="stat-icon">📈</div>
         <div class="stat-info">
-          <div class="stat-value">{{ trendScore }}</div>
+          <div class="stat-value">+{{ trendScore.toFixed(1) }}%</div>
           <div class="stat-label">趋势评分</div>
         </div>
       </div>
@@ -91,10 +91,10 @@ use([
 const isChartVisible = ref(false)
 
 // 统计数据
-const overallScore = ref('87.6')
+const overallScore = ref(0)
 const topIndicator = ref('创新能力')
-const trendScore = ref('+12.3%')
-const dimensionCount = ref('8')
+const trendScore = ref(0)
+const dimensionCount = ref(0)
 
 // 粒子系统
 const particles = ref< Array<{ style: Record<string, string> }> >([])
@@ -479,9 +479,37 @@ const updateStats = () => {
 }
 
 // 确保容器有尺寸后再渲染图表
+// 数字动画函数
+const animateNumber = (start: number, end: number, duration: number, callback: (value: number) => void) => {
+  const startTime = Date.now()
+  const animate = () => {
+    const elapsed = Date.now() - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    const easeOut = 1 - Math.pow(1 - progress, 4)
+    const current = Math.floor(start + (end - start) * easeOut)
+    callback(current)
+    if (progress < 1) {
+      requestAnimationFrame(animate)
+    }
+  }
+  animate()
+}
+
 onMounted(() => {
   generateParticles()
   updateStats()
+  // 启动数字动画
+  setTimeout(() => {
+    animateNumber(0, 87, 2200, (value) => {
+      overallScore.value = value / 10
+    })
+    animateNumber(0, 14, 2000, (value) => {
+      trendScore.value = value / 10
+    })
+    animateNumber(0, 8, 1800, (value) => {
+      dimensionCount.value = value
+    })
+  }, 600)
   setTimeout(() => {
     isChartVisible.value = true
   }, 500)

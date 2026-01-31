@@ -59,8 +59,8 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 use([CanvasRenderer, SunburstChart, TooltipComponent, TitleComponent]);
 
 const totalValue = ref(2848);
-const categoryCount = ref(15);
-const levelDepth = ref(3);
+const categoryCount = ref(0);
+const levelDepth = ref(0);
 
 const animatedTotal = ref(0);
 
@@ -413,27 +413,33 @@ const particleStyle = (i) => {
   };
 };
 
-// 数字动画
-const animateNumber = () => {
-  let current = 0;
-  const target = totalValue.value;
-  const duration = 2000;
+// 数字动画函数
+const animateValue = (start, end, duration, callback) => {
   const startTime = Date.now();
-
   const animate = () => {
     const elapsed = Date.now() - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    const easeOut = 1 - Math.pow(1 - progress, 3);
-
-    current = Math.floor(target * easeOut);
-    animatedTotal.value = current;
-
+    const easeOut = 1 - Math.pow(1 - progress, 4);
+    const current = Math.floor(start + (end - start) * easeOut);
+    callback(current);
     if (progress < 1) {
       requestAnimationFrame(animate);
     }
   };
-
   animate();
+};
+
+// 启动所有动画
+const animateNumber = () => {
+  animateValue(0, totalValue.value, 2500, (value) => {
+    animatedTotal.value = value;
+  });
+  animateValue(0, 15, 2200, (value) => {
+    categoryCount.value = value;
+  });
+  animateValue(0, 3, 2000, (value) => {
+    levelDepth.value = value;
+  });
 };
 
 onMounted(() => {

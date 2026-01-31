@@ -160,7 +160,7 @@
         <div class="metric-content">
           <div class="metric-icon">⚡</div>
           <div class="metric-info">
-            <div class="metric-value">92%</div>
+            <div class="metric-value">{{ energyDensity }}%</div>
             <div class="metric-label">能量密度</div>
           </div>
           <div class="metric-trend positive">↑ 8%</div>
@@ -171,7 +171,7 @@
         <div class="metric-content">
           <div class="metric-icon">🔮</div>
           <div class="metric-info">
-            <div class="metric-value">78%</div>
+            <div class="metric-value">{{ fluctuationRate }}%</div>
             <div class="metric-label">波动频率</div>
           </div>
           <div class="metric-trend positive">↑ 5%</div>
@@ -182,7 +182,7 @@
         <div class="metric-content">
           <div class="metric-icon">💫</div>
           <div class="metric-info">
-            <div class="metric-value">85%</div>
+            <div class="metric-value">{{ spectralIntensity }}%</div>
             <div class="metric-label">光谱强度</div>
           </div>
           <div class="metric-trend positive">↑ 12%</div>
@@ -195,7 +195,10 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 
-const percentage = ref(78);
+const percentage = ref(0);
+const energyDensity = ref(0);
+const fluctuationRate = ref(0);
+const spectralIntensity = ref(0);
 let animationFrame = null;
 let waveOffset1 = 0;
 let waveOffset2 = 0;
@@ -245,27 +248,36 @@ const particleStyle = (i) => {
   };
 };
 
-// 数字动画
-const animatePercentage = () => {
-  let current = 0;
-  const target = 78;
-  const duration = 3500;
+// 数字动画函数
+const animateNumber = (start, end, duration, callback) => {
   const startTime = Date.now();
-
   const animate = () => {
     const elapsed = Date.now() - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    const easeOut = 1 - Math.pow(1 - progress, 5);
-
-    current = Math.floor(target * easeOut);
-    percentage.value = current;
-
+    const easeOut = 1 - Math.pow(1 - progress, 4);
+    const current = Math.floor(start + (end - start) * easeOut);
+    callback(current);
     if (progress < 1) {
-      animationFrame = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
     }
   };
-
   animate();
+};
+
+// 百分比动画
+const animatePercentage = () => {
+  animateNumber(0, 78, 3500, (value) => {
+    percentage.value = value;
+  });
+  animateNumber(0, 92, 2800, (value) => {
+    energyDensity.value = value;
+  });
+  animateNumber(0, 78, 2600, (value) => {
+    fluctuationRate.value = value;
+  });
+  animateNumber(0, 85, 2400, (value) => {
+    spectralIntensity.value = value;
+  });
 };
 
 // 波浪动画

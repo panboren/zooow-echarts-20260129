@@ -25,7 +25,7 @@
       <div class="stat-card">
         <div class="stat-icon">🌟</div>
         <div class="stat-info">
-          <div class="stat-value">{{ totalValue }}</div>
+          <div class="stat-value">{{ (totalValue / 1000).toFixed(3) }}M</div>
           <div class="stat-label">总星系质量</div>
         </div>
       </div>
@@ -39,7 +39,7 @@
       <div class="stat-card">
         <div class="stat-icon">💫</div>
         <div class="stat-info">
-          <div class="stat-value">{{ growthRate }}</div>
+          <div class="stat-value">{{ growthRate.toFixed(1) }}%</div>
           <div class="stat-label">扩张速度</div>
         </div>
       </div>
@@ -91,9 +91,9 @@ use([
 const isChartVisible = ref(false)
 
 // 统计数据
-const totalValue = ref('2.847M')
-const planetCount = ref('156')
-const growthRate = ref('12.3%')
+const totalValue = ref(0)
+const planetCount = ref(0)
+const growthRate = ref(0)
 const galaxyType = ref('螺旋星系')
 
 // 粒子系统
@@ -348,9 +348,37 @@ const updateStats = () => {
 }
 
 // 确保容器有尺寸后再渲染图表
+// 数字动画函数
+const animateNumber = (start: number, end: number, duration: number, callback: (value: number) => void) => {
+  const startTime = Date.now()
+  const animate = () => {
+    const elapsed = Date.now() - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    const easeOut = 1 - Math.pow(1 - progress, 4)
+    const current = Math.floor(start + (end - start) * easeOut)
+    callback(current)
+    if (progress < 1) {
+      requestAnimationFrame(animate)
+    }
+  }
+  animate()
+}
+
 onMounted(() => {
   generateParticles()
   updateStats()
+  // 启动数字动画
+  setTimeout(() => {
+    animateNumber(0, 2893, 2500, (value) => {
+      totalValue.value = value
+    })
+    animateNumber(0, 156, 2200, (value) => {
+      planetCount.value = value
+    })
+    animateNumber(0, 14, 2000, (value) => {
+      growthRate.value = value / 10
+    })
+  }, 600)
   setTimeout(() => {
     isChartVisible.value = true
   }, 500)

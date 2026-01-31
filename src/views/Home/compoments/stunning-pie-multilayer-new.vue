@@ -25,21 +25,21 @@
       <div class="stat-card">
         <div class="stat-icon">📊</div>
         <div class="stat-info">
-          <div class="stat-value">{{ totalValue }}</div>
+          <div class="stat-value">{{ totalValue.toLocaleString() }}</div>
           <div class="stat-label">总数值</div>
         </div>
       </div>
       <div class="stat-card">
         <div class="stat-icon">🎯</div>
         <div class="stat-info">
-          <div class="stat-value">{{ mainCategory }}</div>
+          <div class="stat-value">{{ mainCategory.toFixed(1) }}%</div>
           <div class="stat-label">主类别占比</div>
         </div>
       </div>
       <div class="stat-card">
         <div class="stat-icon">📈</div>
         <div class="stat-info">
-          <div class="stat-value">{{ growthRate }}</div>
+          <div class="stat-value">+{{ growthRate }}%</div>
           <div class="stat-label">增长率</div>
         </div>
       </div>
@@ -91,10 +91,10 @@ use([
 const isChartVisible = ref(false)
 
 // 统计数据
-const totalValue = ref('2,847')
-const mainCategory = ref('35.8%')
-const growthRate = ref('+28.6%')
-const categoryCount = ref('6')
+const totalValue = ref(0)
+const mainCategory = ref(0)
+const growthRate = ref(0)
+const categoryCount = ref(0)
 
 // 粒子系统
 const particles = ref< Array<{ style: Record<string, string> }> >([])
@@ -372,9 +372,40 @@ const updateStats = () => {
 }
 
 // 确保容器有尺寸后再渲染图表
+// 数字动画函数
+const animateNumber = (start: number, end: number, duration: number, callback: (value: number) => void) => {
+  const startTime = Date.now()
+  const animate = () => {
+    const elapsed = Date.now() - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    const easeOut = 1 - Math.pow(1 - progress, 4)
+    const current = Math.floor(start + (end - start) * easeOut)
+    callback(current)
+    if (progress < 1) {
+      requestAnimationFrame(animate)
+    }
+  }
+  animate()
+}
+
 onMounted(() => {
   generateParticles()
   updateStats()
+  // 启动数字动画
+  setTimeout(() => {
+    animateNumber(0, 2869, 2500, (value) => {
+      totalValue.value = value
+    })
+    animateNumber(0, 35, 2200, (value) => {
+      mainCategory.value = value / 10
+    })
+    animateNumber(0, 30, 2000, (value) => {
+      growthRate.value = value
+    })
+    animateNumber(0, 6, 1800, (value) => {
+      categoryCount.value = value
+    })
+  }, 600)
   setTimeout(() => {
     isChartVisible.value = true
   }, 500)
