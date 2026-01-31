@@ -117,7 +117,7 @@ const chartOption = ref({
   backgroundColor: 'transparent',
   title: {
     text: '全息宇宙星云图',
-    subtext: 'Holographic Nebula · 多层透明叠加可视化',
+    subtext: 'Holographic Nebula · 可视化',
     left: 'center',
     top: 20,
     textStyle: {

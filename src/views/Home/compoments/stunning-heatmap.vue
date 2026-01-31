@@ -62,7 +62,7 @@ const option = ref({
   backgroundColor: 'transparent',
   title: {
     text: '活跃度热力图',
-    subtext: '2025年统计数据',
+    subtext: '2026年统计数据',
     left: 'center',
     top: 20,
     textStyle: {

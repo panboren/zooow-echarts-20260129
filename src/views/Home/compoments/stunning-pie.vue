@@ -79,7 +79,7 @@ const option = ref({
   backgroundColor: 'transparent',
   title: {
     text: '数据分布',
-    subtext: '2025年度统计',
+    subtext: '2026年度统计',
     left: 'center',
     top: 30,
     textStyle: {
@@ -147,16 +147,75 @@ const option = ref({
         shadowOffsetY: 8
       },
       label: {
-        show: false,
-        position: 'center'
+        show: true,
+        position: 'center',
+        formatter: () => {
+          return [
+            '{total|总数据}',
+            '{value|' + totalValue.value.toLocaleString() + '}',
+            '{unit|条}'
+          ].join('\n');
+        },
+        rich: {
+          total: {
+            fontSize: 18,
+            fontWeight: 'bold',
+            color: 'rgba(255, 255, 255, 0.7)',
+            padding: [0, 0, 8, 0]
+          },
+          value: {
+            fontSize: 42,
+            fontWeight: '900',
+            fontFamily: 'Arial Black, Arial, sans-serif',
+            background: 'linear-gradient(135deg, #667eea 0%, #f093fb 50%, #4facfe 100%)',
+            color: 'transparent',
+            padding: [0, 0, 6, 0],
+            textShadow: '0 0 30px rgba(102, 126, 234, 0.6)'
+          },
+          unit: {
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: 'rgba(255, 255, 255, 0.5)'
+          }
+        },
+        textStyle: {
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif'
+        }
       },
       emphasis: {
         label: {
           show: true,
-          fontSize: 36,
+          fontSize: 16,
           fontWeight: 'bold',
-          color: '#ffffff',
-          formatter: '{b}\n{d}%',
+          formatter: (params) => {
+            return [
+              '{name|' + params.name + '}',
+              '{value|' + params.value.toLocaleString() + '}',
+              '{percent|' + ((params.value / totalValue.value) * 100).toFixed(1) + '%}'
+            ].join('\n');
+          },
+          rich: {
+            name: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'rgba(255, 255, 255, 0.9)',
+              padding: [0, 0, 10, 0]
+            },
+            value: {
+              fontSize: 48,
+              fontWeight: '900',
+              fontFamily: 'Arial Black, Arial, sans-serif',
+              color: '#ffffff',
+              padding: [0, 0, 8, 0],
+              textShadow: '0 0 40px rgba(102, 126, 234, 0.8)'
+            },
+            percent: {
+              fontSize: 24,
+              fontWeight: 'bold',
+              color: '#f5576c',
+              textShadow: '0 0 20px rgba(245, 87, 108, 0.6)'
+            }
+          },
           textShadowBlur: 20,
           textShadowColor: 'rgba(0, 0, 0, 0.8)',
           fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif'
@@ -293,7 +352,7 @@ defineExpose({
   background: linear-gradient(135deg, rgba(15, 15, 35, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
   border-radius: 24px;
   padding: 20px;
-  box-shadow: 
+  box-shadow:
     0 25px 80px rgba(0, 0, 0, 0.7),
     0 0 60px rgba(102, 126, 234, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);

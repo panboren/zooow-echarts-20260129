@@ -72,9 +72,12 @@ const data = [
         type: 'linear',
         x: 0, y: 0, x2: 1, y2: 1,
         colorStops: [
-          { offset: 0, color: 'rgba(102, 126, 234, 0.95)' },
-          { offset: 0.5, color: 'rgba(118, 75, 162, 0.95)' },
-          { offset: 1, color: 'rgba(102, 126, 234, 0.95)' }
+          { offset: 0, color: 'rgba(102, 126, 234, 0.90)' },
+          { offset: 0.2, color: 'rgba(118, 75, 162, 0.88)' },
+          { offset: 0.4, color: 'rgba(147, 51, 234, 0.85)' },
+          { offset: 0.6, color: 'rgba(192, 38, 211, 0.82)' },
+          { offset: 0.8, color: 'rgba(118, 75, 162, 0.78)' },
+          { offset: 1, color: 'rgba(102, 126, 234, 0.75)' }
         ]
       },
       shadowBlur: 30,
@@ -88,9 +91,11 @@ const data = [
             type: 'linear',
             x: 0, y: 0, x2: 1, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(79, 172, 254, 0.85)' },
-              { offset: 0.5, color: 'rgba(0, 242, 254, 0.85)' },
-              { offset: 1, color: 'rgba(79, 172, 254, 0.85)' }
+              { offset: 0, color: 'rgba(79, 172, 254, 0.88)' },
+              { offset: 0.25, color: 'rgba(59, 130, 246, 0.84)' },
+              { offset: 0.5, color: 'rgba(99, 102, 241, 0.80)' },
+              { offset: 0.75, color: 'rgba(139, 92, 246, 0.76)' },
+              { offset: 1, color: 'rgba(79, 172, 254, 0.72)' }
             ]
           },
           shadowBlur: 25,
@@ -109,9 +114,11 @@ const data = [
             type: 'linear',
             x: 0, y: 0, x2: 1, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(67, 233, 123, 0.85)' },
-              { offset: 0.5, color: 'rgba(56, 249, 215, 0.85)' },
-              { offset: 1, color: 'rgba(67, 233, 123, 0.85)' }
+              { offset: 0, color: 'rgba(67, 233, 123, 0.88)' },
+              { offset: 0.25, color: 'rgba(52, 211, 153, 0.84)' },
+              { offset: 0.5, color: 'rgba(94, 234, 212, 0.80)' },
+              { offset: 0.75, color: 'rgba(45, 212, 191, 0.76)' },
+              { offset: 1, color: 'rgba(67, 233, 123, 0.72)' }
             ]
           },
           shadowBlur: 25,
@@ -130,9 +137,11 @@ const data = [
             type: 'linear',
             x: 0, y: 0, x2: 1, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(245, 87, 108, 0.85)' },
-              { offset: 0.5, color: 'rgba(255, 111, 97, 0.85)' },
-              { offset: 1, color: 'rgba(245, 87, 108, 0.85)' }
+              { offset: 0, color: 'rgba(245, 87, 108, 0.88)' },
+              { offset: 0.25, color: 'rgba(239, 68, 68, 0.84)' },
+              { offset: 0.5, color: 'rgba(220, 38, 38, 0.80)' },
+              { offset: 0.75, color: 'rgba(234, 88, 12, 0.76)' },
+              { offset: 1, color: 'rgba(245, 87, 108, 0.72)' }
             ]
           },
           shadowBlur: 25,
@@ -153,9 +162,12 @@ const data = [
         type: 'linear',
         x: 0, y: 0, x2: 1, y2: 1,
         colorStops: [
-          { offset: 0, color: 'rgba(240, 147, 251, 0.95)' },
-          { offset: 0.5, color: 'rgba(245, 87, 108, 0.95)' },
-          { offset: 1, color: 'rgba(240, 147, 251, 0.95)' }
+          { offset: 0, color: 'rgba(240, 147, 251, 0.90)' },
+          { offset: 0.2, color: 'rgba(236, 72, 153, 0.88)' },
+          { offset: 0.4, color: 'rgba(217, 70, 239, 0.85)' },
+          { offset: 0.6, color: 'rgba(192, 132, 252, 0.82)' },
+          { offset: 0.8, color: 'rgba(168, 85, 247, 0.78)' },
+          { offset: 1, color: 'rgba(240, 147, 251, 0.75)' }
         ]
       },
       shadowBlur: 30,
@@ -169,9 +181,11 @@ const data = [
             type: 'linear',
             x: 0, y: 0, x2: 1, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(254, 225, 64, 0.85)' },
-              { offset: 0.5, color: 'rgba(255, 159, 67, 0.85)' },
-              { offset: 1, color: 'rgba(254, 225, 64, 0.85)' }
+              { offset: 0, color: 'rgba(254, 225, 64, 0.88)' },
+              { offset: 0.25, color: 'rgba(251, 191, 36, 0.84)' },
+              { offset: 0.5, color: 'rgba(245, 158, 11, 0.80)' },
+              { offset: 0.75, color: 'rgba(249, 115, 22, 0.76)' },
+              { offset: 1, color: 'rgba(254, 225, 64, 0.72)' }
             ]
           },
           shadowBlur: 25,
@@ -190,9 +204,10 @@ const data = [
             type: 'linear',
             x: 0, y: 0, x2: 1, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(161, 140, 209, 0.85)' },
-              { offset: 0.5, color: 'rgba(118, 75, 162, 0.85)' },
-              { offset: 1, color: 'rgba(161, 140, 209, 0.85)' }
+              { offset: 0, color: 'rgba(161, 140, 209, 0.88)' },
+              { offset: 0.3, color: 'rgba(139, 92, 246, 0.82)' },
+              { offset: 0.6, color: 'rgba(124, 58, 237, 0.76)' },
+              { offset: 1, color: 'rgba(161, 140, 209, 0.70)' }
             ]
           },
           shadowBlur: 25,
@@ -212,13 +227,16 @@ const data = [
         type: 'linear',
         x: 0, y: 0, x2: 1, y2: 1,
         colorStops: [
-          { offset: 0, color: 'rgba(255, 111, 97, 0.95)' },
-          { offset: 0.5, color: 'rgba(255, 159, 67, 0.95)' },
-          { offset: 1, color: 'rgba(255, 111, 97, 0.95)' }
+          { offset: 0, color: 'rgba(249, 115, 22, 0.90)' },
+          { offset: 0.2, color: 'rgba(251, 146, 60, 0.88)' },
+          { offset: 0.4, color: 'rgba(253, 186, 116, 0.85)' },
+          { offset: 0.6, color: 'rgba(254, 215, 170, 0.82)' },
+          { offset: 0.8, color: 'rgba(251, 146, 60, 0.78)' },
+          { offset: 1, color: 'rgba(249, 115, 22, 0.75)' }
         ]
       },
       shadowBlur: 30,
-      shadowColor: 'rgba(255, 111, 97, 0.8)'
+      shadowColor: 'rgba(249, 115, 22, 0.8)'
     },
     children: [
       {
@@ -228,13 +246,14 @@ const data = [
             type: 'linear',
             x: 0, y: 0, x2: 1, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(255, 159, 67, 0.85)' },
-              { offset: 0.5, color: 'rgba(254, 225, 64, 0.85)' },
-              { offset: 1, color: 'rgba(255, 159, 67, 0.85)' }
+              { offset: 0, color: 'rgba(59, 130, 246, 0.88)' },
+              { offset: 0.3, color: 'rgba(37, 99, 235, 0.82)' },
+              { offset: 0.6, color: 'rgba(30, 58, 138, 0.76)' },
+              { offset: 1, color: 'rgba(59, 130, 246, 0.70)' }
             ]
           },
           shadowBlur: 25,
-          shadowColor: 'rgba(255, 159, 67, 0.6)'
+          shadowColor: 'rgba(59, 130, 246, 0.6)'
         },
         children: [
           { name: '市场调研', value: 100 },
@@ -248,9 +267,11 @@ const data = [
             type: 'linear',
             x: 0, y: 0, x2: 1, y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(45, 212, 191, 0.85)' },
-              { offset: 0.5, color: 'rgba(56, 249, 215, 0.85)' },
-              { offset: 1, color: 'rgba(45, 212, 191, 0.85)' }
+              { offset: 0, color: 'rgba(45, 212, 191, 0.88)' },
+              { offset: 0.25, color: 'rgba(20, 184, 166, 0.84)' },
+              { offset: 0.5, color: 'rgba(8, 145, 178, 0.80)' },
+              { offset: 0.75, color: 'rgba(34, 211, 238, 0.76)' },
+              { offset: 1, color: 'rgba(45, 212, 191, 0.72)' }
             ]
           },
           shadowBlur: 25,

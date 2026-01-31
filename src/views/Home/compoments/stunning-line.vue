@@ -93,7 +93,7 @@ const option = ref({
   backgroundColor: 'transparent',
   title: {
     text: '性能趋势分析',
-    subtext: '2025年 Q1-Q4 数据',
+    subtext: '2026年 Q1-Q4 数据',
     left: 'center',
     top: 25,
     textStyle: {

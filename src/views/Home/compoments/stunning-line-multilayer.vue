@@ -129,7 +129,7 @@ const particleStyle = (i) => ({
 const option = ref({
   backgroundColor: 'transparent',
   title: {
-    text: '多层透明叠加折线图',
+    text: '折线图',
     subtext: 'Multilayer Transparency Overlay · 视觉深度设计',
     left: 'center',
     top: 20,

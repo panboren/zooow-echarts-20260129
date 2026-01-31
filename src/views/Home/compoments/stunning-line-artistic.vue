@@ -88,7 +88,7 @@ const option = ref({
   backgroundColor: 'transparent',
   title: {
     text: '艺术质感折线图',
-    subtext: '水晶透明多层叠加',
+    subtext: '水晶透明',
     left: 'center',
     top: 20,
     textStyle: {

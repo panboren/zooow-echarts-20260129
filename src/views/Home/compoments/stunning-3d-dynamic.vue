@@ -29,7 +29,7 @@
       <!-- 标题 -->
       <h1 class="chart-title">
         <span class="title-icon">🎭</span>
-        3D动态旋转柱状图
+        动态旋转柱状图
         <span class="title-badge">新一代</span>
       </h1>
 

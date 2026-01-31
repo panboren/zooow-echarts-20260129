@@ -72,17 +72,17 @@ const particleStyle = (i) => ({
   top: `${Math.random() * 100}%`,
   animationDelay: `${Math.random() * 8}s`,
   animationDuration: `${Math.random() * 15 + 12}s`,
-  background: `radial-gradient(circle, 
-    ${['rgba(102, 126, 234, 0.7)', 'rgba(79, 172, 254, 0.7)', 
+  background: `radial-gradient(circle,
+    ${['rgba(102, 126, 234, 0.7)', 'rgba(79, 172, 254, 0.7)',
       'rgba(245, 87, 108, 0.7)', 'rgba(67, 233, 123, 0.7)',
-      'rgba(250, 112, 154, 0.7)', 'rgba(254, 225, 64, 0.7)'][Math.floor(Math.random() * 6)]}, 
+      'rgba(250, 112, 154, 0.7)', 'rgba(254, 225, 64, 0.7)'][Math.floor(Math.random() * 6)]},
     transparent)`
 });
 
 const option = ref({
   backgroundColor: 'transparent',
   title: {
-    text: '多层透明叠加',
+    text: '视觉层次',
     subtext: '视觉层次深度设计',
     left: 'center',
     top: 25,
@@ -118,24 +118,24 @@ const option = ref({
       const percent = ((params.value / total) * 100).toFixed(2);
       return `
         <div style="padding: 8px;">
-          <div style="font-size: 20px; font-weight: bold; margin-bottom: 15px; 
+          <div style="font-size: 20px; font-weight: bold; margin-bottom: 15px;
             color: ${params.color}; text-shadow: 0 0 15px ${params.color};">
             ${params.name}
           </div>
-          <div style="display: flex; justify-content: space-between; 
-            align-items: center; margin: 10px 0; padding: 10px; 
-            background: rgba(255,255,255,0.08); border-radius: 10px; 
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; margin: 10px 0; padding: 10px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);">
             <span>数值:</span>
-            <span style="font-weight: bold; color: #ffffff; margin-left: 20px; 
+            <span style="font-weight: bold; color: #ffffff; margin-left: 20px;
               text-shadow: 0 0 10px rgba(102, 126, 234, 0.8);">${params.value.toLocaleString()}</span>
           </div>
-          <div style="display: flex; justify-content: space-between; 
-            align-items: center; margin: 10px 0; padding: 10px; 
-            background: rgba(255,255,255,0.08); border-radius: 10px; 
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; margin: 10px 0; padding: 10px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);">
             <span>占比:</span>
-            <span style="font-weight: bold; color: #f5576c; margin-left: 20px; 
+            <span style="font-weight: bold; color: #f5576c; margin-left: 20px;
               font-size: 20px; text-shadow: 0 0 15px rgba(245, 87, 108, 0.8);">${percent}%</span>
           </div>
         </div>
@@ -340,9 +340,9 @@ const option = ref({
         show: false
       },
       data: [
-        { 
-          value: 1, 
-          name: '', 
+        {
+          value: 1,
+          name: '',
           itemStyle: {
             color: 'rgba(102, 126, 234, 0.35)',
             shadowColor: 'rgba(102, 126, 234, 0.5)',
@@ -419,7 +419,7 @@ defineExpose({
   background: linear-gradient(135deg, rgba(15, 15, 35, 0.98) 0%, rgba(26, 26, 46, 0.98) 50%, rgba(35, 35, 60, 0.98) 100%);
   border-radius: 28px;
   padding: 24px;
-  box-shadow: 
+  box-shadow:
     0 30px 100px rgba(0, 0, 0, 0.8),
     0 0 80px rgba(102, 126, 234, 0.2),
     0 0 120px rgba(79, 172, 254, 0.15),
@@ -650,7 +650,7 @@ defineExpose({
   padding: 12px 16px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 
+  box-shadow:
     0 12px 35px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.4s ease;
@@ -658,7 +658,7 @@ defineExpose({
 
 .stat-item:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }

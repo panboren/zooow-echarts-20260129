@@ -80,12 +80,12 @@ const crystalStyle = (i) => ({
   top: `${Math.random() * 100}%`,
   animationDelay: `${Math.random() * 12}s`,
   animationDuration: `${Math.random() * 20 + 18}s`,
-  background: `radial-gradient(circle at 30% 30%, 
-    ${['rgba(255, 255, 255, 0.9)', 'rgba(102, 126, 234, 0.8)', 
+  background: `radial-gradient(circle at 30% 30%,
+    ${['rgba(255, 255, 255, 0.9)', 'rgba(102, 126, 234, 0.8)',
       'rgba(79, 172, 254, 0.8)', 'rgba(245, 87, 108, 0.8)',
-      'rgba(67, 233, 123, 0.8)', 'rgba(254, 225, 64, 0.8)'][Math.floor(Math.random() * 6)]}, 
+      'rgba(67, 233, 123, 0.8)', 'rgba(254, 225, 64, 0.8)'][Math.floor(Math.random() * 6)]},
     rgba(255, 255, 255, 0.2) 40%, transparent 100%)`,
-  clipPath: `${['polygon(50% 0%, 100% 100%, 0% 100%)', 
+  clipPath: `${['polygon(50% 0%, 100% 100%, 0% 100%)',
     'polygon(50% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%)',
     'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
     'circle(50% at 50% 50%)'][Math.floor(Math.random() * 4)]}`
@@ -95,7 +95,7 @@ const option = ref({
   backgroundColor: 'transparent',
   title: {
     text: '艺术质感',
-    subtext: '水晶透明多层叠加',
+    subtext: '水晶透明',
     left: 'center',
     top: 22,
     textStyle: {
@@ -131,27 +131,27 @@ const option = ref({
       const percent = ((params.value / total) * 100).toFixed(2);
       return `
         <div style="padding: 10px;">
-          <div style="font-size: 22px; font-weight: 900; margin-bottom: 18px; 
+          <div style="font-size: 22px; font-weight: 900; margin-bottom: 18px;
             background: linear-gradient(135deg, ${params.color}, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;">
             ${params.name}
           </div>
-          <div style="display: flex; justify-content: space-between; 
-            align-items: center; margin: 12px 0; padding: 12px; 
-            background: rgba(255,255,255,0.1); border-radius: 12px; 
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; margin: 12px 0; padding: 12px;
+            background: rgba(255,255,255,0.1); border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.15);">
             <span style="color: rgba(255,255,255,0.8);">数值</span>
-            <span style="font-weight: 900; color: #ffffff; margin-left: 25px; 
+            <span style="font-weight: 900; color: #ffffff; margin-left: 25px;
               text-shadow: 0 0 15px ${params.color};">${params.value.toLocaleString()}</span>
           </div>
-          <div style="display: flex; justify-content: space-between; 
-            align-items: center; margin: 12px 0; padding: 12px; 
-            background: rgba(255,255,255,0.1); border-radius: 12px; 
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; margin: 12px 0; padding: 12px;
+            background: rgba(255,255,255,0.1); border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.15);">
             <span style="color: rgba(255,255,255,0.8);">占比</span>
-            <span style="font-weight: 900; color: ${params.color}; margin-left: 25px; 
+            <span style="font-weight: 900; color: ${params.color}; margin-left: 25px;
               font-size: 22px; text-shadow: 0 0 20px ${params.color};">${percent}%</span>
           </div>
         </div>
@@ -416,9 +416,9 @@ const option = ref({
         show: false
       },
       data: [
-        { 
-          value: 1, 
-          name: '', 
+        {
+          value: 1,
+          name: '',
           itemStyle: {
             color: {
               type: 'radial',
@@ -507,11 +507,11 @@ defineExpose({
   position: relative;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(15, 15, 35, 0.99) 0%, 
+  background: linear-gradient(135deg, rgba(15, 15, 35, 0.99) 0%,
     rgba(26, 26, 46, 0.99) 40%, rgba(35, 35, 60, 0.99) 100%);
   border-radius: 32px;
   padding: 28px;
-  box-shadow: 
+  box-shadow:
     0 35px 120px rgba(0, 0, 0, 0.9),
     0 0 100px rgba(255, 255, 255, 0.08),
     0 0 150px rgba(102, 126, 234, 0.15),
@@ -546,9 +546,9 @@ defineExpose({
 .beam-1 {
   top: -300px;
   right: -100px;
-  background: linear-gradient(180deg, 
-    rgba(102, 126, 234, 0.4) 0%, 
-    rgba(79, 172, 254, 0.3) 50%, 
+  background: linear-gradient(180deg,
+    rgba(102, 126, 234, 0.4) 0%,
+    rgba(79, 172, 254, 0.3) 50%,
     transparent 100%);
   animation-delay: 0s;
   transform: rotate(25deg);
@@ -557,9 +557,9 @@ defineExpose({
 .beam-2 {
   top: -200px;
   left: -150px;
-  background: linear-gradient(180deg, 
-    rgba(240, 147, 251, 0.4) 0%, 
-    rgba(245, 87, 108, 0.3) 50%, 
+  background: linear-gradient(180deg,
+    rgba(240, 147, 251, 0.4) 0%,
+    rgba(245, 87, 108, 0.3) 50%,
     transparent 100%);
   animation-delay: -8s;
   transform: rotate(-15deg);
@@ -569,9 +569,9 @@ defineExpose({
   bottom: -400px;
   left: 50%;
   transform: translateX(-50%) rotate(0deg);
-  background: linear-gradient(0deg, 
-    rgba(67, 233, 123, 0.35) 0%, 
-    rgba(254, 225, 64, 0.3) 50%, 
+  background: linear-gradient(0deg,
+    rgba(67, 233, 123, 0.35) 0%,
+    rgba(254, 225, 64, 0.3) 50%,
     transparent 100%);
   animation-delay: -16s;
 }
@@ -762,7 +762,7 @@ defineExpose({
 
 .block-primary {
   border: 1px solid rgba(102, 126, 234, 0.4);
-  box-shadow: 
+  box-shadow:
     0 15px 40px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 30px rgba(102, 126, 234, 0.15);
@@ -770,7 +770,7 @@ defineExpose({
 
 .block-secondary {
   border: 1px solid rgba(79, 172, 254, 0.4);
-  box-shadow: 
+  box-shadow:
     0 15px 40px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 30px rgba(79, 172, 254, 0.15);
@@ -778,7 +778,7 @@ defineExpose({
 
 .block-accent {
   border: 1px solid rgba(245, 87, 108, 0.4);
-  box-shadow: 
+  box-shadow:
     0 15px 40px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 30px rgba(245, 87, 108, 0.15);

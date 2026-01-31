@@ -145,7 +145,7 @@ const option = ref({
   backgroundColor: 'transparent',
   title: {
     text: '全息混合图表',
-    subtext: 'Holographic Hybrid · 多层透明叠加折柱组合',
+    subtext: 'Holographic Hybrid · 折柱组合',
     left: 'center',
     top: 20,
     textStyle: {

@@ -89,7 +89,7 @@ const option = ref({
   backgroundColor: 'transparent',
   title: {
     text: '销售业绩排行榜',
-    subtext: '2025年各月度统计',
+    subtext: '2026年各月度统计',
     left: 'center',
     top: 25,
     textStyle: {

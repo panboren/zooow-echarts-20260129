@@ -30,7 +30,7 @@ const option = ref({
   backgroundColor: 'transparent',
   title: {
     text: '转化漏斗分析',
-    subtext: '2025年数据',
+    subtext: '2026年数据',
     left: 'center',
     top: 20,
     textStyle: {

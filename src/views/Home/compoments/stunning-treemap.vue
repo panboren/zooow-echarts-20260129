@@ -112,7 +112,7 @@ const option = ref({
   backgroundColor: '#0d1117',
   title: {
     text: '销售额分层分析',
-    subtext: '2025年各层级数据',
+    subtext: '2026年各层级数据',
     left: 'center',
     top: 5,
     textStyle: {

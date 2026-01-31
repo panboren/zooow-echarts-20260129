@@ -54,7 +54,7 @@
 
     <!-- 图表标题 -->
     <div class="chart-title">
-      <h2>多层透明叠加散点图</h2>
+      <h2>散点图</h2>
       <p>多维数据分布与聚类分析</p>
     </div>
 
@@ -257,13 +257,13 @@ const chartOption = computed(() => {
         const theme = colorThemes[params.seriesIndex]
         return `
           <div style="padding: 8px;">
-            <div style="font-size: 16px; font-weight: 700; margin-bottom: 10px; 
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 10px;
               background: linear-gradient(135deg, ${theme.shadowColor}, #ffffff);
               -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
               ${params.seriesName}
             </div>
-            <div style="display: flex; justify-content: space-between; 
-              align-items: center; padding: 10px 12px; 
+            <div style="display: flex; justify-content: space-between;
+              align-items: center; padding: 10px 12px;
               background: rgba(${theme.baseColor}, 0.15); border-radius: 8px;
               border: 1px solid rgba(${theme.baseColor}, 0.35);">
               <span style="color: rgba(255,255,255,0.75); font-weight: 600;">坐标</span>

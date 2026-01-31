@@ -6,7 +6,7 @@
         <span class="title-icon">🎨</span>
         <span>ECharts 精美图表现场</span>
       </h1>
-      <p class="gallery-subtitle">46个超酷炫图表组件 - 完整展示</p>
+      <p class="gallery-subtitle">51个超酷炫图表组件 - 完整展示</p>
     </div>
 
     <!-- 统计卡片 -->
@@ -14,28 +14,28 @@
       <div class="stat-card stat-card-1">
         <div class="stat-icon">📊</div>
         <div class="stat-content">
-        <div class="stat-value">46</div>
-        <div class="stat-label">图表组件</div>
+          <div class="stat-value">{{ animatedStats.components }}</div>
+          <div class="stat-label">图表组件</div>
         </div>
       </div>
       <div class="stat-card stat-card-2">
         <div class="stat-icon">🎯</div>
         <div class="stat-content">
-          <div class="stat-value">4</div>
+          <div class="stat-value">{{ animatedStats.series }}</div>
           <div class="stat-label">图表系列</div>
         </div>
       </div>
       <div class="stat-card stat-card-3">
         <div class="stat-icon">📈</div>
         <div class="stat-content">
-          <div class="stat-value">8</div>
+          <div class="stat-value">{{ animatedStats.documents }}</div>
           <div class="stat-label">文档文件</div>
         </div>
       </div>
       <div class="stat-card stat-card-4">
         <div class="stat-icon">✨</div>
         <div class="stat-content">
-          <div class="stat-value">∞</div>
+          <div class="stat-value animated-infinity">∞</div>
           <div class="stat-label">创意可能</div>
         </div>
       </div>
@@ -132,7 +132,7 @@
     <!-- 第六批：全息宇宙系列 -->
     <div  class="section" >
       <h2 class="section-title">
-        <span class="title-badge">06</span>
+        <span class="title-badge">02</span>
         全息宇宙系列
       </h2>
       <div class="row">
@@ -140,15 +140,6 @@
           <LazyChart :component="StunningHolographic" />
         </div>
       </div>
-    </div>
-
-    <!-- 第七批：多层透明叠加系列 -->
-    <div  class="section">
-      <h2 class="section-title">
-        <span class="title-badge">07</span>
-        多层透明叠加系列
-      </h2>
-
       <div class="row">
         <div class="chart-card full-width">
           <LazyChart :component="StunningHybridMultilayer" />
@@ -174,7 +165,7 @@
     <!-- 第八批：下一代图表系列 -->
     <div  class="section">
       <h2 class="section-title">
-        <span class="title-badge">08</span>
+        <span class="title-badge">03</span>
         下一代图表系列
       </h2>
       <div class="row">
@@ -217,7 +208,7 @@
     <!-- 第九批：未来科技系列 -->
     <div  class="section">
       <h2 class="section-title">
-        <span class="title-badge">09</span>
+        <span class="title-badge">04</span>
         未来科技系列
       </h2>
       <div class="row">
@@ -288,8 +279,46 @@
 </template>
 
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, ref, onMounted } from 'vue'
 import LazyChart from '@/components/LazyChart.vue'
+
+// 统计数据动画
+const animatedStats = ref({
+  components: 0,
+  series: 0,
+  documents: 0
+})
+
+// 数字动画函数
+const animateNumber = (start, end, duration, callback) => {
+  const startTime = Date.now()
+  const animate = () => {
+    const elapsed = Date.now() - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    const easeOut = 1 - Math.pow(1 - progress, 4)
+    const current = Math.floor(start + (end - start) * easeOut)
+    callback(current)
+    if (progress < 1) {
+      requestAnimationFrame(animate)
+    }
+  }
+  animate()
+}
+
+onMounted(() => {
+  // 延迟启动动画
+  setTimeout(() => {
+    animateNumber(0, 51, 2500, (value) => {
+      animatedStats.value.components = value
+    })
+    animateNumber(0, 18, 2200, (value) => {
+      animatedStats.value.series = value
+    })
+    animateNumber(0, 27, 2000, (value) => {
+      animatedStats.value.documents = value
+    })
+  }, 500)
+})
 
 // 使用 defineAsyncComponent 懒加载所有图表组件
 const StunningPie = defineAsyncComponent({
@@ -643,6 +672,28 @@ const StunningGlassmorphismDashboard = defineAsyncComponent({
   background-clip: text;
   line-height: 1;
   margin-bottom: 4px;
+  transition: all 0.3s ease;
+}
+
+.animated-infinity {
+  font-size: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: infinityPulse 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes infinityPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.6));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.8));
+  }
 }
 
 .stat-label {

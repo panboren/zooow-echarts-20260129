@@ -116,11 +116,15 @@ const option = ref({
       emphasis: {
         label: {
           show: true,
+          position: 'outside',
+          formatter: '{b}\n{c} ({d}%)',
           fontSize: 16,
           fontWeight: 'bold',
           color: '#ffffff',
           textShadowBlur: 10,
-          textShadowColor: 'rgba(0, 0, 0, 0.8)'
+          textShadowColor: 'rgba(0, 0, 0, 0.8)',
+          distance: 10,
+          padding: [6, 12]
         },
         itemStyle: {
           shadowBlur: 45,

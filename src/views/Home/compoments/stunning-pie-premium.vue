@@ -198,7 +198,7 @@ const option = ref({
   backgroundColor: 'transparent',
   title: {
     text: '流量来源分布',
-    subtext: '2025年度全景分析',
+    subtext: '2026年度全景分析',
     left: 'center',
     top: 25,
     textStyle: {
