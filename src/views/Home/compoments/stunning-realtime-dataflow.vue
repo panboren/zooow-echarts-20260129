@@ -112,7 +112,6 @@ const dataSources = ref([
 ])
 
 // 图表数据
-const flowData = ref<any[]>([])
 const nodeData = ref<any[]>([])
 const linkData = ref<any[]>([])
 
@@ -135,12 +134,12 @@ const generateInitialData = () => {
   // 生成节点数据
   const nodeTypes = ['网关', '服务', '数据库', '缓存', '消息队列', '日志']
   const colors = [
-    'rgba(102, 126, 234, 0.9)',
-    'rgba(240, 147, 251, 0.9)',
     'rgba(67, 233, 123, 0.9)',
-    'rgba(79, 172, 254, 0.9)',
-    'rgba(254, 225, 64, 0.9)',
-    'rgba(250, 112, 154, 0.9)'
+    'rgba(240, 147, 251, 0.9)',
+    'rgba(250, 112, 154, 0.9)',
+    'rgba(56, 249, 215, 0.9)',
+    'rgba(102, 126, 234, 0.85)',
+    'rgba(79, 172, 254, 0.85)'
   ]
 
   for (let i = 0; i < 20; i++) {
@@ -284,26 +283,50 @@ const option = ref<EChartsOption>({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',
-    backgroundColor: 'rgba(10, 10, 25, 0.95)',
-    borderColor: 'rgba(102, 126, 234, 0.7)',
+    backgroundColor: 'rgba(15, 15, 35, 0.98)',
+    borderColor: 'rgba(255, 255, 255, 0.35)',
     borderWidth: 2,
-    borderRadius: 16,
-    padding: [14, 18],
-    textStyle: { color: '#ffffff', fontSize: 13, fontWeight: 600 },
-    extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 12px 48px rgba(102, 126, 234, 0.4);',
+    borderRadius: 20,
+    padding: [18, 26],
+    textStyle: { color: '#ffffff', fontSize: 14, fontWeight: 'bold' },
+    extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);',
     axisPointer: {
-      type: 'line',
-      lineStyle: {
+      type: 'cross',
+      crossStyle: {
         color: 'rgba(102, 126, 234, 0.6)',
-        width: 2
+        width: 2,
+        type: 'dashed'
       }
+    },
+    formatter: (params) => {
+      return `
+        <div style="padding: 8px;">
+          <div style="font-size: 16px; font-weight: 900; margin-bottom: 12px;
+            background: linear-gradient(135deg, #667eea, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;">
+            ${params[0].name}
+          </div>
+          ${params.map(item => `
+            <div style="display: flex; justify-content: space-between;
+              align-items: center; margin: 8px 0; padding: 10px;
+              background: rgba(255,255,255,0.08); border-radius: 10px;
+              border: 1px solid rgba(255,255,255,0.12);">
+              <span style="color: rgba(255,255,255,0.75);">${item.seriesName}</span>
+              <span style="font-weight: 900; color: ${item.color}; margin-left: 20px;
+                text-shadow: 0 0 12px ${item.color};">${item.value}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
     }
   },
   grid: {
-    top: '3%',
-    left: '2%',
-    right: '2%',
-    bottom: '15%',
+    top: '10%',
+    left: '3%',
+    right: '3%',
+    bottom: '6%',
     containLabel: true
   },
   xAxis: [
@@ -311,54 +334,90 @@ const option = ref<EChartsOption>({
       type: 'category',
       data: timeLabels.value,
       axisLine: {
-        lineStyle: { color: 'rgba(102, 126, 234, 0.3)' }
+        lineStyle: {
+          color: 'rgba(255, 255, 255, 0.3)',
+          width: 2
+        }
+      },
+      axisTick: {
+        show: false
       },
       axisLabel: {
-        color: 'rgba(255, 255, 255, 0.7)',
+        color: 'rgba(255, 255, 255, 0.8)',
         fontSize: 11,
-        rotate: 45
+        fontWeight: 'bold',
+        rotate: 45,
+        textShadow: '0 0 10px rgba(102, 126, 234, 0.5)'
       }
     },
     {
       type: 'category',
       data: timeLabels.value,
       axisLine: {
-        lineStyle: { color: 'rgba(240, 147, 251, 0.3)' }
+        lineStyle: {
+          color: 'rgba(255, 255, 255, 0.3)',
+          width: 2
+        }
+      },
+      axisTick: {
+        show: false
       },
       axisLabel: {
-        color: 'rgba(255, 255, 255, 0.7)',
-        fontSize: 11,
-        rotate: 45
+        show: false
       }
     }
   ],
   yAxis: [
     {
       type: 'value',
-      name: '消息数',
-      nameTextStyle: { color: 'rgba(102, 126, 234, 0.8)' },
-      axisLine: {
-        lineStyle: { color: 'rgba(102, 126, 234, 0.3)' }
+      name: '流量',
+      nameTextStyle: {
+        color: 'rgba(67, 233, 123, 0.9)',
+        fontSize: 13,
+        fontWeight: 'bold',
+        padding: [0, 0, 0, 10]
       },
       splitLine: {
-        lineStyle: { color: 'rgba(102, 126, 234, 0.1)' }
+        lineStyle: {
+          color: 'rgba(255, 255, 255, 0.08)',
+          width: 1
+        }
+      },
+      axisLine: {
+        show: false
+      },
+      axisTick: {
+        show: false
       },
       axisLabel: {
-        color: 'rgba(255, 255, 255, 0.7)'
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 11
       }
     },
     {
       type: 'value',
       name: '延迟',
-      nameTextStyle: { color: 'rgba(240, 147, 251, 0.8)' },
-      axisLine: {
-        lineStyle: { color: 'rgba(240, 147, 251, 0.3)' }
+      nameTextStyle: {
+        color: 'rgba(240, 147, 251, 0.9)',
+        fontSize: 13,
+        fontWeight: 'bold',
+        padding: [0, 10, 0, 0]
       },
       splitLine: {
-        lineStyle: { color: 'rgba(240, 147, 251, 0.1)' }
+        lineStyle: {
+          color: 'rgba(255, 255, 255, 0.08)',
+          width: 1
+        }
+      },
+      axisLine: {
+        show: false
+      },
+      axisTick: {
+        show: false
       },
       axisLabel: {
         color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 11,
         formatter: '{value}ms'
       }
     }
@@ -370,36 +429,69 @@ const option = ref<EChartsOption>({
       data: flowValues.value,
       smooth: true,
       symbol: 'circle',
-      symbolSize: 6,
+      symbolSize: 10,
       lineStyle: {
-        width: 3,
+        width: 4,
         color: {
           type: 'linear',
-          x: 0, y: 0, x2: 1, y2: 0,
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
           colorStops: [
-            { offset: 0, color: 'rgba(102, 126, 234, 0.3)' },
-            { offset: 0.5, color: 'rgba(102, 126, 234, 0.8)' },
-            { offset: 1, color: 'rgba(240, 147, 251, 0.3)' }
+            { offset: 0, color: 'rgba(67, 233, 123, 1)' },
+            { offset: 0.3, color: 'rgba(118, 75, 162, 0.9)' },
+            { offset: 0.6, color: 'rgba(240, 147, 251, 0.95)' },
+            { offset: 1, color: 'rgba(250, 112, 154, 1)' }
           ]
         },
-        shadowBlur: 20,
-        shadowColor: 'rgba(102, 126, 234, 0.6)'
+        shadowColor: 'rgba(67, 233, 123, 0.9)',
+        shadowBlur: 25,
+        shadowOffsetX: 0,
+        shadowOffsetY: 10
+      },
+      itemStyle: {
+        color: 'rgba(255, 255, 255, 0.95)',
+        borderColor: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [
+            { offset: 0, color: '#43e97b' },
+            { offset: 0.3, color: '#764ba2' },
+            { offset: 0.6, color: '#f093fb' },
+            { offset: 1, color: '#fa709a' }
+          ]
+        },
+        borderWidth: 3,
+        shadowColor: 'rgba(67, 233, 123, 0.95)',
+        shadowBlur: 25
       },
       areaStyle: {
         color: {
           type: 'linear',
-          x: 0, y: 0, x2: 0, y2: 1,
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
           colorStops: [
-            { offset: 0, color: 'rgba(102, 126, 234, 0.4)' },
-            { offset: 1, color: 'rgba(102, 126, 234, 0.05)' }
+            { offset: 0, color: 'rgba(67, 233, 123, 0.5)' },
+            { offset: 0.25, color: 'rgba(118, 75, 162, 0.35)' },
+            { offset: 0.5, color: 'rgba(240, 147, 251, 0.3)' },
+            { offset: 0.75, color: 'rgba(250, 112, 154, 0.15)' },
+            { offset: 1, color: 'rgba(67, 233, 123, 0)' }
           ]
         }
       },
       emphasis: {
         focus: 'series',
         itemStyle: {
-          shadowBlur: 30,
-          shadowColor: 'rgba(102, 126, 234, 0.9)'
+          shadowBlur: 45,
+          shadowColor: 'rgba(67, 233, 123, 1)',
+          scale: true,
+          scaleSize: 25
         }
       }
     },
@@ -409,27 +501,70 @@ const option = ref<EChartsOption>({
       yAxisIndex: 1,
       data: latencyValues.value,
       smooth: true,
-      symbol: 'diamond',
-      symbolSize: 6,
+      symbol: 'circle',
+      symbolSize: 10,
       lineStyle: {
-        width: 3,
+        width: 4,
         color: {
           type: 'linear',
-          x: 0, y: 0, x2: 1, y2: 0,
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
           colorStops: [
-            { offset: 0, color: 'rgba(240, 147, 251, 0.3)' },
-            { offset: 0.5, color: 'rgba(240, 147, 251, 0.8)' },
-            { offset: 1, color: 'rgba(67, 233, 123, 0.3)' }
+            { offset: 0, color: 'rgba(67, 233, 123, 1)' },
+            { offset: 0.4, color: 'rgba(79, 172, 254, 0.9)' },
+            { offset: 0.7, color: 'rgba(240, 147, 251, 0.95)' },
+            { offset: 1, color: 'rgba(250, 112, 154, 1)' }
           ]
         },
-        shadowBlur: 20,
-        shadowColor: 'rgba(240, 147, 251, 0.6)'
+        shadowColor: 'rgba(67, 233, 123, 0.9)',
+        shadowBlur: 25,
+        shadowOffsetX: 0,
+        shadowOffsetY: 10
+      },
+      itemStyle: {
+        color: 'rgba(255, 255, 255, 0.95)',
+        borderColor: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 0,
+          colorStops: [
+            { offset: 0, color: '#43e97b' },
+            { offset: 0.4, color: '#4facfe' },
+            { offset: 0.7, color: '#f093fb' },
+            { offset: 1, color: '#fa709a' }
+          ]
+        },
+        borderWidth: 3,
+        shadowColor: 'rgba(67, 233, 123, 0.95)',
+        shadowBlur: 25
+      },
+      areaStyle: {
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            { offset: 0, color: 'rgba(67, 233, 123, 0.5)' },
+            { offset: 0.3, color: 'rgba(79, 172, 254, 0.35)' },
+            { offset: 0.6, color: 'rgba(240, 147, 251, 0.2)' },
+            { offset: 0.8, color: 'rgba(250, 112, 154, 0.1)' },
+            { offset: 1, color: 'rgba(67, 233, 123, 0)' }
+          ]
+        }
       },
       emphasis: {
         focus: 'series',
         itemStyle: {
-          shadowBlur: 30,
-          shadowColor: 'rgba(240, 147, 251, 0.9)'
+          shadowBlur: 45,
+          shadowColor: 'rgba(67, 233, 123, 1)',
+          scale: true,
+          scaleSize: 25
         }
       }
     },
@@ -440,7 +575,7 @@ const option = ref<EChartsOption>({
       yAxisIndex: 0,
       coordinateSystem: 'cartesian2d',
       data: nodeData.value,
-      symbolSize: (data: any) => data[2] * 0.3,
+      symbolSize: (data: any) => data[2] * 0.4,
       showEffectOn: 'render',
       rippleEffect: {
         brushType: 'stroke',
@@ -448,15 +583,15 @@ const option = ref<EChartsOption>({
         period: 3
       },
       itemStyle: {
-        color: 'rgba(102, 126, 234, 0.8)',
+        color: 'rgba(240, 147, 251, 0.85)',
         shadowBlur: 20,
-        shadowColor: 'rgba(102, 126, 234, 0.6)'
+        shadowColor: 'rgba(240, 147, 251, 0.7)'
       },
       emphasis: {
         focus: 'series',
         itemStyle: {
           shadowBlur: 40,
-          shadowColor: 'rgba(102, 126, 234, 0.9)'
+          shadowColor: 'rgba(240, 147, 251, 0.95)'
         }
       }
     }
@@ -471,7 +606,7 @@ const toggleFlow = () => {
 const toggleSpeed = () => {
   const speeds = [1, 2, 4, 8]
   const currentIndex = speeds.indexOf(speedLevel.value)
-  speedLevel.value = speeds[(currentIndex + 1) % speeds.length]
+  speedLevel.value = speeds[((currentIndex ?? 0) + 1) % speeds.length]
 }
 
 const changeDataPattern = () => {
@@ -490,9 +625,9 @@ const formatNumber = (num: number): string => {
 
 // 样式生成函数
 const getHaloStyle = (index: number) => {
-  const colors = ['rgba(102, 126, 234, 0.25)', 'rgba(240, 147, 251, 0.25)', 'rgba(67, 233, 123, 0.25)']
+  const colors = ['rgba(67, 233, 123, 0.3)', 'rgba(240, 147, 251, 0.3)', 'rgba(250, 112, 154, 0.25)', 'rgba(56, 249, 215, 0.25)']
   return {
-    background: `radial-gradient(circle, ${colors[index % 3]}, transparent 70%)`,
+    background: `radial-gradient(circle, ${colors[index % 4]}, transparent 70%)`,
     width: `${280 + index * 35}px`,
     height: `${280 + index * 35}px`,
     animationDelay: `${index * 0.25}s`,
@@ -500,12 +635,12 @@ const getHaloStyle = (index: number) => {
   }
 }
 
-const getParticleStyle = (index: number) => {
-  const colors = ['rgba(102, 126, 234, 0.7)', 'rgba(240, 147, 251, 0.7)', 'rgba(67, 233, 123, 0.7)', 'rgba(79, 172, 254, 0.7)']
+const getParticleStyle = (_index: number) => {
+  const colors = ['rgba(67, 233, 123, 0.7)', 'rgba(240, 147, 251, 0.7)', 'rgba(250, 112, 154, 0.7)', 'rgba(56, 249, 215, 0.7)', 'rgba(102, 126, 234, 0.6)']
   return {
     left: `${Math.random() * 100}%`,
     top: `${Math.random() * 100}%`,
-    background: colors[Math.floor(Math.random() * 4)],
+    background: colors[Math.floor(Math.random() * 5)],
     width: `${2 + Math.random() * 2}px`,
     height: `${2 + Math.random() * 2}px`,
     animationDelay: `${Math.random() * 4}s`,
@@ -515,12 +650,12 @@ const getParticleStyle = (index: number) => {
 
 const getSourceStyle = (index: number) => {
   const colors = [
+    'rgba(67, 233, 123, 0.4)',
+    'rgba(240, 147, 251, 0.4)',
+    'rgba(250, 112, 154, 0.35)',
+    'rgba(56, 249, 215, 0.35)',
     'rgba(102, 126, 234, 0.3)',
-    'rgba(240, 147, 251, 0.3)',
-    'rgba(67, 233, 123, 0.3)',
-    'rgba(79, 172, 254, 0.3)',
-    'rgba(254, 225, 64, 0.3)',
-    'rgba(250, 112, 154, 0.3)'
+    'rgba(79, 172, 254, 0.3)'
   ]
   return {
     borderColor: colors[index % 6]
@@ -528,7 +663,7 @@ const getSourceStyle = (index: number) => {
 }
 
 // 更新定时器
-let updateInterval: number | null = null
+let updateInterval: number | undefined = undefined
 
 onMounted(() => {
   generateInitialData()
@@ -623,11 +758,11 @@ onUnmounted(() => {
       letter-spacing: 2px;
 
       .title-gradient {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        background: linear-gradient(135deg, #43e97b 0%, #f093fb 50%, #fa709a 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        text-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
+        text-shadow: 0 0 40px rgba(67, 233, 123, 0.5);
       }
     }
 
@@ -642,7 +777,7 @@ onUnmounted(() => {
     .title-deco {
       width: 200px;
       height: 3px;
-      background: linear-gradient(90deg, transparent, #667eea, #f093fb, transparent);
+      background: linear-gradient(90deg, transparent, #43e97b, #f093fb, #fa709a, transparent);
       margin: 0 auto;
       border-radius: 2px;
     }
@@ -654,63 +789,82 @@ onUnmounted(() => {
     z-index: 10;
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
     margin-bottom: 20px;
     flex-wrap: wrap;
+    padding: 12px;
 
     .control-btn {
       padding: 10px 24px;
-      background: rgba(15, 15, 35, 0.8);
-      border: 2px solid rgba(102, 126, 234, 0.5);
-      border-radius: 12px;
+      background: rgba(15, 15, 30, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(102, 126, 234, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
       &:hover {
-        background: rgba(102, 126, 234, 0.3);
-        border-color: rgba(102, 126, 234, 0.8);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        background: rgba(67, 233, 123, 0.25);
+        transform: translateY(-4px);
+        box-shadow:
+          0 15px 40px rgba(0, 0, 0, 0.5),
+          0 0 35px rgba(67, 233, 123, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
       }
 
       &.active {
-        background: rgba(102, 126, 234, 0.5);
-        border-color: #667eea;
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6);
+        background: rgba(67, 233, 123, 0.35);
+        border-color: rgba(67, 233, 123, 0.5);
+        box-shadow:
+          0 15px 40px rgba(0, 0, 0, 0.5),
+          0 0 35px rgba(67, 233, 123, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
       }
     }
 
     .status-indicator {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       padding: 10px 20px;
-      background: rgba(15, 15, 35, 0.8);
-      border: 2px solid rgba(102, 126, 234, 0.5);
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
+      background: rgba(15, 15, 30, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(67, 233, 123, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
       .status-dot {
-        width: 12px;
-        height: 12px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background: #666;
         animation: status-blink 1s infinite;
 
         &.active {
           background: #43e97b;
-          box-shadow: 0 0 15px rgba(67, 233, 123, 0.8);
+          box-shadow: 0 0 20px rgba(67, 233, 123, 1);
         }
       }
 
       span {
         color: #fff;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
       }
     }
   }
@@ -732,8 +886,8 @@ onUnmounted(() => {
     margin-right: auto;
 
     &:hover {
-      border-color: rgba(102, 126, 234, 0.6);
-      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+      border-color: rgba(67, 233, 123, 0.6);
+      box-shadow: 0 10px 40px rgba(67, 233, 123, 0.3);
     }
 
     .echarts-container {
@@ -748,40 +902,108 @@ onUnmounted(() => {
     z-index: 10;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 16px;
     max-width: 1400px;
     margin: 0 auto 20px;
+    padding: 16px;
 
     .stat-item {
-      background: rgba(15, 15, 35, 0.8);
-      border: 2px solid rgba(102, 126, 234, 0.3);
-      border-radius: 16px;
-      padding: 20px;
+      position: relative;
+      background: rgba(15, 15, 30, 0.75);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 20px 16px;
       text-align: center;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(67, 233, 123, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        border-radius: 20px 0 0 20px;
+      }
 
       &:hover {
-        border-color: rgba(102, 126, 234, 0.6);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+        transform: translateY(-12px) scale(1.02);
+        background: rgba(15, 15, 30, 0.9);
+      }
+
+      &:nth-child(1)::before {
+        background: linear-gradient(180deg, #43e97b 0%, #38f9d7 100%);
+        box-shadow: 0 0 20px rgba(67, 233, 123, 0.8);
+      }
+
+      &:nth-child(2)::before {
+        background: linear-gradient(180deg, #f093fb 0%, #fa709a 100%);
+        box-shadow: 0 0 20px rgba(240, 147, 251, 0.8);
+      }
+
+      &:nth-child(3)::before {
+        background: linear-gradient(180deg, #fa709a 0%, #f093fb 100%);
+        box-shadow: 0 0 20px rgba(250, 112, 154, 0.8);
+      }
+
+      &:nth-child(4)::before {
+        background: linear-gradient(180deg, #56e9b7 0%, #43e97b 100%);
+        box-shadow: 0 0 20px rgba(86, 233, 183, 0.8);
+      }
+
+      &:nth-child(1) {
+        box-shadow:
+          0 20px 50px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(67, 233, 123, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      &:nth-child(2) {
+        box-shadow:
+          0 20px 50px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(240, 147, 251, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      &:nth-child(3) {
+        box-shadow:
+          0 20px 50px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(250, 112, 154, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      &:nth-child(4) {
+        box-shadow:
+          0 20px 50px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(86, 233, 183, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
       }
 
       .stat-value {
-        font-size: 2rem;
+        font-size: 26px;
         font-weight: 900;
-        background: linear-gradient(135deg, #667eea, #f093fb);
+        background: linear-gradient(135deg, #ffffff 0%, #c8c8c8 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        margin-bottom: 8px;
+        text-shadow: none;
+        font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+        margin-bottom: 10px;
       }
 
       .stat-label {
-        font-size: 0.85rem;
-        color: rgba(240, 147, 251, 0.9);
-        font-weight: 600;
-        letter-spacing: 1px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
       }
     }
   }
@@ -796,7 +1018,7 @@ onUnmounted(() => {
     .sources-title {
       font-size: 1.2rem;
       font-weight: 700;
-      color: rgba(102, 126, 234, 0.9);
+      color: rgba(67, 233, 123, 0.9);
       margin-bottom: 15px;
       text-align: center;
     }
@@ -810,49 +1032,78 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
         gap: 15px;
-        padding: 15px 20px;
-        background: rgba(15, 15, 35, 0.8);
-        border: 2px solid rgba(102, 126, 234, 0.3);
-        border-radius: 14px;
-        backdrop-filter: blur(10px);
-        transition: all 0.3s ease;
+        padding: 16px 20px;
+        background: rgba(15, 15, 30, 0.75);
+        backdrop-filter: blur(20px);
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(67, 233, 123, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 3px;
+          height: 100%;
+          border-radius: 18px 0 0 18px;
+          background: linear-gradient(180deg, #43e97b 0%, #fa709a 100%);
+        }
 
         &:hover {
-          border-color: rgba(102, 126, 234, 0.6);
-          transform: translateY(-2px);
-          box-shadow: 0 6px 25px rgba(102, 126, 234, 0.3);
+          transform: translateY(-8px) scale(1.02);
+          background: rgba(15, 15, 30, 0.9);
+          box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.6),
+            0 0 40px rgba(67, 233, 123, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .source-icon {
-          font-size: 2rem;
+          font-size: 1.8rem;
+          position: relative;
+          z-index: 1;
         }
 
         .source-info {
           flex: 1;
+          position: relative;
+          z-index: 1;
 
           .source-name {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: #fff;
             margin-bottom: 4px;
+            letter-spacing: 0.5px;
           }
 
           .source-rate {
-            font-size: 0.8rem;
-            color: rgba(240, 147, 251, 0.8);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
             font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
           }
         }
 
         .source-indicator {
-          width: 10px;
-          height: 10px;
+          width: 8px;
+          height: 8px;
           border-radius: 50%;
           background: #666;
+          position: relative;
+          z-index: 1;
 
           &.active {
             background: #43e97b;
-            box-shadow: 0 0 12px rgba(67, 233, 123, 0.8);
+            box-shadow: 0 0 15px rgba(67, 233, 123, 0.9);
             animation: indicator-pulse 2s infinite;
           }
         }

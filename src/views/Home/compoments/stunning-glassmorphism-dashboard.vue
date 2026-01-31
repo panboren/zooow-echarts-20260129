@@ -155,11 +155,126 @@ const generateTimeSeriesData = () => {
 // 生成饼图数据
 const generatePieData = () => {
   return [
-    { name: '产品A', value: Math.floor(Math.random() * 100 + 200), itemStyle: { color: '#667eea' } },
-    { name: '产品B', value: Math.floor(Math.random() * 100 + 150), itemStyle: { color: '#f093fb' } },
-    { name: '产品C', value: Math.floor(Math.random() * 100 + 100), itemStyle: { color: '#43e97b' } },
-    { name: '产品D', value: Math.floor(Math.random() * 100 + 80), itemStyle: { color: '#4facfe' } },
-    { name: '产品E', value: Math.floor(Math.random() * 100 + 50), itemStyle: { color: '#fee140' } }
+    {
+      name: '核心业务',
+      value: Math.floor(Math.random() * 100 + 200),
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.5)' },
+            { offset: 0.15, color: 'rgba(102, 126, 234, 0.6)' },
+            { offset: 0.3, color: 'rgba(118, 75, 162, 0.65)' },
+            { offset: 0.45, color: 'rgba(79, 172, 254, 0.62)' },
+            { offset: 0.6, color: 'rgba(240, 147, 251, 0.65)' },
+            { offset: 0.75, color: 'rgba(102, 126, 234, 0.68)' },
+            { offset: 0.85, color: 'rgba(118, 75, 162, 0.65)' },
+            { offset: 1, color: 'rgba(102, 126, 234, 0.62)' }
+          ]
+        },
+        shadowColor: 'rgba(102, 126, 234, 0.65)',
+        shadowBlur: 30
+      }
+    },
+    {
+      name: '增长引擎',
+      value: Math.floor(Math.random() * 100 + 150),
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.5)' },
+            { offset: 0.15, color: 'rgba(240, 147, 251, 0.6)' },
+            { offset: 0.3, color: 'rgba(245, 87, 108, 0.65)' },
+            { offset: 0.45, color: 'rgba(254, 225, 64, 0.62)' },
+            { offset: 0.6, color: 'rgba(255, 159, 67, 0.65)' },
+            { offset: 0.75, color: 'rgba(240, 147, 251, 0.68)' },
+            { offset: 0.85, color: 'rgba(245, 87, 108, 0.65)' },
+            { offset: 1, color: 'rgba(240, 147, 251, 0.62)' }
+          ]
+        },
+        shadowColor: 'rgba(245, 87, 108, 0.65)',
+        shadowBlur: 30
+      }
+    },
+    {
+      name: '创新实验',
+      value: Math.floor(Math.random() * 100 + 100),
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.5)' },
+            { offset: 0.15, color: 'rgba(79, 172, 254, 0.6)' },
+            { offset: 0.3, color: 'rgba(0, 242, 254, 0.65)' },
+            { offset: 0.45, color: 'rgba(67, 233, 123, 0.62)' },
+            { offset: 0.6, color: 'rgba(56, 249, 215, 0.65)' },
+            { offset: 0.75, color: 'rgba(79, 172, 254, 0.68)' },
+            { offset: 0.85, color: 'rgba(0, 242, 254, 0.65)' },
+            { offset: 1, color: 'rgba(79, 172, 254, 0.62)' }
+          ]
+        },
+        shadowColor: 'rgba(79, 172, 254, 0.65)',
+        shadowBlur: 30
+      }
+    },
+    {
+      name: '品牌影响',
+      value: Math.floor(Math.random() * 100 + 80),
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.5)' },
+            { offset: 0.15, color: 'rgba(67, 233, 123, 0.6)' },
+            { offset: 0.3, color: 'rgba(56, 249, 215, 0.65)' },
+            { offset: 0.45, color: 'rgba(254, 225, 64, 0.62)' },
+            { offset: 0.6, color: 'rgba(79, 172, 254, 0.65)' },
+            { offset: 0.75, color: 'rgba(67, 233, 123, 0.68)' },
+            { offset: 0.85, color: 'rgba(56, 249, 215, 0.65)' },
+            { offset: 1, color: 'rgba(67, 233, 123, 0.62)' }
+          ]
+        },
+        shadowColor: 'rgba(67, 233, 123, 0.65)',
+        shadowBlur: 30
+      }
+    },
+    {
+      name: '市场拓展',
+      value: Math.floor(Math.random() * 100 + 50),
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.5)' },
+            { offset: 0.15, color: 'rgba(254, 225, 64, 0.6)' },
+            { offset: 0.3, color: 'rgba(250, 112, 154, 0.65)' },
+            { offset: 0.45, color: 'rgba(255, 159, 67, 0.62)' },
+            { offset: 0.6, color: 'rgba(245, 87, 108, 0.65)' },
+            { offset: 0.75, color: 'rgba(254, 225, 64, 0.68)' },
+            { offset: 0.85, color: 'rgba(250, 112, 154, 0.65)' },
+            { offset: 1, color: 'rgba(254, 225, 64, 0.62)' }
+          ]
+        },
+        shadowColor: 'rgba(254, 225, 64, 0.65)',
+        shadowBlur: 30
+      }
+    }
   ]
 }
 
@@ -239,7 +354,22 @@ const mainChartOption = ref<EChartsOption>({
       type: 'line',
       smooth: true,
       data: [],
-      lineStyle: { width: 3, color: '#667eea' },
+      lineStyle: {
+        width: 4,
+        color: {
+          type: 'linear',
+          x: 0, y: 0, x2: 1, y2: 0,
+          colorStops: [
+            { offset: 0, color: '#667eea' },
+            { offset: 0.5, color: '#764ba2' },
+            { offset: 1, color: '#f093fb' }
+          ]
+        },
+        shadowColor: 'rgba(102, 126, 234, 0.7)',
+        shadowBlur: 20,
+        shadowOffsetX: 0,
+        shadowOffsetY: 8
+      },
       areaStyle: {
         color: {
           type: 'linear',
@@ -257,7 +387,22 @@ const mainChartOption = ref<EChartsOption>({
       type: 'line',
       smooth: true,
       data: [],
-      lineStyle: { width: 3, color: '#f093fb' },
+      lineStyle: {
+        width: 4,
+        color: {
+          type: 'linear',
+          x: 0, y: 0, x2: 1, y2: 0,
+          colorStops: [
+            { offset: 0, color: '#f093fb' },
+            { offset: 0.5, color: '#f5576c' },
+            { offset: 1, color: '#43e97b' }
+          ]
+        },
+        shadowColor: 'rgba(240, 147, 251, 0.7)',
+        shadowBlur: 20,
+        shadowOffsetX: 0,
+        shadowOffsetY: 8
+      },
       emphasis: { focus: 'series' }
     }
   ]
@@ -268,38 +413,185 @@ const pieChartOption = ref<EChartsOption>({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'item',
-    backgroundColor: 'rgba(10, 10, 25, 0.95)',
-    borderColor: 'rgba(102, 126, 234, 0.7)',
+    backgroundColor: 'rgba(15, 15, 35, 0.98)',
+    borderColor: 'rgba(255, 255, 255, 0.35)',
     borderWidth: 2,
-    borderRadius: 12,
-    textStyle: { color: '#ffffff', fontSize: 12, fontWeight: 600 },
-    extraCssText: 'backdrop-filter: blur(10px);'
+    borderRadius: 20,
+    padding: [22, 30],
+    textStyle: { color: '#ffffff', fontSize: 14, fontWeight: 'bold' },
+    formatter: (params) => {
+      const total = pieChartOption.value.series![0].data.reduce((sum: number, item: any) => sum + item.value, 0);
+      const percent = ((params.value / total) * 100).toFixed(2);
+      return `
+        <div style="padding: 8px;">
+          <div style="font-size: 18px; font-weight: 900; margin-bottom: 14px; 
+            background: linear-gradient(135deg, ${params.color}, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;">
+            ${params.name}
+          </div>
+          <div style="display: flex; justify-content: space-between; 
+            align-items: center; margin: 10px 0; padding: 10px; 
+            background: rgba(255,255,255,0.08); border-radius: 10px; 
+            border: 1px solid rgba(255,255,255,0.12);">
+            <span style="color: rgba(255,255,255,0.75);">数值</span>
+            <span style="font-weight: 900; color: #ffffff; margin-left: 20px; 
+              text-shadow: 0 0 12px ${params.color};">${params.value.toLocaleString()}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; 
+            align-items: center; margin: 10px 0; padding: 10px; 
+            background: rgba(255,255,255,0.08); border-radius: 10px; 
+            border: 1px solid rgba(255,255,255,0.12);">
+            <span style="color: rgba(255,255,255,0.75);">占比</span>
+            <span style="font-weight: 900; color: ${params.color}; margin-left: 20px; 
+              font-size: 18px; text-shadow: 0 0 15px ${params.color};">${percent}%</span>
+          </div>
+        </div>
+      `;
+    }
   },
   legend: {
-    orient: 'vertical',
-    right: 10,
-    top: 'center',
-    textStyle: { color: 'rgba(255, 255, 255, 0.8)', fontSize: 11 }
+    show: false
   },
   series: [
     {
       name: '分类',
       type: 'pie',
-      radius: ['40%', '70%'],
-      center: ['40%', '50%'],
-      data: [],
+      radius: ['25%', '68%'],
+      center: ['50%', '52%'],
+      avoidLabelOverlap: true,
+      itemStyle: {
+        borderRadius: 28,
+        borderColor: 'rgba(15, 15, 35, 0.9)',
+        borderWidth: 6,
+        shadowColor: 'rgba(0, 0, 0, 0.85)',
+        shadowBlur: 50,
+        shadowOffsetX: 12,
+        shadowOffsetY: 12
+      },
       label: {
-        show: true,
-        color: 'rgba(255, 255, 255, 0.9)',
-        fontSize: 11,
-        formatter: '{b}\n{d}%'
+        show: false,
+        position: 'center'
       },
       emphasis: {
+        label: {
+          show: true,
+          fontSize: 34,
+          fontWeight: '900',
+          color: '#ffffff',
+          formatter: '{b}\n{d}%',
+          textShadowBlur: 40,
+          textShadowColor: 'rgba(0, 0, 0, 0.95)',
+          textShadowOffsetX: 5,
+          textShadowOffsetY: 5,
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif'
+        },
         itemStyle: {
-          shadowBlur: 30,
-          shadowColor: 'rgba(255, 255, 255, 0.5)'
+          shadowBlur: 75,
+          shadowOffsetX: 25,
+          shadowOffsetY: 25,
+          shadowColor: 'rgba(0, 0, 0, 0.95)',
+          borderWidth: 6,
+          borderColor: 'rgba(255, 255, 255, 0.95)'
+        },
+        scale: true,
+        scaleSize: 14
+      },
+      labelLine: {
+        show: false
+      },
+      data: []
+    },
+    {
+      name: '水晶内核',
+      type: 'pie',
+      radius: ['12%', '18%'],
+      center: ['50%', '52%'],
+      silent: true,
+      itemStyle: {
+        borderRadius: 45,
+        borderColor: 'rgba(15, 15, 35, 0.98)',
+        borderWidth: 2.5,
+        opacity: 0.9,
+        shadowColor: 'rgba(102, 126, 234, 0.3)',
+        shadowBlur: 25
+      },
+      label: {
+        show: false
+      },
+      data: [
+        {
+          value: 1,
+          name: '',
+          itemStyle: {
+            color: {
+              type: 'radial',
+              x: 0.3,
+              y: 0.3,
+              r: 0.8,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.6)' },
+            { offset: 0.2, color: 'rgba(102, 126, 234, 0.5)' },
+            { offset: 0.4, color: 'rgba(118, 75, 162, 0.45)' },
+            { offset: 0.6, color: 'rgba(240, 147, 251, 0.4)' },
+            { offset: 0.8, color: 'rgba(118, 75, 162, 0.35)' },
+            { offset: 1, color: 'rgba(102, 126, 234, 0.3)' }
+          ]
+            },
+            shadowColor: 'rgba(255, 255, 255, 0.6)',
+            shadowBlur: 30
+          }
         }
-      }
+      ]
+    },
+    {
+      name: '外围光环1',
+      type: 'pie',
+      radius: ['70%', '75%'],
+      center: ['50%', '52%'],
+      silent: true,
+      itemStyle: {
+        borderRadius: 40,
+        borderColor: 'rgba(15, 15, 35, 0.95)',
+        borderWidth: 1.5,
+        opacity: 0.7
+      },
+      label: {
+        show: false
+      },
+      data: [
+        { value: 1, name: '', itemStyle: { color: 'rgba(102, 126, 234, 0.2)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(240, 147, 251, 0.2)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(245, 87, 108, 0.2)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(79, 172, 254, 0.2)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(67, 233, 123, 0.2)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(254, 225, 64, 0.2)' } }
+      ]
+    },
+    {
+      name: '外围光环2',
+      type: 'pie',
+      radius: ['77%', '80%'],
+      center: ['50%', '52%'],
+      silent: true,
+      itemStyle: {
+        borderRadius: 40,
+        borderColor: 'rgba(15, 15, 35, 0.95)',
+        borderWidth: 1,
+        opacity: 0.6
+      },
+      label: {
+        show: false
+      },
+      data: [
+        { value: 1, name: '', itemStyle: { color: 'rgba(240, 147, 251, 0.15)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(79, 172, 254, 0.15)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(102, 126, 234, 0.15)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(245, 87, 108, 0.15)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(67, 233, 123, 0.15)' } },
+        { value: 1, name: '', itemStyle: { color: 'rgba(254, 225, 64, 0.15)' } }
+      ]
     }
   ]
 })
@@ -346,35 +638,65 @@ const barChartOption = ref<EChartsOption>({
       name: '本期',
       type: 'bar',
       data: [],
+      barWidth: '50%',
       itemStyle: {
         color: {
           type: 'linear',
           x: 0, y: 0, x2: 0, y2: 1,
           colorStops: [
-            { offset: 0, color: 'rgba(102, 126, 234, 0.8)' },
-            { offset: 1, color: 'rgba(102, 126, 234, 0.4)' }
+            { offset: 0, color: 'rgba(102, 126, 234, 0.95)' },
+            { offset: 0.3, color: 'rgba(118, 75, 162, 0.85)' },
+            { offset: 0.6, color: 'rgba(79, 172, 254, 0.75)' },
+            { offset: 1, color: 'rgba(102, 126, 234, 0.5)' }
           ]
         },
-        borderRadius: [8, 8, 0, 0]
+        borderRadius: [12, 12, 4, 4],
+        shadowColor: 'rgba(102, 126, 234, 0.6)',
+        shadowBlur: 20,
+        shadowOffsetX: 0,
+        shadowOffsetY: 8
       },
-      emphasis: { focus: 'series' }
+      emphasis: {
+        focus: 'series',
+        itemStyle: {
+          shadowColor: 'rgba(102, 126, 234, 0.9)',
+          shadowBlur: 35,
+          shadowOffsetX: 0,
+          shadowOffsetY: 12
+        }
+      }
     },
     {
       name: '同期',
       type: 'bar',
       data: [],
+      barWidth: '50%',
       itemStyle: {
         color: {
           type: 'linear',
           x: 0, y: 0, x2: 0, y2: 1,
           colorStops: [
-            { offset: 0, color: 'rgba(240, 147, 251, 0.8)' },
-            { offset: 1, color: 'rgba(240, 147, 251, 0.4)' }
+            { offset: 0, color: 'rgba(240, 147, 251, 0.95)' },
+            { offset: 0.3, color: 'rgba(245, 87, 108, 0.85)' },
+            { offset: 0.6, color: 'rgba(254, 225, 64, 0.75)' },
+            { offset: 1, color: 'rgba(240, 147, 251, 0.5)' }
           ]
         },
-        borderRadius: [8, 8, 0, 0]
+        borderRadius: [12, 12, 4, 4],
+        shadowColor: 'rgba(240, 147, 251, 0.6)',
+        shadowBlur: 20,
+        shadowOffsetX: 0,
+        shadowOffsetY: 8
       },
-      emphasis: { focus: 'series' }
+      emphasis: {
+        focus: 'series',
+        itemStyle: {
+          shadowColor: 'rgba(240, 147, 251, 0.9)',
+          shadowBlur: 35,
+          shadowOffsetX: 0,
+          shadowOffsetY: 12
+        }
+      }
     }
   ]
 })
@@ -422,74 +744,347 @@ const gaugeChartOption = ref<EChartsOption>({
     {
       name: '完成率',
       type: 'gauge',
+      radius: '50%',
+      center: ['20%', '50%'],
+      startAngle: 200,
+      endAngle: -20,
       min: 0,
       max: 100,
-      radius: '65%',
-      center: ['20%', '50%'],
-      detail: {
-        formatter: '{value}%',
-        fontSize: 16,
-        color: '#667eea',
-        fontWeight: 'bold',
-        offsetCenter: [0, '70%']
-      },
-      title: { fontSize: 10, color: 'rgba(255, 255, 255, 0.8)', offsetCenter: [0, '95%'] },
-      axisLine: {
-        lineStyle: {
-          color: [[0.3, '#f5576c'], [0.7, '#fee140'], [1, '#43e97b']],
-          width: 10
+      splitNumber: 10,
+      progress: {
+        show: true,
+        roundCap: true,
+        width: 14,
+        itemStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              { offset: 0, color: '#667eea' },
+              { offset: 0.5, color: '#764ba2' },
+              { offset: 1, color: '#f5576c' }
+            ]
+          },
+          shadowColor: 'rgba(102, 126, 234, 0.5)',
+          shadowBlur: 10,
+          shadowOffsetX: 1,
+          shadowOffsetY: 1
         }
       },
-      pointer: { width: 5, length: '60%' },
-      data: [{ value: 0, name: '完成率' }]
+      pointer: {
+        icon: 'path://M12.8,0.7l12,40.1H8.3L12.8,0.7z',
+        length: '50%',
+        width: 8,
+        offsetCenter: [0, '-5%'],
+        itemStyle: {
+          color: 'auto',
+          shadowColor: 'rgba(0, 0, 0, 0.3)',
+          shadowBlur: 6,
+          shadowOffsetX: 1,
+          shadowOffsetY: 1
+        }
+      },
+      axisLine: {
+        roundCap: true,
+        lineStyle: {
+          width: 14,
+          color: [
+            [0.3, '#667eea'],
+            [0.7, '#4facfe'],
+            [1, '#f5576c']
+          ],
+          shadowColor: 'rgba(0, 0, 0, 0.15)',
+          shadowBlur: 6
+        }
+      },
+      axisTick: {
+        distance: -20,
+        length: 5,
+        lineStyle: {
+          color: '#ffffff',
+          width: 1
+        }
+      },
+      splitLine: {
+        distance: -20,
+        length: 12,
+        lineStyle: {
+          color: '#ffffff',
+          width: 1.5
+        }
+      },
+      axisLabel: {
+        color: '#ffffff',
+        distance: 35,
+        fontSize: 10,
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        formatter: function (value) {
+          if (value === 100) {
+            return '100';
+          }
+          return value.toFixed(0);
+        }
+      },
+      title: {
+        offsetCenter: [0, '90%'],
+        fontSize: 11,
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        textShadow: '0 1px 6px rgba(102, 126, 234, 0.3)'
+      },
+      detail: {
+        fontSize: 22,
+        offsetCenter: [0, '20%'],
+        valueAnimation: true,
+        formatter: function (value) {
+          return Math.round(value) + '%';
+        },
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        textShadow: '0 0 12px rgba(102, 126, 234, 0.5)'
+      },
+      data: [
+        {
+          value: 0,
+          name: '完成率'
+        }
+      ]
     },
     {
       name: '满意度',
       type: 'gauge',
+      radius: '50%',
+      center: ['50%', '50%'],
+      startAngle: 200,
+      endAngle: -20,
       min: 0,
       max: 100,
-      radius: '65%',
-      center: ['50%', '50%'],
-      detail: {
-        formatter: '{value}%',
-        fontSize: 16,
-        color: '#f093fb',
-        fontWeight: 'bold',
-        offsetCenter: [0, '70%']
-      },
-      title: { fontSize: 10, color: 'rgba(255, 255, 255, 0.8)', offsetCenter: [0, '95%'] },
-      axisLine: {
-        lineStyle: {
-          color: [[0.3, '#f5576c'], [0.7, '#fee140'], [1, '#43e97b']],
-          width: 10
+      splitNumber: 10,
+      progress: {
+        show: true,
+        roundCap: true,
+        width: 14,
+        itemStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              { offset: 0, color: '#f093fb' },
+              { offset: 0.5, color: '#f5576c' },
+              { offset: 1, color: '#fee140' }
+            ]
+          },
+          shadowColor: 'rgba(240, 147, 251, 0.5)',
+          shadowBlur: 10,
+          shadowOffsetX: 1,
+          shadowOffsetY: 1
         }
       },
-      pointer: { width: 5, length: '60%' },
-      data: [{ value: 0, name: '满意度' }]
+      pointer: {
+        icon: 'path://M12.8,0.7l12,40.1H8.3L12.8,0.7z',
+        length: '50%',
+        width: 8,
+        offsetCenter: [0, '-5%'],
+        itemStyle: {
+          color: 'auto',
+          shadowColor: 'rgba(0, 0, 0, 0.3)',
+          shadowBlur: 6,
+          shadowOffsetX: 1,
+          shadowOffsetY: 1
+        }
+      },
+      axisLine: {
+        roundCap: true,
+        lineStyle: {
+          width: 14,
+          color: [
+            [0.3, '#f093fb'],
+            [0.7, '#f5576c'],
+            [1, '#fee140']
+          ],
+          shadowColor: 'rgba(0, 0, 0, 0.15)',
+          shadowBlur: 6
+        }
+      },
+      axisTick: {
+        distance: -20,
+        length: 5,
+        lineStyle: {
+          color: '#ffffff',
+          width: 1
+        }
+      },
+      splitLine: {
+        distance: -20,
+        length: 12,
+        lineStyle: {
+          color: '#ffffff',
+          width: 1.5
+        }
+      },
+      axisLabel: {
+        color: '#ffffff',
+        distance: 35,
+        fontSize: 10,
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        formatter: function (value) {
+          if (value === 100) {
+            return '100';
+          }
+          return value.toFixed(0);
+        }
+      },
+      title: {
+        offsetCenter: [0, '90%'],
+        fontSize: 11,
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        textShadow: '0 1px 6px rgba(240, 147, 251, 0.3)'
+      },
+      detail: {
+        fontSize: 22,
+        offsetCenter: [0, '20%'],
+        valueAnimation: true,
+        formatter: function (value) {
+          return Math.round(value) + '%';
+        },
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        textShadow: '0 0 12px rgba(240, 147, 251, 0.5)'
+      },
+      data: [
+        {
+          value: 0,
+          name: '满意度'
+        }
+      ]
     },
     {
       name: '增长率',
       type: 'gauge',
+      radius: '50%',
+      center: ['80%', '50%'],
+      startAngle: 200,
+      endAngle: -20,
       min: 0,
       max: 100,
-      radius: '65%',
-      center: ['80%', '50%'],
-      detail: {
-        formatter: '{value}%',
-        fontSize: 16,
-        color: '#4facfe',
-        fontWeight: 'bold',
-        offsetCenter: [0, '70%']
-      },
-      title: { fontSize: 10, color: 'rgba(255, 255, 255, 0.8)', offsetCenter: [0, '95%'] },
-      axisLine: {
-        lineStyle: {
-          color: [[0.3, '#f5576c'], [0.7, '#fee140'], [1, '#43e97b']],
-          width: 10
+      splitNumber: 10,
+      progress: {
+        show: true,
+        roundCap: true,
+        width: 14,
+        itemStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              { offset: 0, color: '#4facfe' },
+              { offset: 0.5, color: '#00f2fe' },
+              { offset: 1, color: '#43e97b' }
+            ]
+          },
+          shadowColor: 'rgba(79, 172, 254, 0.5)',
+          shadowBlur: 10,
+          shadowOffsetX: 1,
+          shadowOffsetY: 1
         }
       },
-      pointer: { width: 5, length: '60%' },
-      data: [{ value: 0, name: '增长率' }]
+      pointer: {
+        icon: 'path://M12.8,0.7l12,40.1H8.3L12.8,0.7z',
+        length: '50%',
+        width: 8,
+        offsetCenter: [0, '-5%'],
+        itemStyle: {
+          color: 'auto',
+          shadowColor: 'rgba(0, 0, 0, 0.3)',
+          shadowBlur: 6,
+          shadowOffsetX: 1,
+          shadowOffsetY: 1
+        }
+      },
+      axisLine: {
+        roundCap: true,
+        lineStyle: {
+          width: 14,
+          color: [
+            [0.3, '#4facfe'],
+            [0.7, '#00f2fe'],
+            [1, '#43e97b']
+          ],
+          shadowColor: 'rgba(0, 0, 0, 0.15)',
+          shadowBlur: 6
+        }
+      },
+      axisTick: {
+        distance: -20,
+        length: 5,
+        lineStyle: {
+          color: '#ffffff',
+          width: 1
+        }
+      },
+      splitLine: {
+        distance: -20,
+        length: 12,
+        lineStyle: {
+          color: '#ffffff',
+          width: 1.5
+        }
+      },
+      axisLabel: {
+        color: '#ffffff',
+        distance: 35,
+        fontSize: 10,
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        formatter: function (value) {
+          if (value === 100) {
+            return '100';
+          }
+          return value.toFixed(0);
+        }
+      },
+      title: {
+        offsetCenter: [0, '90%'],
+        fontSize: 11,
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        textShadow: '0 1px 6px rgba(79, 172, 254, 0.3)'
+      },
+      detail: {
+        fontSize: 22,
+        offsetCenter: [0, '20%'],
+        valueAnimation: true,
+        formatter: function (value) {
+          return Math.round(value) + '%';
+        },
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        textShadow: '0 0 12px rgba(79, 172, 254, 0.5)'
+      },
+      data: [
+        {
+          value: 0,
+          name: '增长率'
+        }
+      ]
     }
   ]
 })
@@ -589,34 +1184,48 @@ const refreshGaugeData = () => {
 
 // 样式生成函数
 const getHaloStyle = (index: number) => {
-  const colors = ['rgba(102, 126, 234, 0.2)', 'rgba(240, 147, 251, 0.2)', 'rgba(67, 233, 123, 0.2)']
+  const colors = [
+    'rgba(102, 126, 234, 0.25)',
+    'rgba(240, 147, 251, 0.25)',
+    'rgba(67, 233, 123, 0.25)',
+    'rgba(79, 172, 254, 0.22)',
+    'rgba(250, 112, 154, 0.2)',
+    'rgba(56, 249, 215, 0.2)'
+  ]
   return {
-    background: `radial-gradient(circle, ${colors[index % 3]}, transparent 70%)`,
-    width: `${260 + index * 30}px`,
-    height: `${260 + index * 30}px`,
-    animationDelay: `${index * 0.2}s`,
-    animationDuration: `${14 + index * 0.3}s`
+    background: `radial-gradient(circle, ${colors[index % 6]}, transparent 70%)`,
+    width: `${280 + index * 35}px`,
+    height: `${280 + index * 35}px`,
+    animationDelay: `${index * 0.25}s`,
+    animationDuration: `${16 + index * 0.35}s`
   }
 }
 
 const getParticleStyle = (index: number) => {
-  const colors = ['rgba(102, 126, 234, 0.6)', 'rgba(240, 147, 251, 0.6)', 'rgba(67, 233, 123, 0.6)', 'rgba(79, 172, 254, 0.6)']
+  const colors = [
+    'rgba(102, 126, 234, 0.65)',
+    'rgba(240, 147, 251, 0.65)',
+    'rgba(67, 233, 123, 0.65)',
+    'rgba(79, 172, 254, 0.65)',
+    'rgba(250, 112, 154, 0.6)',
+    'rgba(56, 249, 215, 0.6)'
+  ]
   return {
     left: `${Math.random() * 100}%`,
     top: `${Math.random() * 100}%`,
-    background: colors[Math.floor(Math.random() * 4)],
-    width: `${2 + Math.random() * 2}px`,
-    height: `${2 + Math.random() * 2}px`,
-    animationDelay: `${Math.random() * 3}s`,
-    animationDuration: `${10 + Math.random() * 5}s`
+    background: colors[Math.floor(Math.random() * 6)],
+    width: `${2 + Math.random() * 3}px`,
+    height: `${2 + Math.random() * 3}px`,
+    animationDelay: `${Math.random() * 3.5}s`,
+    animationDuration: `${11 + Math.random() * 6}s`
   }
 }
 
 const getKpiStyle = (index: number) => {
   const colors = ['#667eea', '#f093fb', '#43e97b', '#4facfe']
   return {
-    borderColor: `${colors[index % 4]}40`,
-    boxShadow: `0 8px 32px ${colors[index % 4]}20`
+    borderColor: `${colors[index % 4]}50`,
+    boxShadow: `0 15px 45px ${colors[index % 4]}30, 0 0 25px ${colors[index % 4]}15`
   }
 }
 
@@ -771,11 +1380,11 @@ onUnmounted(() => {
       letter-spacing: 2px;
 
       .title-gradient {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 35%, #f093fb 70%, #43e97b 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        text-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
+        text-shadow: 0 0 50px rgba(102, 126, 234, 0.6), 0 0 100px rgba(240, 147, 251, 0.3);
       }
     }
 
@@ -788,11 +1397,12 @@ onUnmounted(() => {
     }
 
     .title-deco {
-      width: 200px;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #667eea, #f093fb, transparent);
+      width: 250px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #667eea, #f093fb, #43e97b, transparent);
       margin: 0 auto;
       border-radius: 2px;
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.5), 0 0 40px rgba(240, 147, 251, 0.3);
     }
   }
 
@@ -812,21 +1422,54 @@ onUnmounted(() => {
     margin-bottom: 20px;
 
     .kpi-card {
-      background: rgba(20, 20, 40, 0.6);
-      backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-top: 1px solid rgba(255, 255, 255, 0.4);
-      border-left: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 20px;
-      padding: 20px;
+      background: linear-gradient(145deg, rgba(30, 30, 50, 0.7) 0%, rgba(15, 15, 35, 0.85) 100%);
+      backdrop-filter: blur(30px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-top: 1px solid rgba(255, 255, 255, 0.5);
+      border-left: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 24px;
+      padding: 24px;
       display: flex;
       align-items: center;
       gap: 15px;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(102, 126, 234, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -50%;
+        right: -50%;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+        pointer-events: none;
+      }
 
       &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        transform: translateY(-8px) rotateX(2deg) rotateY(-1deg);
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.5),
+          0 0 50px rgba(102, 126, 234, 0.25),
+          inset 0 1px 0 rgba(255, 255, 255, 0.25),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+        border-color: rgba(255, 255, 255, 0.35);
       }
 
       .kpi-icon {
@@ -879,18 +1522,51 @@ onUnmounted(() => {
 
   /* 图表卡片 */
   .chart-card {
-    background: rgba(20, 20, 40, 0.6);
-    backdrop-filter: blur(20px) saturate(180%);
+    background: linear-gradient(145deg, rgba(30, 30, 50, 0.65) 0%, rgba(15, 15, 35, 0.8) 100%);
+    backdrop-filter: blur(30px) saturate(200%);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    border-left: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 20px;
-    padding: 20px;
-    transition: all 0.3s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.45);
+    border-left: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 24px;
+    padding: 24px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.35),
+      0 0 30px rgba(102, 126, 234, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      right: -40%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
     &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+      transform: translateY(-6px) rotateX(1.5deg);
+      box-shadow:
+        0 35px 70px rgba(0, 0, 0, 0.45),
+        0 0 50px rgba(102, 126, 234, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     .card-header {
@@ -911,18 +1587,32 @@ onUnmounted(() => {
         gap: 8px;
 
         .action-btn {
-          padding: 6px 12px;
-          background: rgba(102, 126, 234, 0.2);
+          padding: 8px 16px;
+          background: linear-gradient(145deg, rgba(102, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.2) 100%);
           border: 1px solid rgba(102, 126, 234, 0.4);
-          border-radius: 8px;
+          border-radius: 12px;
           color: rgba(255, 255, 255, 0.9);
           font-size: 0.8rem;
-          font-weight: 600;
+          font-weight: 700;
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow:
+            0 4px 15px rgba(102, 126, 234, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
           &:hover {
-            background: rgba(102, 126, 234, 0.4);
+            background: linear-gradient(145deg, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.35) 100%);
+            transform: translateY(-2px);
+            box-shadow:
+              0 8px 25px rgba(102, 126, 234, 0.35),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+          }
+
+          &:active {
+            transform: translateY(0);
+            box-shadow:
+              0 2px 10px rgba(102, 126, 234, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
           }
         }
       }
@@ -955,8 +1645,8 @@ onUnmounted(() => {
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
-    opacity: 0.4;
-    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.45;
+    transform: translate(-50%, -50%) scale(1.25);
   }
 }
 
@@ -966,13 +1656,13 @@ onUnmounted(() => {
     opacity: 0;
   }
   10% {
-    opacity: 0.7;
+    opacity: 0.75;
   }
   90% {
-    opacity: 0.7;
+    opacity: 0.75;
   }
   100% {
-    transform: translateY(-180px) translateX(100px) scale(0.2) rotate(720deg);
+    transform: translateY(-200px) translateX(120px) scale(0.15) rotate(900deg);
     opacity: 0;
   }
 }

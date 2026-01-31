@@ -10,7 +10,7 @@
     </div>
 
     <!-- 统计卡片 -->
-    <div v-if="show" class="stats-row">
+    <div  class="stats-row">
       <div class="stat-card stat-card-1">
         <div class="stat-icon">📊</div>
         <div class="stat-content">
@@ -42,223 +42,223 @@
     </div>
 
     <!-- 第一批：基础图表 -->
-    <div v-if="show" class="section">
+    <div  class="section">
       <h2 class="section-title">
         <span class="title-badge">01</span>
         基础图表系列
       </h2>
       <div class="row">
         <div class="chart-card">
-          <StunningPie />
+          <LazyChart :component="StunningPie" />
         </div>
         <div class="chart-card">
-          <StunningLine />
+          <LazyChart :component="StunningLine" />
         </div>
         <div class="chart-card">
-          <StunningBar />
+          <LazyChart :component="StunningBar" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningPiePremium />
+          <LazyChart :component="StunningPiePremium" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningPieMultilayer />
+          <LazyChart :component="StunningPieMultilayer" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningPieArtistic />
+          <LazyChart :component="StunningPieArtistic" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card">
-          <StunningPieGalaxy />
+          <LazyChart :component="StunningPieGalaxy" />
         </div>
         <div class="chart-card">
-          <StunningPieNature />
+          <LazyChart :component="StunningPieNature" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningPieCyber />
+          <LazyChart :component="StunningPieCyber" />
         </div>
       </div>
     </div>
 
     <!-- 第二批：高级图表 -->
-    <div v-if="show" class="section">
+    <div  class="section">
       <h2 class="section-title">
         <span class="title-badge">02</span>
         高级图表系列
       </h2>
       <div class="row">
         <div class="chart-card">
-          <StunningRadar />
+          <LazyChart :component="StunningRadar" />
         </div>
         <div class="chart-card">
-          <StunningScatter />
+          <LazyChart :component="StunningScatter" />
         </div>
         <div class="chart-card">
-          <StunningGauge />
+          <LazyChart :component="StunningGauge" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningBarArtistic />
+          <LazyChart :component="StunningBarArtistic" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningLineArtistic />
+          <LazyChart :component="StunningLineArtistic" />
         </div>
       </div>
     </div>
 
     <!-- 第三批：专业图表 -->
-    <div v-if="show" class="section">
+    <div  class="section">
       <h2 class="section-title">
         <span class="title-badge">03</span>
         专业图表系列
       </h2>
       <div class="row">
         <div class="chart-card">
-          <StunningFunnel />
+          <LazyChart :component="StunningFunnel" />
         </div>
         <div class="chart-card">
-          <StunningHeatmap />
+          <LazyChart :component="StunningHeatmap" />
         </div>
         <div class="chart-card">
-          <StunningGraph />
+          <LazyChart :component="StunningGraph" />
         </div>
       </div>
     </div>
 
     <!-- 第四批：树形图表 -->
-    <div v-if="show" class="section">
+    <div  class="section">
       <h2 class="section-title">
         <span class="title-badge">04</span>
         树形图表系列
       </h2>
       <div class="row">
         <div class="chart-card">
-          <StunningTreemap />
+          <LazyChart :component="StunningTreemap" />
         </div>
       </div>
     </div>
 
     <!-- 第五批：超酷炫图表 -->
-    <div v-if="show" class="section">
+    <div  class="section">
       <h2 class="section-title">
         <span class="title-badge">05</span>
         超酷炫图表系列
       </h2>
       <div class="row">
         <div class="chart-card">
-          <StunningLiquid />
+          <LazyChart :component="StunningLiquid" />
         </div>
         <div class="chart-card">
-          <StunningSunburst />
+          <LazyChart :component="StunningSunburst" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card">
-          <StunningSankey />
+          <LazyChart :component="StunningSankey" />
         </div>
         <div class="chart-card">
-          <StunningWordcloud />
+          <LazyChart :component="StunningWordcloud" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningRose />
+          <LazyChart :component="StunningRose" />
         </div>
       </div>
     </div>
 
     <!-- 第六批：全息宇宙系列 -->
-    <div v-if="show" class="section" >
+    <div  class="section" >
       <h2 class="section-title">
         <span class="title-badge">06</span>
         全息宇宙系列
       </h2>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningHolographic />
+          <LazyChart :component="StunningHolographic" />
         </div>
       </div>
     </div>
 
     <!-- 第七批：多层透明叠加系列 -->
-    <div v-if="show" class="section">
+    <div  class="section">
       <h2 class="section-title">
         <span class="title-badge">07</span>
         多层透明叠加系列
       </h2>
       <div class="row">
         <div class="chart-card">
-          <StunningLineMultilayer />
+          <LazyChart :component="StunningLineMultilayer" />
         </div>
         <div class="chart-card">
-          <StunningBarMultilayer />
+          <LazyChart :component="StunningBarMultilayer" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card">
-          <StunningPieMultilayerNew />
+          <LazyChart :component="StunningPieMultilayerNew" />
         </div>
         <div class="chart-card">
-          <StunningRadarMultilayer />
+          <LazyChart :component="StunningRadarMultilayer" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningHybridMultilayer />
+          <LazyChart :component="StunningHybridMultilayer" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningAreaMultilayer />
+          <LazyChart :component="StunningAreaMultilayer" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningGaugeMultilayer />
+          <LazyChart :component="StunningGaugeMultilayer" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningScatterMultilayer />
+          <LazyChart :component="StunningScatterMultilayer" />
         </div>
       </div>
     </div>
 
     <!-- 第八批：下一代图表系列 -->
-    <div v-if="show" class="section">
+    <div  class="section">
       <h2 class="section-title">
         <span class="title-badge">08</span>
         下一代图表系列
       </h2>
       <div class="row">
         <div class="chart-card full-width">
-          <Stunning3DDynamic />
+          <LazyChart :component="Stunning3DDynamic" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningTimelineExplorer />
+          <LazyChart :component="StunningTimelineExplorer" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningAIPrediction />
+          <LazyChart :component="StunningAIPrediction" />
         </div>
       </div>
-      <div class="row" v-if="show">
+      <div class="row" >
         <div class="chart-card full-width">
-          <StunningMultiDashboard />
+          <LazyChart :component="StunningMultiDashboard" />
         </div>
       </div>
     </div>
@@ -271,57 +271,57 @@
       </h2>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningHolographicTunnel />
+          <LazyChart :component="StunningHolographicTunnel" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningNeuralNetwork />
+          <LazyChart :component="StunningNeuralNetwork" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningQuantumEntanglement />
+          <LazyChart :component="StunningQuantumEntanglement" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningHolographicGlobe />
+          <LazyChart :component="StunningHolographicGlobe" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningNeuralMetaverse />
+          <LazyChart :component="StunningNeuralMetaverse" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningEnergyField />
+          <LazyChart :component="StunningEnergyField" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningDNAHelix />
+          <LazyChart :component="StunningDNAHelix" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningQuantumWave />
+          <LazyChart :component="StunningQuantumWave" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningHolographicCosmos />
+          <LazyChart :component="StunningHolographicCosmos" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningRealtimeDataflow />
+          <LazyChart :component="StunningRealtimeDataflow" />
         </div>
       </div>
       <div class="row">
         <div class="chart-card full-width">
-          <StunningGlassmorphismDashboard />
+          <LazyChart :component="StunningGlassmorphismDashboard" />
         </div>
       </div>
     </div>
@@ -337,55 +337,199 @@
 </template>
 
 <script setup>
-import StunningPie from './stunning-pie.vue';
-import StunningLine from './stunning-line.vue';
-import StunningBar from './stunning-bar.vue';
-import StunningPiePremium from './stunning-pie-premium.vue';
-import StunningPieMultilayer from './stunning-pie-multilayer.vue';
-import StunningPieArtistic from './stunning-pie-artistic.vue';
-import StunningPieGalaxy from './stunning-pie-galaxy.vue';
-import StunningPieNature from './stunning-pie-nature.vue';
-import StunningPieCyber from './stunning-pie-cyber.vue';
-import StunningBarArtistic from './stunning-bar-artistic.vue';
-import StunningLineArtistic from './stunning-line-artistic.vue';
-import StunningRadar from './stunning-radar.vue';
-import StunningScatter from './stunning-scatter.vue';
-import StunningGauge from './stunning-gauge.vue';
-import StunningFunnel from './stunning-funnel.vue';
-import StunningHeatmap from './stunning-heatmap.vue';
-import Stunning3DDynamic from './stunning-3d-dynamic.vue';
-import StunningTimelineExplorer from './stunning-timeline-explorer.vue';
-import StunningAIPrediction from './stunning-ai-prediction.vue';
-import StunningMultiDashboard from './stunning-multi-dashboard.vue';
-import StunningGraph from './stunning-graph.vue';
-import StunningTreemap from './stunning-treemap.vue';
-import StunningLiquid from './stunning-liquid.vue';
-import StunningSunburst from './stunning-sunburst.vue';
-import StunningSankey from './stunning-sankey.vue';
-import StunningWordcloud from './stunning-wordcloud.vue';
-import StunningRose from './stunning-rose.vue';
-import StunningHolographic from './stunning-holographic.vue';
-import StunningLineMultilayer from './stunning-line-multilayer.vue';
-import StunningBarMultilayer from './stunning-bar-multilayer.vue';
-import StunningHybridMultilayer from './stunning-hybrid-multilayer.vue';
-import StunningPieMultilayerNew from './stunning-pie-multilayer-new.vue';
-import StunningRadarMultilayer from './stunning-radar-multilayer.vue';
-import StunningAreaMultilayer from './stunning-area-multilayer.vue';
-import StunningGaugeMultilayer from './stunning-gauge-multilayer.vue';
-import StunningScatterMultilayer from './stunning-scatter-multilayer.vue';
-import StunningHolographicTunnel from './stunning-holographic-tunnel.vue';
-import StunningNeuralNetwork from './stunning-neural-network.vue';
-import StunningQuantumEntanglement from './stunning-quantum-entanglement.vue';
-import StunningHolographicGlobe from './stunning-holographic-globe.vue';
-import StunningNeuralMetaverse from './stunning-neural-metaverse.vue';
-import StunningEnergyField from './stunning-energy-field.vue';
-import StunningDNAHelix from './stunning-dna-helix.vue';
-import StunningQuantumWave from './stunning-quantum-wave.vue';
-import StunningHolographicCosmos from './stunning-holographic-cosmos.vue';
-import StunningRealtimeDataflow from './stunning-realtime-dataflow.vue';
-import StunningGlassmorphismDashboard from './stunning-glassmorphism-dashboard.vue';
+import { defineAsyncComponent } from 'vue'
+import LazyChart from '@/components/LazyChart.vue'
 
-let show = ref(false)
+// 使用 defineAsyncComponent 懒加载所有图表组件
+const StunningPie = defineAsyncComponent({
+  loader: () => import('./stunning-pie.vue'),
+  delay: 200,
+  timeout: 30000
+})
+const StunningLine = defineAsyncComponent({
+  loader: () => import('./stunning-line.vue'),
+  delay: 200
+})
+const StunningBar = defineAsyncComponent({
+  loader: () => import('./stunning-bar.vue'),
+  delay: 200
+})
+const StunningPiePremium = defineAsyncComponent({
+  loader: () => import('./stunning-pie-premium.vue'),
+  delay: 200
+})
+const StunningPieMultilayer = defineAsyncComponent({
+  loader: () => import('./stunning-pie-multilayer.vue'),
+  delay: 200
+})
+const StunningPieArtistic = defineAsyncComponent({
+  loader: () => import('./stunning-pie-artistic.vue'),
+  delay: 200
+})
+const StunningPieGalaxy = defineAsyncComponent({
+  loader: () => import('./stunning-pie-galaxy.vue'),
+  delay: 200
+})
+const StunningPieNature = defineAsyncComponent({
+  loader: () => import('./stunning-pie-nature.vue'),
+  delay: 200
+})
+const StunningPieCyber = defineAsyncComponent({
+  loader: () => import('./stunning-pie-cyber.vue'),
+  delay: 200
+})
+const StunningBarArtistic = defineAsyncComponent({
+  loader: () => import('./stunning-bar-artistic.vue'),
+  delay: 200
+})
+const StunningLineArtistic = defineAsyncComponent({
+  loader: () => import('./stunning-line-artistic.vue'),
+  delay: 200
+})
+const StunningRadar = defineAsyncComponent({
+  loader: () => import('./stunning-radar.vue'),
+  delay: 200
+})
+const StunningScatter = defineAsyncComponent({
+  loader: () => import('./stunning-scatter.vue'),
+  delay: 200
+})
+const StunningGauge = defineAsyncComponent({
+  loader: () => import('./stunning-gauge.vue'),
+  delay: 200
+})
+const StunningFunnel = defineAsyncComponent({
+  loader: () => import('./stunning-funnel.vue'),
+  delay: 200
+})
+const StunningHeatmap = defineAsyncComponent({
+  loader: () => import('./stunning-heatmap.vue'),
+  delay: 200
+})
+const Stunning3DDynamic = defineAsyncComponent({
+  loader: () => import('./stunning-3d-dynamic.vue'),
+  delay: 200
+})
+const StunningTimelineExplorer = defineAsyncComponent({
+  loader: () => import('./stunning-timeline-explorer.vue'),
+  delay: 200
+})
+const StunningAIPrediction = defineAsyncComponent({
+  loader: () => import('./stunning-ai-prediction.vue'),
+  delay: 200
+})
+const StunningMultiDashboard = defineAsyncComponent({
+  loader: () => import('./stunning-multi-dashboard.vue'),
+  delay: 200
+})
+const StunningGraph = defineAsyncComponent({
+  loader: () => import('./stunning-graph.vue'),
+  delay: 200
+})
+const StunningTreemap = defineAsyncComponent({
+  loader: () => import('./stunning-treemap.vue'),
+  delay: 200
+})
+const StunningLiquid = defineAsyncComponent({
+  loader: () => import('./stunning-liquid.vue'),
+  delay: 200
+})
+const StunningSunburst = defineAsyncComponent({
+  loader: () => import('./stunning-sunburst.vue'),
+  delay: 200
+})
+const StunningSankey = defineAsyncComponent({
+  loader: () => import('./stunning-sankey.vue'),
+  delay: 200
+})
+const StunningWordcloud = defineAsyncComponent({
+  loader: () => import('./stunning-wordcloud.vue'),
+  delay: 200
+})
+const StunningRose = defineAsyncComponent({
+  loader: () => import('./stunning-rose.vue'),
+  delay: 200
+})
+const StunningHolographic = defineAsyncComponent({
+  loader: () => import('./stunning-holographic.vue'),
+  delay: 200
+})
+const StunningLineMultilayer = defineAsyncComponent({
+  loader: () => import('./stunning-line-multilayer.vue'),
+  delay: 200
+})
+const StunningBarMultilayer = defineAsyncComponent({
+  loader: () => import('./stunning-bar-multilayer.vue'),
+  delay: 200
+})
+const StunningHybridMultilayer = defineAsyncComponent({
+  loader: () => import('./stunning-hybrid-multilayer.vue'),
+  delay: 200
+})
+const StunningPieMultilayerNew = defineAsyncComponent({
+  loader: () => import('./stunning-pie-multilayer-new.vue'),
+  delay: 200
+})
+const StunningRadarMultilayer = defineAsyncComponent({
+  loader: () => import('./stunning-radar-multilayer.vue'),
+  delay: 200
+})
+const StunningAreaMultilayer = defineAsyncComponent({
+  loader: () => import('./stunning-area-multilayer.vue'),
+  delay: 200
+})
+const StunningGaugeMultilayer = defineAsyncComponent({
+  loader: () => import('./stunning-gauge-multilayer.vue'),
+  delay: 200
+})
+const StunningScatterMultilayer = defineAsyncComponent({
+  loader: () => import('./stunning-scatter-multilayer.vue'),
+  delay: 200
+})
+const StunningHolographicTunnel = defineAsyncComponent({
+  loader: () => import('./stunning-holographic-tunnel.vue'),
+  delay: 200
+})
+const StunningNeuralNetwork = defineAsyncComponent({
+  loader: () => import('./stunning-neural-network.vue'),
+  delay: 200
+})
+const StunningQuantumEntanglement = defineAsyncComponent({
+  loader: () => import('./stunning-quantum-entanglement.vue'),
+  delay: 200
+})
+const StunningHolographicGlobe = defineAsyncComponent({
+  loader: () => import('./stunning-holographic-globe.vue'),
+  delay: 200
+})
+const StunningNeuralMetaverse = defineAsyncComponent({
+  loader: () => import('./stunning-neural-metaverse.vue'),
+  delay: 200
+})
+const StunningEnergyField = defineAsyncComponent({
+  loader: () => import('./stunning-energy-field.vue'),
+  delay: 200
+})
+const StunningDNAHelix = defineAsyncComponent({
+  loader: () => import('./stunning-dna-helix.vue'),
+  delay: 200
+})
+const StunningQuantumWave = defineAsyncComponent({
+  loader: () => import('./stunning-quantum-wave.vue'),
+  delay: 200
+})
+const StunningHolographicCosmos = defineAsyncComponent({
+  loader: () => import('./stunning-holographic-cosmos.vue'),
+  delay: 200
+})
+const StunningRealtimeDataflow = defineAsyncComponent({
+  loader: () => import('./stunning-realtime-dataflow.vue'),
+  delay: 200
+})
+const StunningGlassmorphismDashboard = defineAsyncComponent({
+  loader: () => import('./stunning-glassmorphism-dashboard.vue'),
+  delay: 200
+})
 </script>
 
 <style scoped>
@@ -687,6 +831,91 @@ let show = ref(false)
 
   .chart-card.full-width {
     min-height: 650px;
+  }
+}
+
+/* 骨架屏样式 */
+.chart-skeleton {
+  width: 100%;
+  height: 100%;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(15, 15, 35, 0.9) 100%);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-animation {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.skeleton-animation::before,
+.skeleton-animation::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.skeleton-animation::before {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-animation::after {
+  width: 80px;
+  height: 80px;
+  border: 3px solid rgba(102, 126, 234, 0.3);
+  border-top-color: #667eea;
+  animation: skeleton-spin 1s linear infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.7;
+  }
+}
+
+@keyframes skeleton-spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.skeleton-text {
+  font-size: 16px;
+  color: rgba(102, 126, 234, 0.8);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: skeleton-fade 2s ease-in-out infinite;
+}
+
+@keyframes skeleton-fade {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
   }
 }
 </style>

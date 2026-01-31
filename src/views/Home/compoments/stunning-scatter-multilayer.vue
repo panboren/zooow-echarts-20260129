@@ -165,35 +165,137 @@ const scatterData = generateScatterData()
 
 // 图表配置
 const chartOption = computed(() => {
+  // 定义8层透明渐变配色方案
+  const colorThemes = [
+    // 聚类A - 紫色系
+    {
+      baseColor: '102, 126, 234',
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
+        { offset: 0.15, color: 'rgba(102, 126, 234, 0.75)' },
+        { offset: 0.30, color: 'rgba(118, 75, 162, 0.80)' },
+        { offset: 0.45, color: 'rgba(240, 147, 251, 0.73)' },
+        { offset: 0.60, color: 'rgba(102, 126, 234, 0.77)' },
+        { offset: 0.75, color: 'rgba(118, 75, 162, 0.81)' },
+        { offset: 0.88, color: 'rgba(102, 126, 234, 0.74)' },
+        { offset: 1, color: 'rgba(118, 75, 162, 0.68)' }
+      ],
+      shadowColor: 'rgba(102, 126, 234, 0.9)',
+      borderColor: 'rgba(255, 255, 255, 0.55)'
+    },
+    // 聚类B - 粉色系
+    {
+      baseColor: '240, 147, 251',
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
+        { offset: 0.15, color: 'rgba(240, 147, 251, 0.75)' },
+        { offset: 0.30, color: 'rgba(245, 87, 108, 0.80)' },
+        { offset: 0.45, color: 'rgba(254, 225, 64, 0.73)' },
+        { offset: 0.60, color: 'rgba(255, 159, 67, 0.77)' },
+        { offset: 0.75, color: 'rgba(240, 147, 251, 0.81)' },
+        { offset: 0.88, color: 'rgba(245, 87, 108, 0.74)' },
+        { offset: 1, color: 'rgba(240, 147, 251, 0.68)' }
+      ],
+      shadowColor: 'rgba(240, 147, 251, 0.9)',
+      borderColor: 'rgba(255, 255, 255, 0.55)'
+    },
+    // 聚类C - 绿色系
+    {
+      baseColor: '67, 233, 123',
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
+        { offset: 0.15, color: 'rgba(67, 233, 123, 0.75)' },
+        { offset: 0.30, color: 'rgba(56, 249, 215, 0.80)' },
+        { offset: 0.45, color: 'rgba(79, 172, 254, 0.73)' },
+        { offset: 0.60, color: 'rgba(0, 242, 254, 0.77)' },
+        { offset: 0.75, color: 'rgba(67, 233, 123, 0.81)' },
+        { offset: 0.88, color: 'rgba(56, 249, 215, 0.74)' },
+        { offset: 1, color: 'rgba(67, 233, 123, 0.68)' }
+      ],
+      shadowColor: 'rgba(67, 233, 123, 0.9)',
+      borderColor: 'rgba(255, 255, 255, 0.60)'
+    },
+    // 聚类D - 青色系
+    {
+      baseColor: '79, 172, 254',
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
+        { offset: 0.15, color: 'rgba(79, 172, 254, 0.75)' },
+        { offset: 0.30, color: 'rgba(0, 242, 254, 0.80)' },
+        { offset: 0.45, color: 'rgba(67, 233, 123, 0.73)' },
+        { offset: 0.60, color: 'rgba(56, 249, 215, 0.77)' },
+        { offset: 0.75, color: 'rgba(79, 172, 254, 0.81)' },
+        { offset: 0.88, color: 'rgba(0, 242, 254, 0.74)' },
+        { offset: 1, color: 'rgba(79, 172, 254, 0.68)' }
+      ],
+      shadowColor: 'rgba(79, 172, 254, 0.9)',
+      borderColor: 'rgba(255, 255, 255, 0.60)'
+    },
+    // 聚类E - 金色系
+    {
+      baseColor: '254, 225, 64',
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
+        { offset: 0.15, color: 'rgba(254, 225, 64, 0.75)' },
+        { offset: 0.30, color: 'rgba(255, 159, 67, 0.80)' },
+        { offset: 0.45, color: 'rgba(250, 112, 154, 0.73)' },
+        { offset: 0.60, color: 'rgba(245, 87, 108, 0.77)' },
+        { offset: 0.75, color: 'rgba(254, 225, 64, 0.81)' },
+        { offset: 0.88, color: 'rgba(255, 159, 67, 0.74)' },
+        { offset: 1, color: 'rgba(254, 225, 64, 0.68)' }
+      ],
+      shadowColor: 'rgba(254, 225, 64, 0.9)',
+      borderColor: 'rgba(255, 255, 255, 0.65)'
+    }
+  ]
+
   return {
     backgroundColor: 'transparent',
     tooltip: {
       trigger: 'item',
       formatter: (params: any) => {
-        return `(${params.data[0]}, ${params.data[1]})`
+        const theme = colorThemes[params.seriesIndex]
+        return `
+          <div style="padding: 8px;">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 10px; 
+              background: linear-gradient(135deg, ${theme.shadowColor}, #ffffff);
+              -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+              ${params.seriesName}
+            </div>
+            <div style="display: flex; justify-content: space-between; 
+              align-items: center; padding: 10px 12px; 
+              background: rgba(${theme.baseColor}, 0.15); border-radius: 8px;
+              border: 1px solid rgba(${theme.baseColor}, 0.35);">
+              <span style="color: rgba(255,255,255,0.75); font-weight: 600;">坐标</span>
+              <span style="font-weight: 700; color: ${theme.shadowColor};">(${params.data[0]}, ${params.data[1]})</span>
+            </div>
+          </div>
+        `
       },
-      backgroundColor: 'rgba(26, 26, 46, 0.95)',
-      borderColor: 'rgba(102, 126, 234, 0.5)',
-      borderWidth: 1,
-      padding: [12, 16],
+      backgroundColor: 'rgba(26, 26, 46, 0.98)',
+      borderColor: 'rgba(102, 126, 234, 0.6)',
+      borderWidth: 2,
+      borderRadius: 16,
+      padding: [16, 20],
       textStyle: {
         color: '#ffffff',
-        fontSize: 14
+        fontSize: 13
       },
-      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0,0,0,0.4);'
+      extraCssText: 'backdrop-filter: blur(12px); box-shadow: 0 12px 45px rgba(0,0,0,0.5);'
     },
     legend: {
       orient: 'horizontal',
       top: '2%',
       left: 'center',
       textStyle: {
-        color: 'rgba(255, 255, 255, 0.8)',
-        fontSize: 12,
+        color: 'rgba(255, 255, 255, 0.9)',
+        fontSize: 13,
+        fontWeight: 600,
         fontFamily: 'system-ui, -apple-system, sans-serif'
       },
-      itemGap: 20,
-      itemWidth: 12,
-      itemHeight: 12,
+      itemGap: 22,
+      itemWidth: 14,
+      itemHeight: 14,
       icon: 'circle'
     },
     grid: {
@@ -209,24 +311,24 @@ const chartOption = computed(() => {
       nameLocation: 'middle',
       nameGap: 30,
       nameTextStyle: {
-        color: 'rgba(255, 255, 255, 0.8)',
+        color: 'rgba(255, 255, 255, 0.85)',
         fontSize: 14,
         fontWeight: 'bold'
       },
       axisLine: {
         lineStyle: {
           color: 'rgba(102, 126, 234, 0.5)',
-          width: 1
+          width: 1.5
         }
       },
       axisLabel: {
-        color: 'rgba(255, 255, 255, 0.75)',
+        color: 'rgba(255, 255, 255, 0.8)',
         fontSize: 12,
         fontFamily: 'SF Mono, Monaco, monospace'
       },
       splitLine: {
         lineStyle: {
-          color: 'rgba(102, 126, 234, 0.15)',
+          color: 'rgba(102, 126, 234, 0.18)',
           type: 'dashed',
           width: 1
         }
@@ -238,216 +340,83 @@ const chartOption = computed(() => {
       nameLocation: 'middle',
       nameGap: 50,
       nameTextStyle: {
-        color: 'rgba(255, 255, 255, 0.8)',
+        color: 'rgba(255, 255, 255, 0.85)',
         fontSize: 14,
         fontWeight: 'bold'
       },
       axisLine: {
         lineStyle: {
           color: 'rgba(102, 126, 234, 0.5)',
-          width: 1
+          width: 1.5
         }
       },
       axisLabel: {
-        color: 'rgba(255, 255, 255, 0.75)',
+        color: 'rgba(255, 255, 255, 0.8)',
         fontSize: 12,
         fontFamily: 'SF Mono, Monaco, monospace'
       },
       splitLine: {
         lineStyle: {
-          color: 'rgba(102, 126, 234, 0.15)',
+          color: 'rgba(102, 126, 234, 0.18)',
           type: 'dashed',
           width: 1
         }
       }
     },
-    series: [
-      // 第1层：基础散点
-      {
-        name: '聚类 A',
-        type: 'scatter',
-        symbolSize: 8,
-        data: scatterData.data1,
+    series: colorThemes.map((theme, index) => {
+      const isEffectScatter = index >= 2
+      const dataKey = `data${index + 1}` as keyof typeof scatterData
+      const baseSize = 8 + index * 2.5
+
+      return {
+        name: `聚类 ${['A', 'B', 'C', 'D', 'E'][index]}`,
+        type: isEffectScatter ? 'effectScatter' : 'scatter',
+        symbolSize: baseSize,
+        data: scatterData[dataKey],
         itemStyle: {
           color: {
             type: 'radial',
             x: 0.5,
             y: 0.5,
             r: 0.5,
-            colorStops: [
-              { offset: 0, color: 'rgba(102, 126, 234, 0.9)' },
-              { offset: 1, color: 'rgba(102, 126, 234, 0.3)' }
-            ]
+            colorStops: theme.stops
           },
-          borderColor: 'rgba(255, 255, 255, 0.5)',
-          borderWidth: 1,
-          shadowBlur: 15,
-          shadowColor: 'rgba(102, 126, 234, 0.4)'
-        },
-        emphasis: {
-          itemStyle: {
-            color: 'rgba(102, 126, 234, 1)',
-            borderColor: '#ffffff',
-            borderWidth: 2,
-            shadowBlur: 25,
-            shadowColor: 'rgba(102, 126, 234, 0.6)'
-          },
-          scale: true,
-          scaleSize: 1.3
-        }
-      },
-      // 第2层：次要散点
-      {
-        name: '聚类 B',
-        type: 'scatter',
-        symbolSize: 10,
-        data: scatterData.data2,
-        itemStyle: {
-          color: {
-            type: 'radial',
-            x: 0.5,
-            y: 0.5,
-            r: 0.5,
-            colorStops: [
-              { offset: 0, color: 'rgba(240, 147, 251, 0.9)' },
-              { offset: 1, color: 'rgba(240, 147, 251, 0.3)' }
-            ]
-          },
-          borderColor: 'rgba(255, 255, 255, 0.5)',
-          borderWidth: 1,
-          shadowBlur: 18,
-          shadowColor: 'rgba(240, 147, 251, 0.45)'
-        },
-        emphasis: {
-          itemStyle: {
-            color: 'rgba(240, 147, 251, 1)',
-            borderColor: '#ffffff',
-            borderWidth: 2,
-            shadowBlur: 30,
-            shadowColor: 'rgba(240, 147, 251, 0.65)'
-          },
-          scale: true,
-          scaleSize: 1.3
-        }
-      },
-      // 第3层：活跃散点
-      {
-        name: '聚类 C',
-        type: 'effectScatter',
-        symbolSize: 12,
-        data: scatterData.data3,
-        itemStyle: {
-          color: {
-            type: 'radial',
-            x: 0.5,
-            y: 0.5,
-            r: 0.5,
-            colorStops: [
-              { offset: 0, color: 'rgba(67, 233, 123, 0.95)' },
-              { offset: 1, color: 'rgba(67, 233, 123, 0.35)' }
-            ]
-          },
-          borderColor: 'rgba(255, 255, 255, 0.6)',
+          borderColor: theme.borderColor,
           borderWidth: 1.5,
-          shadowBlur: 20,
-          shadowColor: 'rgba(67, 233, 123, 0.5)'
+          shadowBlur: 25 + index * 6,
+          shadowColor: theme.shadowColor
         },
-        rippleEffect: {
-          brushType: 'stroke',
-          scale: 2.5,
-          period: 3
-        },
+        ...(isEffectScatter && {
+          rippleEffect: {
+            brushType: 'stroke',
+            scale: 2.5 + index * 0.3,
+            period: 3 + index * 0.4
+          }
+        }),
         emphasis: {
           itemStyle: {
-            color: 'rgba(67, 233, 123, 1)',
-            borderColor: '#ffffff',
-            borderWidth: 2,
-            shadowBlur: 35,
-            shadowColor: 'rgba(67, 233, 123, 0.7)'
-          },
-          scale: true,
-          scaleSize: 1.3
-        }
-      },
-      // 第4层：热门散点
-      {
-        name: '聚类 D',
-        type: 'effectScatter',
-        symbolSize: 14,
-        data: scatterData.data4,
-        itemStyle: {
-          color: {
-            type: 'radial',
-            x: 0.5,
-            y: 0.5,
-            r: 0.5,
-            colorStops: [
-              { offset: 0, color: 'rgba(79, 172, 254, 0.95)' },
-              { offset: 1, color: 'rgba(79, 172, 254, 0.35)' }
-            ]
-          },
-          borderColor: 'rgba(255, 255, 255, 0.6)',
-          borderWidth: 1.5,
-          shadowBlur: 22,
-          shadowColor: 'rgba(79, 172, 254, 0.55)'
-        },
-        rippleEffect: {
-          brushType: 'stroke',
-          scale: 2.8,
-          period: 3.5
-        },
-        emphasis: {
-          itemStyle: {
-            color: 'rgba(79, 172, 254, 1)',
-            borderColor: '#ffffff',
-            borderWidth: 2,
-            shadowBlur: 38,
-            shadowColor: 'rgba(79, 172, 254, 0.75)'
-          },
-          scale: true,
-          scaleSize: 1.3
-        }
-      },
-      // 第5层：核心散点
-      {
-        name: '聚类 E',
-        type: 'effectScatter',
-        symbolSize: 16,
-        data: scatterData.data5,
-        itemStyle: {
-          color: {
-            type: 'radial',
-            x: 0.5,
-            y: 0.5,
-            r: 0.5,
-            colorStops: [
-              { offset: 0, color: 'rgba(254, 225, 64, 1)' },
-              { offset: 1, color: 'rgba(255, 159, 67, 0.4)' }
-            ]
-          },
-          borderColor: 'rgba(255, 255, 255, 0.7)',
-          borderWidth: 2,
-          shadowBlur: 25,
-          shadowColor: 'rgba(254, 225, 64, 0.6)'
-        },
-        rippleEffect: {
-          brushType: 'stroke',
-          scale: 3,
-          period: 4
-        },
-        emphasis: {
-          itemStyle: {
-            color: 'rgba(254, 225, 64, 1)',
+            color: {
+              type: 'radial',
+              x: 0.5,
+              y: 0.5,
+              r: 0.5,
+              colorStops: [
+                { offset: 0, color: 'rgba(255, 255, 255, 0.98)' },
+                { offset: 0.3, color: theme.shadowColor.replace('0.9', '0.95)') },
+                { offset: 0.6, color: theme.shadowColor.replace('0.9', '0.88)') },
+                { offset: 1, color: theme.shadowColor.replace('0.9', '0.80)') }
+              ]
+            },
             borderColor: '#ffffff',
             borderWidth: 2.5,
-            shadowBlur: 40,
-            shadowColor: 'rgba(254, 225, 64, 0.8)'
+            shadowBlur: 45 + index * 8,
+            shadowColor: theme.shadowColor
           },
           scale: true,
-          scaleSize: 1.3
+          scaleSize: 1.35
         }
       }
-    ]
+    })
   }
 })
 

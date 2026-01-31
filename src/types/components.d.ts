@@ -36,6 +36,7 @@ declare module 'vue' {
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
     ImagePreview: typeof import('./../components/ImagePreview/index.vue')['default']
     InfiniteScroll: typeof import('./../components/InfiniteScroll/index.vue')['default']
+    LazyChart: typeof import('./../components/LazyChart.vue')['default']
     OptimizedImage: typeof import('./../components/OptimizedImage/OptimizedImage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

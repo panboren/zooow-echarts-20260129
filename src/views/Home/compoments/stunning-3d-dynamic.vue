@@ -146,20 +146,85 @@ const avgSpeed = ref('56.8 ms')
 // 生成多层数据
 const generate3DData = () => {
   const categories = ['Q1', 'Q2', 'Q3', 'Q4', 'Q1+1', 'Q2+1', 'Q3+1', 'Q4+1']
-  const layers = 6
+  const layers = 8
 
   const series: any[] = []
 
+  // 定义颜色主题 - 每个层级使用独特的颜色方案
+  const colorThemes = [
+    // 紫色主题 - 层级1-2
+    {
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.60)' },
+        { offset: 0.12, color: 'rgba(102, 126, 234, 0.70)' },
+        { offset: 0.28, color: 'rgba(118, 75, 162, 0.75)' },
+        { offset: 0.42, color: 'rgba(240, 147, 251, 0.68)' },
+        { offset: 0.58, color: 'rgba(102, 126, 234, 0.72)' },
+        { offset: 0.72, color: 'rgba(118, 75, 162, 0.76)' },
+        { offset: 0.86, color: 'rgba(102, 126, 234, 0.70)' },
+        { offset: 1, color: 'rgba(118, 75, 162, 0.65)' }
+      ]
+    },
+    // 粉色主题 - 层级3-4
+    {
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.60)' },
+        { offset: 0.12, color: 'rgba(240, 147, 251, 0.70)' },
+        { offset: 0.28, color: 'rgba(245, 87, 108, 0.75)' },
+        { offset: 0.42, color: 'rgba(254, 225, 64, 0.68)' },
+        { offset: 0.58, color: 'rgba(255, 159, 67, 0.72)' },
+        { offset: 0.72, color: 'rgba(240, 147, 251, 0.76)' },
+        { offset: 0.86, color: 'rgba(245, 87, 108, 0.70)' },
+        { offset: 1, color: 'rgba(240, 147, 251, 0.65)' }
+      ]
+    },
+    // 绿色主题 - 层级5-6
+    {
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.60)' },
+        { offset: 0.12, color: 'rgba(67, 233, 123, 0.70)' },
+        { offset: 0.28, color: 'rgba(56, 249, 215, 0.75)' },
+        { offset: 0.42, color: 'rgba(79, 172, 254, 0.68)' },
+        { offset: 0.58, color: 'rgba(0, 242, 254, 0.72)' },
+        { offset: 0.72, color: 'rgba(67, 233, 123, 0.76)' },
+        { offset: 0.86, color: 'rgba(56, 249, 215, 0.70)' },
+        { offset: 1, color: 'rgba(67, 233, 123, 0.65)' }
+      ]
+    },
+    // 青色主题 - 层级7-8
+    {
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.60)' },
+        { offset: 0.12, color: 'rgba(79, 172, 254, 0.70)' },
+        { offset: 0.28, color: 'rgba(0, 242, 254, 0.75)' },
+        { offset: 0.42, color: 'rgba(67, 233, 123, 0.68)' },
+        { offset: 0.58, color: 'rgba(56, 249, 215, 0.72)' },
+        { offset: 0.72, color: 'rgba(79, 172, 254, 0.76)' },
+        { offset: 0.86, color: 'rgba(0, 242, 254, 0.70)' },
+        { offset: 1, color: 'rgba(79, 172, 254, 0.65)' }
+      ]
+    }
+  ]
+
+  const shadowColors = [
+    'rgba(102, 126, 234, 0.9)',
+    'rgba(240, 147, 251, 0.9)',
+    'rgba(67, 233, 123, 0.9)',
+    'rgba(79, 172, 254, 0.9)'
+  ]
+
   for (let i = 0; i < layers; i++) {
     const data = categories.map(() => Math.floor(Math.random() * 800) + 200)
-    const colorIndex = i % 5
-    const opacity = 0.2 + (i * 0.12)
+    const themeIndex = Math.floor(i / 2)
+    const theme = colorThemes[themeIndex]
+    const shadowColor = shadowColors[themeIndex]
+    const baseOpacity = (opacityLevel.value / 100)
 
     series.push({
       name: `层级 ${i + 1}`,
       type: 'bar',
       data: data,
-      barWidth: 10 + i * 2,
+      barWidth: 12 + i * 1.5,
       itemStyle: {
         color: {
           type: 'linear',
@@ -167,29 +232,23 @@ const generate3DData = () => {
           y: 0,
           x2: 0,
           y2: 1,
-          colorStops: [
-            {
-              offset: 0,
-              color: `rgba(${colorIndex === 0 ? '102, 126, 234' : colorIndex === 1 ? '240, 147, 251' : colorIndex === 2 ? '67, 233, 123' : colorIndex === 3 ? '79, 172, 254' : '254, 225, 64'}, ${opacityLevel.value / 100})`
-            },
-            {
-              offset: 1,
-              color: `rgba(${colorIndex === 0 ? '118, 75, 162' : colorIndex === 1 ? '214, 114, 237' : colorIndex === 2 ? '56, 189, 100' : colorIndex === 3 ? '56, 178, 255' : '251, 209, 46'}, ${opacityLevel.value / 100 * 0.6})`
-            }
-          ]
+          colorStops: theme.stops.map(stop => ({
+            offset: stop.offset,
+            color: stop.color.replace(/[\d.]+\)$/, (baseOpacity * (0.85 + Math.random() * 0.3)).toFixed(2) + ')')
+          }))
         },
-        shadowBlur: 20 + i * 5,
-        shadowColor: `rgba(${colorIndex === 0 ? '102, 126, 234' : colorIndex === 1 ? '240, 147, 251' : colorIndex === 2 ? '67, 233, 123' : colorIndex === 3 ? '79, 172, 254' : '254, 225, 64'}, 0.6)`,
-        shadowOffsetX: 5,
-        shadowOffsetY: 5,
-        borderRadius: [4, 4, 0, 0]
+        shadowBlur: 30 + i * 6,
+        shadowColor: shadowColor,
+        shadowOffsetX: 6,
+        shadowOffsetY: 8,
+        borderRadius: [5, 5, 0, 0]
       },
       zlevel: i,
       emphasis: {
         scale: true,
-        scaleSize: 1.3,
-        shadowBlur: 40,
-        shadowColor: 'rgba(255, 255, 255, 0.8)',
+        scaleSize: 1.35,
+        shadowBlur: 55,
+        shadowColor: 'rgba(255, 255, 255, 0.9)',
         itemStyle: {
           color: {
             type: 'linear',
@@ -200,17 +259,29 @@ const generate3DData = () => {
             colorStops: [
               {
                 offset: 0,
-                color: `rgba(255, 255, 255, 0.95)`
+                color: 'rgba(255, 255, 255, 0.98)'
+              },
+              {
+                offset: 0.25,
+                color: shadowColor.replace('0.9', '0.95')
+              },
+              {
+                offset: 0.5,
+                color: shadowColor.replace('0.9', '0.88')
+              },
+              {
+                offset: 0.75,
+                color: shadowColor.replace('0.9', '0.80')
               },
               {
                 offset: 1,
-                color: `rgba(${colorIndex === 0 ? '102, 126, 234' : colorIndex === 1 ? '240, 147, 251' : colorIndex === 2 ? '67, 233, 123' : colorIndex === 3 ? '79, 172, 254' : '254, 225, 64'}, 0.8)`
+                color: shadowColor.replace('0.9', '0.70')
               }
             ]
           }
         }
       },
-      animationDuration: 1000 + i * 200,
+      animationDuration: 1200 + i * 250,
       animationEasing: 'elasticOut'
     })
   }

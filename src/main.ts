@@ -16,6 +16,7 @@ import i18n from './i18n'
 // 核心模块
 import { globalErrorHandler, performanceMonitor, serviceWorkerManager } from '@/core'
 import componentsPlugin from '@/components'
+import '@/core/EChartsCleanup' // ECharts自动清理
 
 // 清理可能存在的旧数据（开发环境下）
 if (import.meta.env.DEV) {

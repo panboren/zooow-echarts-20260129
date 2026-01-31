@@ -187,7 +187,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import * as echarts from 'echarts'
 import type { EChartsOption } from 'echarts'
 
@@ -254,20 +254,38 @@ const initChart1 = () => {
     backgroundColor: 'transparent',
     tooltip: {
       trigger: 'axis',
-      backgroundColor: 'rgba(10, 10, 25, 0.95)',
-      borderColor: 'rgba(102, 126, 234, 0.7)',
+      backgroundColor: 'rgba(15, 15, 35, 0.98)',
+      borderColor: 'rgba(255, 255, 255, 0.35)',
       borderWidth: 2,
-      borderRadius: 12,
-      padding: [12, 16],
-      textStyle: { color: '#ffffff', fontSize: 13, fontWeight: 500 },
-      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);',
+      borderRadius: 20,
+      padding: [18, 24],
+      textStyle: { color: '#ffffff', fontSize: 14, fontWeight: 'bold' },
+      extraCssText: 'backdrop-filter: blur(15px); box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);',
+      axisPointer: {
+        type: 'cross',
+        crossStyle: {
+          color: 'rgba(102, 126, 234, 0.6)',
+          width: 2,
+          type: 'dashed'
+        }
+      },
       formatter: (params: any) => {
         return `
-          <div style="padding: 6px;">
-            <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #667eea;">${params[0].axisValue}</div>
-            <div style="display: flex; justify-content: space-between;">
-              <span>流量</span>
-              <span style="color: #667eea; font-weight: 700;">${params[0].value} req/s</span>
+          <div style="padding: 8px;">
+            <div style="font-size: 18px; font-weight: 900; margin-bottom: 12px; 
+              background: linear-gradient(135deg, #667eea, #764ba2);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;">
+              ${params[0].axisValue}
+            </div>
+            <div style="display: flex; justify-content: space-between; 
+              align-items: center; margin: 10px 0; padding: 12px; 
+              background: rgba(255,255,255,0.08); border-radius: 10px; 
+              border: 1px solid rgba(255,255,255,0.12);">
+              <span style="color: rgba(255,255,255,0.75); font-weight: 600;">实时流量</span>
+              <span style="font-weight: 900; color: #667eea; margin-left: 20px; 
+                text-shadow: 0 0 12px rgba(102, 126, 234, 0.8);">${params[0].value} req/s</span>
             </div>
           </div>
         `
@@ -291,33 +309,55 @@ const initChart1 = () => {
       data: data,
       smooth: true,
       symbol: 'circle',
-      symbolSize: 6,
+      symbolSize: 10,
       lineStyle: {
-        width: 3,
+        width: 4,
         color: {
           type: 'linear',
           x: 0, y: 0, x2: 1, y2: 0,
           colorStops: [
             { offset: 0, color: 'rgba(102, 126, 234, 1)' },
+            { offset: 0.5, color: 'rgba(118, 75, 162, 0.95)' },
             { offset: 1, color: 'rgba(240, 147, 251, 1)' }
           ]
         },
-        shadowBlur: 15,
-        shadowColor: 'rgba(102, 126, 234, 0.6)'
+        shadowBlur: 25,
+        shadowColor: 'rgba(102, 126, 234, 0.9)'
       },
       itemStyle: {
-        color: 'rgba(102, 126, 234, 1)',
-        shadowBlur: 10,
-        shadowColor: 'rgba(102, 126, 234, 0.8)'
+        color: 'rgba(255, 255, 255, 0.95)',
+        borderColor: {
+          type: 'linear',
+          x: 0, y: 0, x2: 1, y2: 0,
+          colorStops: [
+            { offset: 0, color: '#667eea' },
+            { offset: 0.5, color: '#764ba2' },
+            { offset: 1, color: '#f093fb' }
+          ]
+        },
+        borderWidth: 3,
+        shadowBlur: 25,
+        shadowColor: 'rgba(102, 126, 234, 0.95)'
       },
       areaStyle: {
         color: {
           type: 'linear',
           x: 0, y: 0, x2: 0, y2: 1,
           colorStops: [
-            { offset: 0, color: 'rgba(102, 126, 234, 0.3)' },
-            { offset: 1, color: 'rgba(102, 126, 234, 0.05)' }
+            { offset: 0, color: 'rgba(102, 126, 234, 0.5)' },
+            { offset: 0.3, color: 'rgba(118, 75, 162, 0.35)' },
+            { offset: 0.7, color: 'rgba(240, 147, 251, 0.2)' },
+            { offset: 1, color: 'rgba(102, 126, 234, 0)' }
           ]
+        }
+      },
+      emphasis: {
+        focus: 'series',
+        itemStyle: {
+          shadowBlur: 45,
+          shadowColor: 'rgba(102, 126, 234, 1)',
+          scale: true,
+          scaleSize: 25
         }
       }
     }]
@@ -339,20 +379,30 @@ const initChart2 = () => {
     backgroundColor: 'transparent',
     tooltip: {
       trigger: 'axis',
-      backgroundColor: 'rgba(10, 10, 25, 0.95)',
-      borderColor: 'rgba(240, 147, 251, 0.7)',
+      backgroundColor: 'rgba(15, 15, 35, 0.98)',
+      borderColor: 'rgba(255, 255, 255, 0.35)',
       borderWidth: 2,
-      borderRadius: 12,
-      padding: [12, 16],
-      textStyle: { color: '#ffffff', fontSize: 13, fontWeight: 500 },
-      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(240, 147, 251, 0.4);',
+      borderRadius: 20,
+      padding: [18, 24],
+      textStyle: { color: '#ffffff', fontSize: 14, fontWeight: 'bold' },
+      extraCssText: 'backdrop-filter: blur(15px); box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);',
       formatter: (params: any) => {
         return `
-          <div style="padding: 6px;">
-            <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #f093fb;">${params[0].name}</div>
-            <div style="display: flex; justify-content: space-between;">
-              <span>负载</span>
-              <span style="color: #f093fb; font-weight: 700;">${params[0].value}%</span>
+          <div style="padding: 8px;">
+            <div style="font-size: 18px; font-weight: 900; margin-bottom: 12px; 
+              background: linear-gradient(135deg, #f5576c, #ff9f43);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;">
+              ${params[0].name}
+            </div>
+            <div style="display: flex; justify-content: space-between; 
+              align-items: center; margin: 10px 0; padding: 12px; 
+              background: rgba(255,255,255,0.08); border-radius: 10px; 
+              border: 1px solid rgba(255,255,255,0.12);">
+              <span style="color: rgba(255,255,255,0.75); font-weight: 600;">服务器负载</span>
+              <span style="font-weight: 900; color: #f5576c; margin-left: 20px; 
+                text-shadow: 0 0 12px rgba(245, 87, 108, 0.8);">${params[0].value}%</span>
             </div>
           </div>
         `
@@ -375,27 +425,29 @@ const initChart2 = () => {
     series: [{
       type: 'bar',
       data: data,
-      barWidth: '60%',
+      barWidth: '55%',
       itemStyle: {
         color: {
           type: 'linear',
           x: 0, y: 0, x2: 0, y2: 1,
           colorStops: [
-            { offset: 0, color: 'rgba(240, 147, 251, 0.95)' },
-            { offset: 1, color: 'rgba(214, 114, 237, 0.7)' }
+            { offset: 0, color: 'rgba(245, 87, 108, 1)' },
+            { offset: 0.3, color: 'rgba(255, 159, 67, 0.95)' },
+            { offset: 0.7, color: 'rgba(250, 112, 154, 0.85)' },
+            { offset: 1, color: 'rgba(214, 114, 237, 0.75)' }
           ]
         },
-        shadowBlur: 20,
-        shadowColor: 'rgba(240, 147, 251, 0.6)',
-        borderRadius: [6, 6, 0, 0]
+        shadowBlur: 30,
+        shadowColor: 'rgba(245, 87, 108, 0.8)',
+        borderRadius: [8, 8, 0, 0]
       },
       emphasis: {
         scale: true,
-        scaleSize: 1.1,
+        scaleSize: 1.15,
         itemStyle: {
           color: 'rgba(255, 255, 255, 1)',
-          shadowBlur: 30,
-          shadowColor: 'rgba(255, 255, 255, 0.8)'
+          shadowBlur: 40,
+          shadowColor: 'rgba(255, 255, 255, 0.9)'
         }
       }
     }]
@@ -411,31 +463,156 @@ const initChart3 = () => {
   chartInstance3 = echarts.init(chartRef3.value)
 
   const data = [
-    { value: 35, name: '系统内核', itemStyle: { color: 'rgba(102, 126, 234, 0.9)' } },
-    { value: 28, name: '应用程序', itemStyle: { color: 'rgba(240, 147, 251, 0.9)' } },
-    { value: 18, name: '缓存数据', itemStyle: { color: 'rgba(67, 233, 123, 0.9)' } },
-    { value: 12, name: '网络缓冲', itemStyle: { color: 'rgba(79, 172, 254, 0.9)' } },
-    { value: 7, name: '其他', itemStyle: { color: 'rgba(254, 225, 64, 0.9)' } }
+    {
+      value: 35,
+      name: '系统内核',
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.55)' },
+            { offset: 0.15, color: 'rgba(102, 126, 234, 0.65)' },
+            { offset: 0.3, color: 'rgba(118, 75, 162, 0.7)' },
+            { offset: 0.45, color: 'rgba(79, 172, 254, 0.68)' },
+            { offset: 0.6, color: 'rgba(240, 147, 251, 0.72)' },
+            { offset: 0.75, color: 'rgba(102, 126, 234, 0.75)' },
+            { offset: 0.85, color: 'rgba(118, 75, 162, 0.7)' },
+            { offset: 1, color: 'rgba(102, 126, 234, 0.68)' }
+          ]
+        },
+        shadowColor: 'rgba(102, 126, 234, 0.7)',
+        shadowBlur: 35
+      }
+    },
+    {
+      value: 28,
+      name: '应用程序',
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.55)' },
+            { offset: 0.15, color: 'rgba(240, 147, 251, 0.65)' },
+            { offset: 0.3, color: 'rgba(245, 87, 108, 0.7)' },
+            { offset: 0.45, color: 'rgba(254, 225, 64, 0.68)' },
+            { offset: 0.6, color: 'rgba(255, 159, 67, 0.72)' },
+            { offset: 0.75, color: 'rgba(240, 147, 251, 0.75)' },
+            { offset: 0.85, color: 'rgba(245, 87, 108, 0.7)' },
+            { offset: 1, color: 'rgba(240, 147, 251, 0.68)' }
+          ]
+        },
+        shadowColor: 'rgba(245, 87, 108, 0.7)',
+        shadowBlur: 35
+      }
+    },
+    {
+      value: 18,
+      name: '缓存数据',
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.55)' },
+            { offset: 0.15, color: 'rgba(67, 233, 123, 0.65)' },
+            { offset: 0.3, color: 'rgba(56, 249, 215, 0.7)' },
+            { offset: 0.45, color: 'rgba(79, 172, 254, 0.68)' },
+            { offset: 0.6, color: 'rgba(0, 242, 254, 0.72)' },
+            { offset: 0.75, color: 'rgba(67, 233, 123, 0.75)' },
+            { offset: 0.85, color: 'rgba(56, 249, 215, 0.7)' },
+            { offset: 1, color: 'rgba(67, 233, 123, 0.68)' }
+          ]
+        },
+        shadowColor: 'rgba(67, 233, 123, 0.7)',
+        shadowBlur: 35
+      }
+    },
+    {
+      value: 12,
+      name: '网络缓冲',
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.55)' },
+            { offset: 0.15, color: 'rgba(79, 172, 254, 0.65)' },
+            { offset: 0.3, color: 'rgba(0, 242, 254, 0.7)' },
+            { offset: 0.45, color: 'rgba(67, 233, 123, 0.68)' },
+            { offset: 0.6, color: 'rgba(56, 249, 215, 0.72)' },
+            { offset: 0.75, color: 'rgba(79, 172, 254, 0.75)' },
+            { offset: 0.85, color: 'rgba(0, 242, 254, 0.7)' },
+            { offset: 1, color: 'rgba(79, 172, 254, 0.68)' }
+          ]
+        },
+        shadowColor: 'rgba(79, 172, 254, 0.7)',
+        shadowBlur: 35
+      }
+    },
+    {
+      value: 7,
+      name: '其他',
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.4,
+          y: 0.3,
+          r: 0.9,
+          colorStops: [
+            { offset: 0, color: 'rgba(255, 255, 255, 0.55)' },
+            { offset: 0.15, color: 'rgba(254, 225, 64, 0.65)' },
+            { offset: 0.3, color: 'rgba(255, 159, 67, 0.7)' },
+            { offset: 0.45, color: 'rgba(250, 112, 154, 0.68)' },
+            { offset: 0.6, color: 'rgba(245, 87, 108, 0.72)' },
+            { offset: 0.75, color: 'rgba(254, 225, 64, 0.75)' },
+            { offset: 0.85, color: 'rgba(255, 159, 67, 0.7)' },
+            { offset: 1, color: 'rgba(254, 225, 64, 0.68)' }
+          ]
+        },
+        shadowColor: 'rgba(254, 225, 64, 0.7)',
+        shadowBlur: 35
+      }
+    }
   ]
 
   const option: EChartsOption = {
     backgroundColor: 'transparent',
     tooltip: {
       trigger: 'item',
-      backgroundColor: 'rgba(10, 10, 25, 0.95)',
-      borderColor: 'rgba(67, 233, 123, 0.7)',
+      backgroundColor: 'rgba(15, 15, 35, 0.98)',
+      borderColor: 'rgba(255, 255, 255, 0.35)',
       borderWidth: 2,
-      borderRadius: 12,
-      padding: [12, 16],
-      textStyle: { color: '#ffffff', fontSize: 13, fontWeight: 500 },
-      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(67, 233, 123, 0.4);',
+      borderRadius: 20,
+      padding: [18, 24],
+      textStyle: { color: '#ffffff', fontSize: 14, fontWeight: 'bold' },
+      extraCssText: 'backdrop-filter: blur(15px); box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);',
       formatter: (params: any) => {
         return `
-          <div style="padding: 6px;">
-            <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: ${params.color};">${params.name}</div>
-            <div style="display: flex; justify-content: space-between;">
-              <span>使用</span>
-              <span style="color: #43e97b; font-weight: 700;">${params.value}%</span>
+          <div style="padding: 8px;">
+            <div style="font-size: 18px; font-weight: 900; margin-bottom: 12px; 
+              background: linear-gradient(135deg, ${params.color}, #ffffff);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;">
+              ${params.name}
+            </div>
+            <div style="display: flex; justify-content: space-between; 
+              align-items: center; margin: 10px 0; padding: 12px; 
+              background: rgba(255,255,255,0.08); border-radius: 10px; 
+              border: 1px solid rgba(255,255,255,0.12);">
+              <span style="color: rgba(255,255,255,0.75); font-weight: 600;">内存使用</span>
+              <span style="font-weight: 900; color: ${params.color}; margin-left: 20px; 
+                text-shadow: 0 0 12px ${params.color};">${params.value}%</span>
             </div>
           </div>
         `
@@ -449,29 +626,56 @@ const initChart3 = () => {
     },
     series: [{
       type: 'pie',
-      radius: ['45%', '75%'],
-      center: ['40%', '50%'],
       data: data,
+      radius: ['35%', '75%'],
+      center: ['40%', '50%'],
+      avoidLabelOverlap: true,
       itemStyle: {
-        shadowBlur: 20,
-        shadowColor: 'rgba(67, 233, 123, 0.4)',
-        borderColor: '#0a0a19',
-        borderWidth: 2
+        borderRadius: 20,
+        borderColor: 'rgba(15, 15, 35, 0.85)',
+        borderWidth: 5,
+        shadowColor: 'rgba(0, 0, 0, 0.6)',
+        shadowBlur: 40,
+        shadowOffsetX: 8,
+        shadowOffsetY: 8
       },
       label: {
         show: true,
         color: '#ffffff',
         fontSize: 11,
-        fontWeight: 600,
-        formatter: '{b}\n{d}%'
+        fontWeight: 700,
+        formatter: '{b}\n{d}%',
+        textShadow: '0 0 12px rgba(0, 0, 0, 0.8)',
+        textShadowOffsetX: 2,
+        textShadowOffsetY: 2
+      },
+      labelLine: {
+        lineStyle: {
+          color: 'rgba(255, 255, 255, 0.3)',
+          width: 1.5
+        },
+        smooth: 0.3,
+        length: 15,
+        length2: 20
       },
       emphasis: {
-        scale: true,
-        scaleSize: 1.1,
+        label: {
+          fontSize: 13,
+          fontWeight: 800,
+          textShadow: '0 0 20px rgba(0, 0, 0, 0.9)',
+          textShadowOffsetX: 3,
+          textShadowOffsetY: 3
+        },
         itemStyle: {
-          shadowBlur: 30,
-          shadowColor: 'rgba(67, 233, 123, 0.8)'
-        }
+          shadowBlur: 60,
+          shadowOffsetX: 15,
+          shadowOffsetY: 15,
+          shadowColor: 'rgba(0, 0, 0, 0.8)',
+          borderWidth: 5,
+          borderColor: 'rgba(255, 255, 255, 0.9)'
+        },
+        scale: true,
+        scaleSize: 1.1
       }
     }]
   }
@@ -485,27 +689,60 @@ const initChart4 = () => {
 
   chartInstance4 = echarts.init(chartRef4.value)
 
-  const data = generateRealtimeData(20, 45, 25)
-  const labels = Array.from({ length: 20 }, (_, i) => `N${i + 1}`)
+  const data = generateRealtimeData(30, 250, 180)
+  const labels = Array.from({ length: 30 }, (_, i) => `N${i + 1}`)
 
   const option: EChartsOption = {
     backgroundColor: 'transparent',
     tooltip: {
       trigger: 'axis',
-      backgroundColor: 'rgba(10, 10, 25, 0.95)',
-      borderColor: 'rgba(79, 172, 254, 0.7)',
+      backgroundColor: 'rgba(15, 15, 35, 0.98)',
+      borderColor: 'rgba(255, 255, 255, 0.35)',
       borderWidth: 2,
-      borderRadius: 12,
-      padding: [12, 16],
-      textStyle: { color: '#ffffff', fontSize: 13, fontWeight: 500 },
-      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);',
+      borderRadius: 20,
+      padding: [18, 24],
+      textStyle: { color: '#ffffff', fontSize: 14, fontWeight: 'bold' },
+      extraCssText: 'backdrop-filter: blur(15px); box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);',
       formatter: (params: any) => {
+        const value = params[0].value
+        let level = ''
+        let color = ''
+        if (value < 100) {
+          level = '优秀'
+          color = '#43e97b'
+        } else if (value < 200) {
+          level = '良好'
+          color = '#4facfe'
+        } else if (value < 350) {
+          level = '一般'
+          color = '#f093fb'
+        } else {
+          level = '较高'
+          color = '#f5576c'
+        }
         return `
-          <div style="padding: 6px;">
-            <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #4facfe;">${params[0].name}</div>
-            <div style="display: flex; justify-content: space-between;">
-              <span>延迟</span>
-              <span style="color: #4facfe; font-weight: 700;">${params[0].value}ms</span>
+          <div style="padding: 8px;">
+            <div style="font-size: 18px; font-weight: 900; margin-bottom: 12px;
+              background: linear-gradient(135deg, #4facfe, #43e97b);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;">
+              ${params[0].name}
+            </div>
+            <div style="display: flex; justify-content: space-between;
+              align-items: center; margin: 10px 0; padding: 12px;
+              background: rgba(255,255,255,0.08); border-radius: 10px;
+              border: 1px solid rgba(255,255,255,0.12);">
+              <span style="color: rgba(255,255,255,0.75); font-weight: 600;">网络延迟</span>
+              <span style="font-weight: 900; color: ${color}; margin-left: 20px;
+                text-shadow: 0 0 12px ${color};">${params[0].value}ms</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;
+              align-items: center; margin: 8px 0; padding: 10px;
+              background: rgba(${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}, 0.15); border-radius: 8px;
+              border: 1px solid rgba(${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}, 0.3);">
+              <span style="color: rgba(255,255,255,0.65); font-weight: 500;">性能评级</span>
+              <span style="font-weight: 800; color: ${color}; margin-left: 20px;">${level}</span>
             </div>
           </div>
         `
@@ -521,32 +758,124 @@ const initChart4 = () => {
     },
     yAxis: {
       type: 'value',
-      splitLine: { lineStyle: { color: 'rgba(79, 172, 254, 0.2)', type: 'dashed' } },
-      axisLabel: { color: 'rgba(255, 255, 255, 0.7)', fontSize: 11, fontWeight: 500 }
+      name: '延迟 (ms)',
+      nameTextStyle: {
+        color: 'rgba(79, 172, 254, 0.9)',
+        fontSize: 13,
+        fontWeight: 'bold',
+        padding: [0, 0, 0, 10]
+      },
+      min: 0,
+      max: 500,
+      splitLine: {
+        lineStyle: {
+          color: 'rgba(79, 172, 254, 0.15)',
+          type: 'dashed',
+          width: 1
+        }
+      },
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 11,
+        fontWeight: 500,
+        formatter: '{value}ms'
+      }
+    },
+    visualMap: {
+      show: false,
+      min: 0,
+      max: 500,
+      pieces: [
+        { gte: 0, lt: 100, color: '#43e97b' },
+        { gte: 100, lt: 200, color: '#4facfe' },
+        { gte: 200, lt: 350, color: '#f093fb' },
+        { gte: 350, lte: 500, color: '#f5576c' }
+      ]
     },
     series: [{
       type: 'scatter',
       data: data.map((v, i) => [labels[i], v]),
-      symbolSize: (value: number) => Math.max(10, value / 3),
+      symbolSize: (value: number) => {
+        const baseSize = 16
+        const scaleFactor = value / 50
+        return Math.max(baseSize, Math.min(45, baseSize + scaleFactor))
+      },
       itemStyle: {
-        color: {
-          type: 'radial',
-          x: 0.5, y: 0.5, r: 0.5,
-          colorStops: [
-            { offset: 0, color: 'rgba(79, 172, 254, 0.95)' },
-            { offset: 1, color: 'rgba(56, 178, 255, 0.7)' }
-          ]
+        color: (params: any) => {
+          const value = params.data[1]
+          if (value < 100) {
+            return {
+              type: 'radial',
+              x: 0.5, y: 0.5, r: 0.5,
+              colorStops: [
+                { offset: 0, color: 'rgba(67, 233, 123, 1)' },
+                { offset: 0.4, color: 'rgba(56, 249, 215, 0.95)' },
+                { offset: 0.7, color: 'rgba(67, 233, 123, 0.85)' },
+                { offset: 1, color: 'rgba(67, 233, 123, 0.7)' }
+              ]
+            }
+          } else if (value < 200) {
+            return {
+              type: 'radial',
+              x: 0.5, y: 0.5, r: 0.5,
+              colorStops: [
+                { offset: 0, color: 'rgba(79, 172, 254, 1)' },
+                { offset: 0.4, color: 'rgba(0, 242, 254, 0.95)' },
+                { offset: 0.7, color: 'rgba(79, 172, 254, 0.85)' },
+                { offset: 1, color: 'rgba(79, 172, 254, 0.7)' }
+              ]
+            }
+          } else if (value < 350) {
+            return {
+              type: 'radial',
+              x: 0.5, y: 0.5, r: 0.5,
+              colorStops: [
+                { offset: 0, color: 'rgba(240, 147, 251, 1)' },
+                { offset: 0.4, color: 'rgba(245, 87, 108, 0.95)' },
+                { offset: 0.7, color: 'rgba(250, 112, 154, 0.85)' },
+                { offset: 1, color: 'rgba(240, 147, 251, 0.7)' }
+              ]
+            }
+          } else {
+            return {
+              type: 'radial',
+              x: 0.5, y: 0.5, r: 0.5,
+              colorStops: [
+                { offset: 0, color: 'rgba(245, 87, 108, 1)' },
+                { offset: 0.4, color: 'rgba(255, 159, 67, 0.95)' },
+                { offset: 0.7, color: 'rgba(250, 112, 154, 0.85)' },
+                { offset: 1, color: 'rgba(245, 87, 108, 0.7)' }
+              ]
+            }
+          }
         },
-        shadowBlur: 20,
-        shadowColor: 'rgba(79, 172, 254, 0.6)'
+        shadowBlur: 35,
+        shadowColor: 'rgba(79, 172, 254, 0.8)'
+      },
+      label: {
+        show: true,
+        position: 'top',
+        formatter: (params: any) => `${params.data[1]}`,
+        color: '#ffffff',
+        fontSize: 10,
+        fontWeight: 700,
+        textShadow: '0 0 10px rgba(0, 0, 0, 0.8)',
+        textShadowOffsetX: 1,
+        textShadowOffsetY: 1
       },
       emphasis: {
         scale: true,
-        scaleSize: 1.3,
+        scaleSize: 1.5,
         itemStyle: {
-          color: 'rgba(255, 255, 255, 1)',
-          shadowBlur: 30,
-          shadowColor: 'rgba(255, 255, 255, 0.8)'
+          shadowBlur: 55,
+          shadowColor: 'rgba(255, 255, 255, 0.9)'
+        },
+        label: {
+          fontSize: 12,
+          fontWeight: 800,
+          textShadow: '0 0 15px rgba(0, 0, 0, 0.9)'
         }
       }
     }]

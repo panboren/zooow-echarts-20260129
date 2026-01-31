@@ -175,9 +175,9 @@ let chartInstance: echarts.ECharts | null = null
 let rotationInterval: number | null = null
 let rotationAngle = 0
 
-const helixLength = ref(20)
-const rotationSpeed = ref(3)
-const helixRadius = ref(60)
+const helixLength = ref(30)
+const rotationSpeed = ref(4)
+const helixRadius = ref(70)
 const isMutating = ref(false)
 
 const basePairs = ref(0)
@@ -188,10 +188,30 @@ const integrity = ref(100)
 // DNA碱基类型
 const baseTypes = ['A', 'T', 'C', 'G']
 const baseColors = {
-  A: { primary: 'rgba(102, 126, 234, 0.9)', secondary: 'rgba(102, 126, 234, 0.5)' },
-  T: { primary: 'rgba(240, 147, 251, 0.9)', secondary: 'rgba(240, 147, 251, 0.5)' },
-  C: { primary: 'rgba(67, 233, 123, 0.9)', secondary: 'rgba(67, 233, 123, 0.5)' },
-  G: { primary: 'rgba(79, 172, 254, 0.9)', secondary: 'rgba(79, 172, 254, 0.5)' }
+  A: {
+    primary: 'rgba(102, 126, 234, 1)',
+    secondary: 'rgba(102, 126, 234, 0.6)',
+    glow: 'rgba(102, 126, 234, 0.8)',
+    gradient: ['rgba(102, 126, 234, 0.9)', 'rgba(118, 75, 162, 0.7)', 'rgba(240, 147, 251, 0.5)']
+  },
+  T: {
+    primary: 'rgba(240, 147, 251, 1)',
+    secondary: 'rgba(240, 147, 251, 0.6)',
+    glow: 'rgba(240, 147, 251, 0.8)',
+    gradient: ['rgba(240, 147, 251, 0.9)', 'rgba(245, 87, 108, 0.7)', 'rgba(250, 112, 154, 0.5)']
+  },
+  C: {
+    primary: 'rgba(67, 233, 123, 1)',
+    secondary: 'rgba(67, 233, 123, 0.6)',
+    glow: 'rgba(67, 233, 123, 0.8)',
+    gradient: ['rgba(67, 233, 123, 0.9)', 'rgba(56, 249, 215, 0.7)', 'rgba(79, 172, 254, 0.5)']
+  },
+  G: {
+    primary: 'rgba(79, 172, 254, 1)',
+    secondary: 'rgba(79, 172, 254, 0.6)',
+    glow: 'rgba(79, 172, 254, 0.8)',
+    gradient: ['rgba(79, 172, 254, 0.9)', 'rgba(67, 233, 123, 0.7)', 'rgba(102, 126, 234, 0.5)']
+  }
 }
 
 // 生成DNA螺旋数据
@@ -200,8 +220,8 @@ const generateDNAData = () => {
   const connections: any[] = []
 
   for (let i = 0; i < helixLength.value; i++) {
-    const angle = (i / helixLength.value) * Math.PI * 4 + rotationAngle * 0.05
-    const z = (i - helixLength.value / 2) * 15
+    const angle = (i / helixLength.value) * Math.PI * 6 + rotationAngle * 0.05
+    const z = (i - helixLength.value / 2) * 12
 
     // 螺旋链1
     const x1 = Math.cos(angle) * helixRadius.value
@@ -212,20 +232,22 @@ const generateDNAData = () => {
     points.push({
       name: `${base1}-${i}-1`,
       value: [x1, y1, z],
-      symbolSize: 8,
+      symbolSize: 14,
       itemStyle: {
         color: color1.primary,
-        shadowBlur: 15,
-        shadowColor: color1.secondary
+        shadowBlur: 35,
+        shadowColor: color1.glow
       },
       label: {
         show: true,
         formatter: base1,
-        fontSize: 10,
-        fontWeight: 700,
-        color: '#ffffff'
+        fontSize: 12,
+        fontWeight: 800,
+        color: '#ffffff',
+        textShadow: '0 0 10px ' + color1.glow
       },
-      base: base1
+      base: base1,
+      glow: color1.glow
     })
 
     // 螺旋链2 (互补碱基)
@@ -237,37 +259,45 @@ const generateDNAData = () => {
     points.push({
       name: `${base2}-${i}-2`,
       value: [x2, y2, z],
-      symbolSize: 8,
+      symbolSize: 14,
       itemStyle: {
         color: color2.primary,
-        shadowBlur: 15,
-        shadowColor: color2.secondary
+        shadowBlur: 35,
+        shadowColor: color2.glow
       },
       label: {
         show: true,
         formatter: base2,
-        fontSize: 10,
-        fontWeight: 700,
-        color: '#ffffff'
+        fontSize: 12,
+        fontWeight: 800,
+        color: '#ffffff',
+        textShadow: '0 0 10px ' + color2.glow
       },
-      base: base2
+      base: base2,
+      glow: color2.glow
     })
 
-    // 碱基对连接
+    // 碱基对连接 - 使用丰富的渐变
     connections.push({
       source: i * 2,
       target: i * 2 + 1,
       value: 5,
       lineStyle: {
-        width: 3,
+        width: 4,
+        opacity: 0.85,
         color: {
           type: 'linear',
           x: 0, y: 0, x2: 1, y2: 0,
           colorStops: [
-            { offset: 0, color: color1.secondary },
-            { offset: 1, color: color2.secondary }
+            { offset: 0, color: color1.gradient[0] },
+            { offset: 0.3, color: color1.gradient[1] },
+            { offset: 0.5, color: color1.gradient[2] },
+            { offset: 0.7, color: color2.gradient[1] },
+            { offset: 1, color: color2.gradient[0] }
           ]
-        }
+        },
+        shadowBlur: 20,
+        shadowColor: color1.glow
       }
     })
   }
@@ -298,44 +328,49 @@ const initChart = () => {
     backgroundColor: 'transparent',
     tooltip: {
       trigger: 'item',
-      backgroundColor: 'rgba(10, 10, 25, 0.95)',
-      borderColor: 'rgba(102, 126, 234, 0.7)',
+      backgroundColor: 'rgba(10, 10, 25, 0.98)',
+      borderColor: 'rgba(102, 126, 234, 0.8)',
       borderWidth: 2,
-      borderRadius: 16,
-      padding: [14, 18],
-      textStyle: { color: '#ffffff', fontSize: 13, fontWeight: 600 },
-      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 12px 48px rgba(102, 126, 234, 0.4);',
+      borderRadius: 18,
+      padding: [16, 20],
+      textStyle: { color: '#ffffff', fontSize: 14, fontWeight: 700 },
+      extraCssText: 'backdrop-filter: blur(15px); box-shadow: 0 15px 60px rgba(102, 126, 234, 0.5);',
       formatter: (params: any) => {
         if (params.dataType === 'node') {
           const [x, y, z] = params.data.value
+          const baseColor = params.data.glow || 'rgba(102, 126, 234, 1)'
           return `
-            <div style="padding: 8px;">
-              <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <div style="padding: 10px;">
+              <div style="font-size: 18px; font-weight: 800; margin-bottom: 12px; background: linear-gradient(135deg, #667eea, #764ba2, #f093fb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);">
                 ${params.name}
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <span>碱基类型</span>
-                <span style="color: #667eea; font-weight: 700;">${params.data.base}</span>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="color: rgba(255,255,255,0.7);">碱基类型</span>
+                <span style="color: ${baseColor}; font-weight: 800; text-shadow: 0 0 10px ${baseColor};">${params.data.base}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <span>互补碱基</span>
-                <span style="color: #f093fb; font-weight: 700;">${getComplementBase(params.data.base)}</span>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="color: rgba(255,255,255,0.7);">互补碱基</span>
+                <span style="color: #f093fb; font-weight: 800; text-shadow: 0 0 10px rgba(240, 147, 251, 0.8);">${getComplementBase(params.data.base)}</span>
               </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span>位置</span>
-                <span style="color: #43e97b; font-weight: 700;">(${x.toFixed(0)}, ${y.toFixed(0)}, ${z.toFixed(0)})</span>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+                <span style="color: rgba(255,255,255,0.7);">3D坐标</span>
+                <span style="color: #43e97b; font-weight: 800; text-shadow: 0 0 10px rgba(67, 233, 123, 0.8);">(${x.toFixed(0)}, ${y.toFixed(0)}, ${z.toFixed(0)})</span>
               </div>
             </div>
           `
         } else {
           return `
-            <div style="padding: 8px;">
-              <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #667eea;">
+            <div style="padding: 10px;">
+              <div style="font-size: 18px; font-weight: 800; margin-bottom: 12px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                 碱基对连接
               </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span>氢键数</span>
-                <span style="color: #f093fb; font-weight: 700;">3</span>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="color: rgba(255,255,255,0.7);">氢键数</span>
+                <span style="color: #f093fb; font-weight: 800; text-shadow: 0 0 10px rgba(240, 147, 251, 0.8);">3</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+                <span style="color: rgba(255,255,255,0.7);">连接类型</span>
+                <span style="color: #43e97b; font-weight: 800; text-shadow: 0 0 10px rgba(67, 233, 123, 0.8);">双螺旋</span>
               </div>
             </div>
           `
@@ -344,14 +379,14 @@ const initChart = () => {
     },
     xAxis: {
       type: 'value',
-      min: -150,
-      max: 150,
+      min: -200,
+      max: 200,
       show: false
     },
     yAxis: {
       type: 'value',
-      min: -150,
-      max: 150,
+      min: -200,
+      max: 200,
       show: false
     },
     grid: { top: '5%', left: '5%', right: '5%', bottom: '5%' },
@@ -370,13 +405,14 @@ const initChart = () => {
         emphasis: {
           focus: 'adjacency',
           lineStyle: {
-            width: 5,
-            shadowBlur: 25,
-            shadowColor: 'rgba(255, 255, 255, 0.7)'
+            width: 6,
+            shadowBlur: 40,
+            shadowColor: 'rgba(255, 255, 255, 0.9)'
           },
           itemStyle: {
-            shadowBlur: 30,
-            shadowColor: 'rgba(255, 255, 255, 0.9)'
+            shadowBlur: 50,
+            shadowColor: 'rgba(255, 255, 255, 1)',
+            scale: 1.3
           }
         }
       }
