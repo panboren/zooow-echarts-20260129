@@ -8,13 +8,15 @@ import InfiniteScroll from './InfiniteScroll/index.vue'
 import Skeleton from './Skeleton/index.vue'
 import ErrorBoundary from './ErrorBoundary/index.vue'
 import ImagePreview from './ImagePreview/index.vue'
+import ChartThemeSwitcher from './ChartThemeSwitcher/index.vue'
 
 const components = {
   VirtualList,
   InfiniteScroll,
   Skeleton,
   ErrorBoundary,
-  ImagePreview
+  ImagePreview,
+  ChartThemeSwitcher
 }
 
 export function registerComponents(app: App) {
@@ -29,4 +31,4 @@ export default {
   }
 }
 
-export { VirtualList, InfiniteScroll, Skeleton, ErrorBoundary, ImagePreview }
+export { VirtualList, InfiniteScroll, Skeleton, ErrorBoundary, ImagePreview, ChartThemeSwitcher }

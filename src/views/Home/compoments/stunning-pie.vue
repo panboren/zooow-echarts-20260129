@@ -75,7 +75,8 @@ const particleStyle = (i) => ({
   background: `radial-gradient(circle, ${['rgba(102, 126, 234, 0.6)', 'rgba(79, 172, 254, 0.6)', 'rgba(245, 87, 108, 0.6)', 'rgba(67, 233, 123, 0.6)'][Math.floor(Math.random() * 4)]}, transparent)`
 });
 
-const option = ref({
+// 基础配置（不含主题颜色）
+const baseOptionContent = {
   backgroundColor: 'transparent',
   title: {
     text: '数据分布',
@@ -109,7 +110,7 @@ const option = ref({
       fontWeight: 'bold'
     },
     formatter: (params) => {
-      const total = option.value.series[0].data.reduce((sum, item) => sum + item.value, 0);
+      const total = baseOptionContent.series[0].data.reduce((sum, item) => sum + item.value, 0);
       const percent = ((params.value / total) * 100).toFixed(1);
 
       return `
@@ -274,11 +275,13 @@ const option = ref({
       ]
     }
   ]
-});
+};
 
 const handleClick = (params) => {
   console.log('点击了扇形:', params);
 };
+
+const option = computed(() => baseOptionContent);
 
 defineExpose({
   chartRef

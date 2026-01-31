@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ChartThemeSwitcher: typeof import('./../components/ChartThemeSwitcher/index.vue')['default']
     ContentWrap: typeof import('./../components/ContentWrap/index.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
@@ -42,6 +43,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Skeleton: typeof import('./../components/Skeleton/index.vue')['default']
     Table: typeof import('./../components/Table/index.vue')['default']
+    ThemedChart: typeof import('./../components/ThemedChart.vue')['default']
     VirtualList: typeof import('./../components/VirtualList/index.vue')['default']
   }
 }

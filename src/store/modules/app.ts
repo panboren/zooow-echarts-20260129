@@ -13,6 +13,7 @@ interface AppState {
   isDark: boolean
   currentSize: 'large' | 'default' | 'small'
   theme: ThemeTypes
+  chartTheme: string // 图表主题
   breadcrumb: boolean
   tagsView: boolean
   logo: boolean
@@ -41,6 +42,7 @@ export const useAppStore = defineStore('app', {
       topHeaderTextColor: 'inherit',
       topHeaderHoverColor: '#f6f6f6'
     },
+    chartTheme: 'default',
     breadcrumb: true,
     tagsView: true,
     logo: true,
@@ -56,6 +58,7 @@ export const useAppStore = defineStore('app', {
     getIsDark: (state) => state.isDark,
     getCurrentSize: (state) => state.currentSize,
     getTheme: (state) => state.theme,
+    getChartTheme: (state) => state.chartTheme,
     getBreadcrumb: (state) => state.breadcrumb,
     getTagsView: (state) => state.tagsView,
     getLogo: (state) => state.logo,
@@ -76,6 +79,9 @@ export const useAppStore = defineStore('app', {
     },
     setTheme(theme: ThemeTypes) {
       this.theme = theme
+    },
+    setChartTheme(chartTheme: string) {
+      this.chartTheme = chartTheme
     },
     setBreadcrumb(breadcrumb: boolean) {
       this.breadcrumb = breadcrumb

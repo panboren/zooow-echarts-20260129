@@ -14,6 +14,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import * as echarts from 'echarts'
+import { useAppStore } from '@/store/modules/app'
+import { getChartTheme, applyThemeToOption } from '@/config/echartsThemes'
 
 interface Props {
   component: any
@@ -27,6 +29,8 @@ const props = withDefaults(defineProps<Props>(), {
 const containerRef = ref<HTMLElement>()
 const componentRef = ref<any>()
 const isVisible = ref(false)
+const appStore = useAppStore()
+
 let observer: IntersectionObserver | null = null
 let cleanupTimer: number | null = null
 
@@ -54,6 +58,61 @@ const debouncedCleanup = () => {
   }, 100) // 100ms延迟，避免频繁清理
 }
 
+// 应用主题到图表
+const applyThemeToChart = () => {
+  console.log('🔄 LazyChart applyThemeToChart 被调用')
+
+  // 移除isVisible检查，始终尝试应用主题
+  if (componentRef.value) {
+    try {
+      // 尝试获取图表DOM
+      let chartDom = null
+
+      // 方法1: 通过$el.querySelector
+      if (componentRef.value.$el) {
+        chartDom = componentRef.value.$el.querySelector('.chart')
+      }
+
+      // 方法2: 直接获取组件的chartRef
+      if (!chartDom && componentRef.value.chartRef && componentRef.value.chartRef.$el) {
+        chartDom = componentRef.value.chartRef.$el.querySelector('.chart')
+      }
+
+      // 方法3: 尝试直接访问VChart组件的DOM
+      if (!chartDom) {
+        const vchartElements = containerRef.value?.querySelectorAll('.chart')
+        if (vchartElements && vchartElements.length > 0) {
+          chartDom = vchartElements[0]
+        }
+      }
+
+      if (chartDom) {
+        const chart = echarts.getInstanceByDom(chartDom)
+        if (chart) {
+          const currentOption = chart.getOption()
+          const theme = getChartTheme(appStore.getChartTheme)
+          const themedOption = applyThemeToOption(currentOption, theme)
+          chart.setOption(themedOption, true)
+          console.log('✅ LazyChart: 主题已成功应用')
+        }
+      }
+    } catch (error) {
+      console.warn('⚠️ LazyChart: 应用主题失败', error)
+    }
+  }
+}
+
+// 防抖应用主题
+let themeApplyTimer: number | null = null
+const debouncedApplyTheme = () => {
+  if (themeApplyTimer) {
+    clearTimeout(themeApplyTimer)
+  }
+  themeApplyTimer = window.setTimeout(() => {
+    applyThemeToChart()
+  }, 100)
+}
+
 onMounted(() => {
   // 使用 IntersectionObserver 监听元素是否进入/离开可视区域
   observer = new IntersectionObserver(
@@ -78,12 +137,18 @@ onMounted(() => {
   if (containerRef.value) {
     observer.observe(containerRef.value)
   }
+
+  // 监听主题变化
+  window.addEventListener('chart-theme-change', debouncedApplyTheme)
 })
 
 onUnmounted(() => {
   // 清理定时器
   if (cleanupTimer) {
     clearTimeout(cleanupTimer)
+  }
+  if (themeApplyTimer) {
+    clearTimeout(themeApplyTimer)
   }
 
   // 断开观察器
@@ -94,12 +159,24 @@ onUnmounted(() => {
 
   // 清理ECharts实例
   cleanupECharts()
+
+  // 移除主题变化监听
+  window.removeEventListener('chart-theme-change', debouncedApplyTheme)
 })
+
+// 监听 store 中主题变化
+watch(
+  () => appStore.getChartTheme,
+  () => {
+    debouncedApplyTheme()
+  }
+)
 
 // 暴露给父组件
 defineExpose({
   isVisible,
-  cleanupECharts
+  cleanupECharts,
+  applyThemeToChart
 })
 </script>
 

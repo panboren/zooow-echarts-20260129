@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <ChartThemeSwitcher />
     <StunningMasterGallery />
   </div>
 
@@ -7,6 +8,7 @@
 
 <script setup>
 import StunningMasterGallery from './compoments/stunning-master-gallery.vue'
+import ChartThemeSwitcher from '@/components/ChartThemeSwitcher/index.vue'
 </script>
 
 <style scoped>
