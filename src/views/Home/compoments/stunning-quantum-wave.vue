@@ -54,9 +54,9 @@
       <div class="nebula nebula-22"></div>
       <div class="nebula nebula-23"></div>
       <div class="nebula nebula-24"></div>
-      <!-- 550个浮动粒子 -->
+      <!-- 200个浮动粒子（优化性能） -->
       <div
-        v-for="i in 550"
+        v-for="i in 200"
         :key="`particle-${i}`"
         class="particle"
         :style="particleStyle(i)"
@@ -177,6 +177,11 @@ import type { EChartsOption } from 'echarts'
 const chartRef = ref<HTMLElement | null>(null)
 let chartInstance: echarts.ECharts | null = null
 let waveInterval: number | null = null
+
+// 保存resize处理函数的引用，以便正确移除
+const handleResize = () => {
+  chartInstance?.resize()
+}
 let wavePhase = 0
 
 const waveCount = ref(3)
@@ -419,9 +424,7 @@ onMounted(() => {
     startAnimation()
   }, 500)
 
-  window.addEventListener('resize', () => {
-    chartInstance?.resize()
-  })
+  window.addEventListener('resize', handleResize)
 })
 
 onUnmounted(() => {
@@ -429,7 +432,8 @@ onUnmounted(() => {
     clearInterval(waveInterval)
   }
   chartInstance?.dispose()
-  window.removeEventListener('resize', () => {})
+  // 正确移除事件监听器
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 

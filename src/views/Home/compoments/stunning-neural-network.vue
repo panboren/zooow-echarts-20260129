@@ -148,6 +148,11 @@ const chartRef = ref<HTMLElement | null>(null)
 let chartInstance: echarts.ECharts | null = null
 let animationInterval: number | null = null
 
+// 保存resize处理函数的引用
+const handleResize = () => {
+  chartInstance?.resize()
+}
+
 const layerCount = ref(5)
 const neuronsPerLayer = ref(6)
 const signalSpeed = ref(5)
@@ -430,15 +435,14 @@ onMounted(() => {
     updateStats()
   }, 500)
 
-  window.addEventListener('resize', () => {
-    chartInstance?.resize()
-  })
+  window.addEventListener('resize', handleResize)
 })
 
 onUnmounted(() => {
   stopTraining()
   chartInstance?.dispose()
-  window.removeEventListener('resize', () => {})
+  // 正确移除事件监听器
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 

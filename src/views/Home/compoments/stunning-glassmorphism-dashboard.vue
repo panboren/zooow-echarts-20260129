@@ -5,9 +5,9 @@
       <div v-for="i in 18" :key="i" class="halo" :style="getHaloStyle(i)"></div>
     </div>
 
-    <!-- 粒子系统 -->
+    <!-- 粒子系统（优化为150个粒子） -->
     <div class="particle-system">
-      <div v-for="i in 450" :key="i" class="particle" :style="getParticleStyle(i)"></div>
+      <div v-for="i in 150" :key="i" class="particle" :style="getParticleStyle(i)"></div>
     </div>
 
     <!-- 标题区域 -->
@@ -130,6 +130,16 @@ let barChart: echarts.ECharts | null = null
 let radarChart: echarts.ECharts | null = null
 let gaugeChart: echarts.ECharts | null = null
 const kpiCharts: echarts.ECharts[] = []
+
+// 保存resize处理函数的引用
+const handleResize = () => {
+  mainChart?.resize()
+  pieChart?.resize()
+  barChart?.resize()
+  radarChart?.resize()
+  gaugeChart?.resize()
+  kpiCharts.forEach(chart => chart?.resize())
+}
 
 // 控制状态
 const timeRange = ref('本周')
@@ -424,27 +434,27 @@ const pieChartOption = ref<EChartsOption>({
       const percent = ((params.value / total) * 100).toFixed(2);
       return `
         <div style="padding: 8px;">
-          <div style="font-size: 18px; font-weight: 900; margin-bottom: 14px; 
+          <div style="font-size: 18px; font-weight: 900; margin-bottom: 14px;
             background: linear-gradient(135deg, ${params.color}, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;">
             ${params.name}
           </div>
-          <div style="display: flex; justify-content: space-between; 
-            align-items: center; margin: 10px 0; padding: 10px; 
-            background: rgba(255,255,255,0.08); border-radius: 10px; 
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; margin: 10px 0; padding: 10px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.12);">
             <span style="color: rgba(255,255,255,0.75);">数值</span>
-            <span style="font-weight: 900; color: #ffffff; margin-left: 20px; 
+            <span style="font-weight: 900; color: #ffffff; margin-left: 20px;
               text-shadow: 0 0 12px ${params.color};">${params.value.toLocaleString()}</span>
           </div>
-          <div style="display: flex; justify-content: space-between; 
-            align-items: center; margin: 10px 0; padding: 10px; 
-            background: rgba(255,255,255,0.08); border-radius: 10px; 
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; margin: 10px 0; padding: 10px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.12);">
             <span style="color: rgba(255,255,255,0.75);">占比</span>
-            <span style="font-weight: 900; color: ${params.color}; margin-left: 20px; 
+            <span style="font-weight: 900; color: ${params.color}; margin-left: 20px;
               font-size: 18px; text-shadow: 0 0 15px ${params.color};">${percent}%</span>
           </div>
         </div>
@@ -530,14 +540,14 @@ const pieChartOption = ref<EChartsOption>({
               x: 0.3,
               y: 0.3,
               r: 0.8,
-          colorStops: [
-            { offset: 0, color: 'rgba(255, 255, 255, 0.6)' },
-            { offset: 0.2, color: 'rgba(102, 126, 234, 0.5)' },
-            { offset: 0.4, color: 'rgba(118, 75, 162, 0.45)' },
-            { offset: 0.6, color: 'rgba(240, 147, 251, 0.4)' },
-            { offset: 0.8, color: 'rgba(118, 75, 162, 0.35)' },
-            { offset: 1, color: 'rgba(102, 126, 234, 0.3)' }
-          ]
+              colorStops: [
+                { offset: 0, color: 'rgba(255, 255, 255, 0.6)' },
+                { offset: 0.2, color: 'rgba(102, 126, 234, 0.5)' },
+                { offset: 0.4, color: 'rgba(118, 75, 162, 0.45)' },
+                { offset: 0.6, color: 'rgba(240, 147, 251, 0.4)' },
+                { offset: 0.8, color: 'rgba(118, 75, 162, 0.35)' },
+                { offset: 1, color: 'rgba(102, 126, 234, 0.3)' }
+              ]
             },
             shadowColor: 'rgba(255, 255, 255, 0.6)',
             shadowBlur: 30
@@ -1121,12 +1131,12 @@ const changeTimeRange = () => {
   const ranges = ['本周', '本月', '本季度', '本年']
   const currentIndex = ranges.indexOf(timeRange.value)
   timeRange.value = ranges[(currentIndex + 1) % ranges.length]
-  
+
   const timeSeriesData = generateTimeSeriesData()
   mainChartOption.value.xAxis!.data = timeSeriesData.labels
   mainChartOption.value.series![0].data = timeSeriesData.data1
   mainChartOption.value.series![1].data = timeSeriesData.data2
-  
+
   mainChart?.setOption(mainChartOption.value)
 }
 
@@ -1134,10 +1144,10 @@ const toggleChartType = () => {
   const types = ['line', 'area', 'bar']
   const currentIndex = types.indexOf(chartType.value)
   chartType.value = types[(currentIndex + 1) % types.length]
-  
+
   mainChartOption.value.series![0].type = chartType.value as any
   mainChartOption.value.series![1].type = chartType.value as any
-  
+
   mainChart?.setOption(mainChartOption.value)
 }
 
@@ -1145,7 +1155,7 @@ const togglePieType = () => {
   const types = ['环形', '饼图', '南丁格尔']
   const currentIndex = types.indexOf(pieType.value)
   pieType.value = types[(currentIndex + 1) % types.length]
-  
+
   if (pieType.value === '饼图') {
     pieChartOption.value.series![0].radius = '70%'
   } else if (pieType.value === '南丁格尔') {
@@ -1154,7 +1164,7 @@ const togglePieType = () => {
     pieChartOption.value.series![0].radius = ['40%', '70%']
     pieChartOption.value.series![0].roseType = undefined
   }
-  
+
   pieChart?.setOption(pieChartOption.value)
 }
 
@@ -1300,14 +1310,7 @@ onMounted(() => {
     }
   }, 100)
 
-  window.addEventListener('resize', () => {
-    mainChart?.resize()
-    pieChart?.resize()
-    barChart?.resize()
-    radarChart?.resize()
-    gaugeChart?.resize()
-    kpiCharts.forEach(chart => chart.resize())
-  })
+  window.addEventListener('resize', handleResize)
 })
 
 onUnmounted(() => {
@@ -1317,6 +1320,8 @@ onUnmounted(() => {
   radarChart?.dispose()
   gaugeChart?.dispose()
   kpiCharts.forEach(chart => chart.dispose())
+  // 正确移除事件监听器
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 

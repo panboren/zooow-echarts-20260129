@@ -46,9 +46,9 @@
       <div class="nebula nebula-18"></div>
       <div class="nebula nebula-19"></div>
       <div class="nebula nebula-20"></div>
-      <!-- 450个浮动粒子 -->
+      <!-- 150个浮动粒子（优化性能） -->
       <div
-        v-for="i in 450"
+        v-for="i in 150"
         :key="`particle-${i}`"
         class="particle"
         :style="particleStyle(i)"

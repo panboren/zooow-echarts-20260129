@@ -297,7 +297,8 @@ const option = ref({
     },
     itemWidth: 24,
     itemHeight: 12,
-    itemGap: 35
+    itemGap: 35,
+    formatter: (name) => name // 直接显示类别名称
   },
   series: [
     {

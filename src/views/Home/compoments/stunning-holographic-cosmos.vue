@@ -10,9 +10,9 @@
       <div v-for="i in 20" :key="i" class="nebula" :style="getNebulaStyle(i)"></div>
     </div>
 
-    <!-- 粒子系统 -->
+    <!-- 粒子系统（优化为180个粒子） -->
     <div class="particle-system">
-      <div v-for="i in 600" :key="i" class="particle" :style="getParticleStyle(i)"></div>
+      <div v-for="i in 180" :key="i" class="particle" :style="getParticleStyle(i)"></div>
     </div>
 
     <!-- 标题区域 -->

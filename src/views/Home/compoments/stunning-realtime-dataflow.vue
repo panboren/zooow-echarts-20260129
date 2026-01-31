@@ -5,9 +5,9 @@
       <div v-for="i in 20" :key="i" class="halo" :style="getHaloStyle(i)"></div>
     </div>
 
-    <!-- 粒子系统 -->
+    <!-- 粒子系统（优化为150个粒子） -->
     <div class="particle-system">
-      <div v-for="i in 500" :key="i" class="particle" :style="getParticleStyle(i)"></div>
+      <div v-for="i in 150" :key="i" class="particle" :style="getParticleStyle(i)"></div>
     </div>
 
     <!-- 标题区域 -->
@@ -87,6 +87,11 @@ import type { EChartsOption } from 'echarts'
 const chartRef = ref<HTMLElement>()
 const chartContainer = ref<HTMLElement>()
 let chart: echarts.ECharts | null = null
+
+// 保存resize处理函数的引用
+const handleResize = () => {
+  chart?.resize()
+}
 
 // 控制状态
 const isFlowing = ref(true)
@@ -675,9 +680,7 @@ onMounted(() => {
         chart = echarts.init(chartRef.value)
         chart.setOption(option.value)
 
-        window.addEventListener('resize', () => {
-          chart?.resize()
-        })
+        window.addEventListener('resize', handleResize)
 
         // 启动实时更新
         updateInterval = window.setInterval(updateRealtimeData, 1000)
@@ -695,6 +698,8 @@ onUnmounted(() => {
     clearInterval(updateInterval)
   }
   chart?.dispose()
+  // 正确移除事件监听器
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 

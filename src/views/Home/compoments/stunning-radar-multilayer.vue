@@ -181,14 +181,12 @@ const chartOption = computed(() => {
       shape: 'polygon',
       splitNumber: 5,
       name: {
-        textStyle: {
-          color: 'rgba(255, 255, 255, 0.85)',
-          fontSize: 12,
-          fontFamily: 'system-ui, -apple-system, sans-serif',
-          fontWeight: '500',
-          textShadowColor: 'rgba(0, 0, 0, 0.5)',
-          textShadowBlur: 5
-        }
+        color: 'rgba(255, 255, 255, 0.85)',
+        fontSize: 12,
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+        fontWeight: '500',
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowBlur: 5
       },
       splitArea: {
         areaStyle: {
