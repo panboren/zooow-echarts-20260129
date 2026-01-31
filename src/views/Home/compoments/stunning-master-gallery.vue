@@ -6,23 +6,23 @@
         <span class="title-icon">🎨</span>
         <span>ECharts 精美图表现场</span>
       </h1>
-      <p class="gallery-subtitle">31个超酷炫图表组件 - 完整展示</p>
+      <p class="gallery-subtitle">38个超酷炫图表组件 - 完整展示</p>
     </div>
 
     <!-- 统计卡片 -->
-    <div class="stats-row">
+    <div v-if="show" class="stats-row">
       <div class="stat-card stat-card-1">
         <div class="stat-icon">📊</div>
         <div class="stat-content">
-        <div class="stat-value">31</div>
+        <div class="stat-value">38</div>
         <div class="stat-label">图表组件</div>
         </div>
       </div>
       <div class="stat-card stat-card-2">
         <div class="stat-icon">🎯</div>
         <div class="stat-content">
-          <div class="stat-value">3</div>
-          <div class="stat-label">仪表板版本</div>
+          <div class="stat-value">4</div>
+          <div class="stat-label">图表系列</div>
         </div>
       </div>
       <div class="stat-card stat-card-3">
@@ -42,7 +42,7 @@
     </div>
 
     <!-- 第一批：基础图表 -->
-    <div class="section">
+    <div v-if="show" class="section">
       <h2 class="section-title">
         <span class="title-badge">01</span>
         基础图表系列
@@ -89,7 +89,7 @@
     </div>
 
     <!-- 第二批：高级图表 -->
-    <div class="section">
+    <div v-if="show" class="section">
       <h2 class="section-title">
         <span class="title-badge">02</span>
         高级图表系列
@@ -118,7 +118,7 @@
     </div>
 
     <!-- 第三批：专业图表 -->
-    <div class="section">
+    <div v-if="show" class="section">
       <h2 class="section-title">
         <span class="title-badge">03</span>
         专业图表系列
@@ -137,7 +137,7 @@
     </div>
 
     <!-- 第四批：树形图表 -->
-    <div class="section">
+    <div v-if="show" class="section">
       <h2 class="section-title">
         <span class="title-badge">04</span>
         树形图表系列
@@ -150,7 +150,7 @@
     </div>
 
     <!-- 第五批：超酷炫图表 -->
-    <div class="section">
+    <div v-if="show" class="section">
       <h2 class="section-title">
         <span class="title-badge">05</span>
         超酷炫图表系列
@@ -179,7 +179,7 @@
     </div>
 
     <!-- 第六批：全息宇宙系列 -->
-    <div class="section">
+    <div v-if="show" class="section" >
       <h2 class="section-title">
         <span class="title-badge">06</span>
         全息宇宙系列
@@ -192,7 +192,7 @@
     </div>
 
     <!-- 第七批：多层透明叠加系列 -->
-    <div class="section">
+    <div v-if="show" class="section">
       <h2 class="section-title">
         <span class="title-badge">07</span>
         多层透明叠加系列
@@ -235,6 +235,57 @@
       </div>
     </div>
 
+    <!-- 第八批：下一代图表系列 -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="title-badge">08</span>
+        下一代图表系列
+      </h2>
+      <div class="row">
+        <div class="chart-card full-width">
+          <Stunning3DDynamic />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningTimelineExplorer />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningAIPrediction />
+        </div>
+      </div>
+      <div class="row" v-if="show">
+        <div class="chart-card full-width">
+          <StunningMultiDashboard />
+        </div>
+      </div>
+    </div>
+
+    <!-- 第九批：未来科技系列 -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="title-badge">09</span>
+        未来科技系列
+      </h2>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningHolographicTunnel />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningNeuralNetwork />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <StunningQuantumEntanglement />
+        </div>
+      </div>
+    </div>
+
     <!-- 底部信息 -->
     <div class="gallery-footer">
       <div class="footer-info">
@@ -262,6 +313,10 @@ import StunningScatter from './stunning-scatter.vue';
 import StunningGauge from './stunning-gauge.vue';
 import StunningFunnel from './stunning-funnel.vue';
 import StunningHeatmap from './stunning-heatmap.vue';
+import Stunning3DDynamic from './stunning-3d-dynamic.vue';
+import StunningTimelineExplorer from './stunning-timeline-explorer.vue';
+import StunningAIPrediction from './stunning-ai-prediction.vue';
+import StunningMultiDashboard from './stunning-multi-dashboard.vue';
 import StunningGraph from './stunning-graph.vue';
 import StunningTreemap from './stunning-treemap.vue';
 import StunningLiquid from './stunning-liquid.vue';
@@ -278,6 +333,11 @@ import StunningRadarMultilayer from './stunning-radar-multilayer.vue';
 import StunningAreaMultilayer from './stunning-area-multilayer.vue';
 import StunningGaugeMultilayer from './stunning-gauge-multilayer.vue';
 import StunningScatterMultilayer from './stunning-scatter-multilayer.vue';
+import StunningHolographicTunnel from './stunning-holographic-tunnel.vue';
+import StunningNeuralNetwork from './stunning-neural-network.vue';
+import StunningQuantumEntanglement from './stunning-quantum-entanglement.vue';
+
+let show = ref(false)
 </script>
 
 <style scoped>
