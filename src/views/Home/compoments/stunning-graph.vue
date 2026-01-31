@@ -365,10 +365,14 @@ defineExpose({
     0 0 180px rgba(59, 130, 246, 0.15),
     inset 0 2px 0 rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(147, 51, 234, 0.3);
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
 }
 
 .chart {
-  height: 720px;
+  flex: 1;
   width: 100%;
+  min-height: 400px;
 }
 </style>
