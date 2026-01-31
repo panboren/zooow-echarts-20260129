@@ -253,7 +253,7 @@ defineExpose({
 }
 
 .chart {
-  height: 500px;
+  height: 720px;
   width: 100%;
 }
 </style>

@@ -194,8 +194,8 @@ const option = ref({
   grid: {
     left: '5%',
     right: '5%',
-    top: '20%',
-    bottom: '15%',
+    top: '25%',
+    bottom: '2%',
     containLabel: true
   },
   xAxis: {
@@ -383,14 +383,14 @@ const option = ref({
   width: 100%;
   height: 100%;
   min-height: 680px;
-  background: 
+  background:
     radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(240, 147, 251, 0.12) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 60%),
     linear-gradient(135deg, #080814 0%, #0f0f23 30%, #141428 60%, #0a0a18 100%);
   border-radius: 32px;
   padding: 28px;
-  box-shadow: 
+  box-shadow:
     0 45px 140px rgba(0, 0, 0, 0.9),
     0 0 120px rgba(102, 126, 234, 0.18),
     0 0 180px rgba(240, 147, 251, 0.12),
@@ -498,7 +498,7 @@ const option = ref({
 
 .chart {
   width: 100%;
-  height: 100%;
+  height: 508px;
   min-height: 400px;
 }
 

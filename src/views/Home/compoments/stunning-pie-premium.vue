@@ -18,14 +18,7 @@
         :option="option"
         :autoresize="true"
         @click="handleClick"
-        @mouseover="handleMouseOver"
-        @mouseout="handleMouseOut"
       />
-    </div>
-    <div class="center-display" v-if="hoveredItem">
-      <div class="center-value">{{ hoveredItem.value.toLocaleString() }}</div>
-      <div class="center-label">{{ hoveredItem.name }}</div>
-      <div class="center-percent">{{ hoveredItem.percent }}%</div>
     </div>
     <div class="data-cards">
       <div class="data-card card-1">
@@ -67,7 +60,6 @@ import { ref, computed, watch } from "vue";
 use([CanvasRenderer, PieChart, TitleComponent, TooltipComponent]);
 
 const chartRef = ref(null);
-const hoveredItem = ref(null);
 
 const totalValue = computed(() => 10000);
 const categoryCount = computed(() => 8);
@@ -274,7 +266,14 @@ const option = ref({
       },
       emphasis: {
         label: {
-          show: false
+          show: true,
+          fontSize: 28,
+          fontWeight: 'bold',
+          color: '#ffffff',
+          formatter: '{b}\n{d}%',
+          textShadowBlur: 20,
+          textShadowColor: 'rgba(0, 0, 0, 0.8)',
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif'
         },
         itemStyle: {
           shadowBlur: 60,
@@ -294,20 +293,6 @@ const option = ref({
     }
   ]
 });
-
-const handleMouseOver = (params) => {
-  if (params && params.data) {
-    hoveredItem.value = {
-      name: params.data.name,
-      value: params.data.value,
-      percent: params.data.percent
-    };
-  }
-};
-
-const handleMouseOut = () => {
-  hoveredItem.value = null;
-};
 
 const handleClick = (params) => {
   console.log('点击了扇形:', params);
@@ -433,74 +418,6 @@ defineExpose({
   width: 100%;
   height: 100%;
   min-height: 400px;
-}
-
-/* 中心显示区域 */
-.center-display {
-  position: absolute;
-  top: 58%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 10;
-  pointer-events: none;
-  animation: fadeInUp 0.3s ease-out;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -45%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.center-value {
-  font-size: 56px;
-  font-weight: bold;
-  background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-.center-label {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 8px;
-  font-weight: 500;
-}
-
-.center-percent {
-  font-size: 32px;
-  font-weight: bold;
-  color: #f5576c;
-  margin-top: 5px;
-  text-shadow: 0 0 20px rgba(245, 87, 108, 0.5);
-  animation: glow 2s ease-in-out infinite;
-}
-
-@keyframes glow {
-  0%, 100% {
-    text-shadow: 0 0 20px rgba(245, 87, 108, 0.5);
-  }
-  50% {
-    text-shadow: 0 0 30px rgba(245, 87, 108, 0.8);
-  }
 }
 
 .data-cards {

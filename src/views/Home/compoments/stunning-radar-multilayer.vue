@@ -507,8 +507,8 @@ onMounted(() => {
 .stats-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 20px;
   z-index: 2;
   position: relative;
 }
@@ -516,13 +516,14 @@ onMounted(() => {
 .stat-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
+  gap: 10px;
+  padding: 12px 14px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 16px;
+  border-radius: 14px;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  min-height: 56px;
 }
 
 .stat-card:hover {
@@ -532,28 +533,46 @@ onMounted(() => {
 }
 
 .stat-icon {
-  font-size: 28px;
+  font-size: 22px;
   filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stat-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
 }
 
 .stat-value {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #ffffff;
   font-family: 'SF Mono', 'Monaco', monospace;
   text-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+  line-height: 1.2;
   margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .stat-label {
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
   letter-spacing: 0.3px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 图表标题 */

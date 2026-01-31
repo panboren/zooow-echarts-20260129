@@ -27,7 +27,7 @@ use([CanvasRenderer, FunnelChart, TitleComponent, TooltipComponent, LegendCompon
 const chartRef = ref(null);
 
 const option = ref({
-  backgroundColor: '#0f172a',
+  backgroundColor: 'transparent',
   title: {
     text: '转化漏斗分析',
     subtext: '2025年数据',
@@ -35,29 +35,63 @@ const option = ref({
     top: 20,
     textStyle: {
       color: '#ffffff',
-      fontSize: 32,
-      fontWeight: 'bold',
-      fontFamily: 'Arial, sans-serif',
-      textShadow: '0 4px 20px rgba(102, 126, 234, 0.5)'
+      fontSize: 34,
+      fontWeight: '900',
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+      textShadow: '0 0 40px rgba(102, 126, 234, 0.9), 0 0 80px rgba(240, 147, 251, 0.6)',
+      letterSpacing: '2px'
     },
     subtextStyle: {
-      color: '#a0a0a0',
-      fontSize: 16,
-      fontFamily: 'Arial, sans-serif'
+      color: 'rgba(255, 255, 255, 0.7)',
+      fontSize: 14,
+      fontWeight: 'bold',
+      fontFamily: 'Arial, sans-serif',
+      textShadow: '0 0 30px rgba(102, 126, 234, 0.5)',
+      letterSpacing: '3px'
     }
   },
   tooltip: {
     trigger: 'item',
-    formatter: '{a} <br/>{b} : {c} ({d}%)',
-    backgroundColor: 'rgba(15, 23, 42, 0.95)',
-    borderColor: '#667eea',
+    backgroundColor: 'rgba(10, 10, 20, 0.98)',
+    borderColor: 'rgba(102, 126, 234, 0.7)',
     borderWidth: 2,
-    borderRadius: 16,
-    padding: [20, 25],
+    borderRadius: 20,
+    padding: [20, 28],
     textStyle: {
       color: '#ffffff',
       fontSize: 14,
       fontFamily: 'Arial, sans-serif'
+    },
+    formatter: (params) => {
+      return `
+        <div style="padding: 8px;">
+          <div style="font-size: 18px; font-weight: 900; margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;">
+            ${params.name}
+          </div>
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; padding: 10px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;">
+            <span style="display: flex; align-items: center;">
+              <span style="width: 12px; height: 12px; border-radius: 50%;
+                background: ${params.color}; box-shadow: 0 0 10px ${params.color}; margin-right: 10px;"></span>
+              <span style="color: rgba(255,255,255,0.7);">数值</span>
+            </span>
+            <span style="font-weight: 900; color: ${params.color};
+              text-shadow: 0 0 15px ${params.color};">${params.value.toLocaleString()}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; margin-top: 8px; padding: 10px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;">
+            <span style="color: rgba(255,255,255,0.7);">占比</span>
+            <span style="font-weight: 900; color: ${params.color};
+              text-shadow: 0 0 15px ${params.color};">${params.percent}%</span>
+          </div>
+        </div>
+      `;
     }
   },
   legend: {
@@ -93,7 +127,7 @@ const option = ref({
         color: '#ffffff',
         fontFamily: 'Arial, sans-serif',
         formatter: '{b}: {c}',
-        textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+        textShadow: '0 2px 12px rgba(0, 0, 0, 0.9)'
       },
       labelLine: {
         length: 10,
@@ -103,10 +137,10 @@ const option = ref({
         }
       },
       itemStyle: {
-        borderColor: '#ffffff',
-        borderWidth: 2,
-        shadowColor: 'rgba(0, 0, 0, 0.4)',
-        shadowBlur: 15,
+        borderColor: 'rgba(255, 255, 255, 0.35)',
+        borderWidth: 1,
+        shadowColor: 'rgba(102, 126, 234, 0.6)',
+        shadowBlur: 25,
         shadowOffsetX: 5,
         shadowOffsetY: 5
       },
@@ -116,11 +150,12 @@ const option = ref({
           fontWeight: 'bold'
         },
         itemStyle: {
-          shadowColor: 'rgba(102, 126, 234, 0.8)',
-          shadowBlur: 30,
-          shadowOffsetX: 8,
-          shadowOffsetY: 8,
-          borderWidth: 3
+          shadowColor: 'rgba(102, 126, 234, 1)',
+          shadowBlur: 45,
+          shadowOffsetX: 12,
+          shadowOffsetY: 12,
+          borderWidth: 3,
+          borderColor: 'rgba(255, 255, 255, 0.85)'
         }
       },
       data: [
@@ -132,11 +167,15 @@ const option = ref({
               type: 'linear',
               x: 0,
               y: 0,
-              x2: 1,
-              y2: 0,
+              x2: 0,
+              y2: 1,
               colorStops: [
-                { offset: 0, color: '#667eea' },
-                { offset: 1, color: '#764ba2' }
+                { offset: 0, color: 'rgba(102, 126, 234, 0.85)' },
+                { offset: 0.2, color: 'rgba(118, 75, 162, 0.78)' },
+                { offset: 0.4, color: 'rgba(240, 147, 251, 0.72)' },
+                { offset: 0.6, color: 'rgba(118, 75, 162, 0.68)' },
+                { offset: 0.8, color: 'rgba(102, 126, 234, 0.62)' },
+                { offset: 1, color: 'rgba(102, 126, 234, 0.55)' }
               ]
             }
           }
@@ -149,11 +188,13 @@ const option = ref({
               type: 'linear',
               x: 0,
               y: 0,
-              x2: 1,
-              y2: 0,
+              x2: 0,
+              y2: 1,
               colorStops: [
-                { offset: 0, color: '#f093fb' },
-                { offset: 1, color: '#f5576c' }
+                { offset: 0, color: 'rgba(79, 172, 254, 0.85)' },
+                { offset: 0.3, color: 'rgba(0, 242, 254, 0.75)' },
+                { offset: 0.6, color: 'rgba(67, 233, 123, 0.65)' },
+                { offset: 1, color: 'rgba(79, 172, 254, 0.55)' }
               ]
             }
           }
@@ -166,11 +207,13 @@ const option = ref({
               type: 'linear',
               x: 0,
               y: 0,
-              x2: 1,
-              y2: 0,
+              x2: 0,
+              y2: 1,
               colorStops: [
-                { offset: 0, color: '#4facfe' },
-                { offset: 1, color: '#00f2fe' }
+                { offset: 0, color: 'rgba(67, 233, 123, 0.85)' },
+                { offset: 0.3, color: 'rgba(56, 249, 215, 0.75)' },
+                { offset: 0.6, color: 'rgba(79, 172, 254, 0.65)' },
+                { offset: 1, color: 'rgba(67, 233, 123, 0.55)' }
               ]
             }
           }
@@ -183,11 +226,14 @@ const option = ref({
               type: 'linear',
               x: 0,
               y: 0,
-              x2: 1,
-              y2: 0,
+              x2: 0,
+              y2: 1,
               colorStops: [
-                { offset: 0, color: '#43e97b' },
-                { offset: 1, color: '#38f9d7' }
+                { offset: 0, color: 'rgba(240, 147, 251, 0.85)' },
+                { offset: 0.25, color: 'rgba(255, 105, 180, 0.78)' },
+                { offset: 0.5, color: 'rgba(245, 87, 108, 0.72)' },
+                { offset: 0.75, color: 'rgba(255, 105, 180, 0.65)' },
+                { offset: 1, color: 'rgba(240, 147, 251, 0.58)' }
               ]
             }
           }
@@ -200,11 +246,14 @@ const option = ref({
               type: 'linear',
               x: 0,
               y: 0,
-              x2: 1,
-              y2: 0,
+              x2: 0,
+              y2: 1,
               colorStops: [
-                { offset: 0, color: '#fa709a' },
-                { offset: 1, color: '#fee140' }
+                { offset: 0, color: 'rgba(254, 225, 64, 0.85)' },
+                { offset: 0.25, color: 'rgba(255, 171, 0, 0.78)' },
+                { offset: 0.5, color: 'rgba(245, 87, 108, 0.72)' },
+                { offset: 0.75, color: 'rgba(255, 171, 0, 0.65)' },
+                { offset: 1, color: 'rgba(254, 225, 64, 0.58)' }
               ]
             }
           }
@@ -227,15 +276,23 @@ defineExpose({
 .stunning-funnel-container {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(240, 147, 251, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 60%),
+    linear-gradient(135deg, #080814 0%, #0f0f23 30%, #141428 60%, #0a0a18 100%);
+  border-radius: 32px;
+  padding: 28px;
+  box-shadow:
+    0 45px 140px rgba(0, 0, 0, 0.9),
+    0 0 120px rgba(102, 126, 234, 0.18),
+    0 0 180px rgba(240, 147, 251, 0.12),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.25);
 }
 
 .chart {
-  height: 500px;
+  height: 720px;
   width: 100%;
 }
 </style>

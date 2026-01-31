@@ -193,8 +193,8 @@ const option = ref({
   grid: {
     left: '5%',
     right: '5%',
-    top: '20%',
-    bottom: '15%',
+    top: '25%',
+    bottom: '2%',
     containLabel: true
   },
   xAxis: {
@@ -493,7 +493,7 @@ const option = ref({
 
 .chart {
   width: 100%;
-  height: 100%;
+  height: 508px;
   min-height: 400px;
 }
 

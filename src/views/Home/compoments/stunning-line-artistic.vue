@@ -80,7 +80,7 @@ const starStyle = (i) => ({
   top: `${Math.random() * 100}%`,
   animationDelay: `${Math.random() * 10}s`,
   animationDuration: `${Math.random() * 8 + 6}s`,
-  background: `radial-gradient(circle, ${['rgba(255, 255, 255, 0.95)', 'rgba(102, 126, 234, 0.9)', 
+  background: `radial-gradient(circle, ${['rgba(255, 255, 255, 0.95)', 'rgba(102, 126, 234, 0.9)',
     'rgba(79, 172, 254, 0.9)', 'rgba(245, 87, 108, 0.9)', 'rgba(67, 233, 123, 0.9)'][Math.floor(Math.random() * 5)]}, transparent)`
 });
 
@@ -131,7 +131,7 @@ const option = ref({
       const total = params.reduce((sum, item) => sum + item.value, 0);
       return `
         <div style="padding: 8px;">
-          <div style="font-size: 20px; font-weight: 900; margin-bottom: 16px; 
+          <div style="font-size: 20px; font-weight: 900; margin-bottom: 16px;
             background: linear-gradient(135deg, ${params[0].color}, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -139,21 +139,21 @@ const option = ref({
             ${params[0].name}
           </div>
           ${params.map(item => `
-            <div style="display: flex; justify-content: space-between; 
-              align-items: center; margin: 10px 0; padding: 10px; 
-              background: rgba(255,255,255,0.08); border-radius: 10px; 
+            <div style="display: flex; justify-content: space-between;
+              align-items: center; margin: 10px 0; padding: 10px;
+              background: rgba(255,255,255,0.08); border-radius: 10px;
               border: 1px solid rgba(255,255,255,0.12);">
               <span style="color: rgba(255,255,255,0.75);">${item.seriesName}</span>
-              <span style="font-weight: 900; color: ${item.color}; margin-left: 20px; 
+              <span style="font-weight: 900; color: ${item.color}; margin-left: 20px;
                 text-shadow: 0 0 12px ${item.color};">${item.value.toLocaleString()}</span>
             </div>
           `).join('')}
-          <div style="display: flex; justify-content: space-between; 
-            align-items: center; margin: 10px 0; padding: 12px; 
-            background: rgba(102, 126, 234, 0.15); border-radius: 10px; 
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; margin: 10px 0; padding: 12px;
+            background: rgba(102, 126, 234, 0.15); border-radius: 10px;
             border: 1px solid rgba(102, 126, 234, 0.3);">
             <span style="color: rgba(255,255,255,0.9); font-weight: bold;">总计</span>
-            <span style="font-weight: 900; color: #ffffff; margin-left: 20px; 
+            <span style="font-weight: 900; color: #ffffff; margin-left: 20px;
               font-size: 18px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);">
               ${total.toLocaleString()}
             </span>
@@ -166,7 +166,7 @@ const option = ref({
     left: '10%',
     right: '6%',
     top: '22%',
-    bottom: '20%',
+    bottom: '5%',
     containLabel: true
   },
   xAxis: {
@@ -438,11 +438,11 @@ defineExpose({
   position: relative;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(15, 15, 35, 0.99) 0%, 
+  background: linear-gradient(135deg, rgba(15, 15, 35, 0.99) 0%,
     rgba(26, 26, 46, 0.99) 45%, rgba(35, 35, 60, 0.99) 100%);
   border-radius: 32px;
   padding: 26px;
-  box-shadow: 
+  box-shadow:
     0 35px 120px rgba(0, 0, 0, 0.9),
     0 0 100px rgba(255, 255, 255, 0.08),
     0 0 150px rgba(102, 126, 234, 0.15),
@@ -566,30 +566,30 @@ defineExpose({
 
 .aurora-1 {
   top: -100px;
-  background: linear-gradient(90deg, 
-    rgba(102, 126, 234, 0.65) 0%, 
-    rgba(79, 172, 254, 0.55) 33%, 
-    rgba(245, 87, 108, 0.65) 66%, 
+  background: linear-gradient(90deg,
+    rgba(102, 126, 234, 0.65) 0%,
+    rgba(79, 172, 254, 0.55) 33%,
+    rgba(245, 87, 108, 0.65) 66%,
     rgba(102, 126, 234, 0.65) 100%);
   animation-delay: 0s;
 }
 
 .aurora-2 {
   top: -150px;
-  background: linear-gradient(90deg, 
-    rgba(245, 87, 108, 0.65) 0%, 
-    rgba(67, 233, 123, 0.55) 33%, 
-    rgba(79, 172, 254, 0.65) 66%, 
+  background: linear-gradient(90deg,
+    rgba(245, 87, 108, 0.65) 0%,
+    rgba(67, 233, 123, 0.55) 33%,
+    rgba(79, 172, 254, 0.65) 66%,
     rgba(245, 87, 108, 0.65) 100%);
   animation-delay: -13s;
 }
 
 .aurora-3 {
   top: -200px;
-  background: linear-gradient(90deg, 
-    rgba(79, 172, 254, 0.65) 0%, 
-    rgba(102, 126, 234, 0.55) 33%, 
-    rgba(67, 233, 123, 0.65) 66%, 
+  background: linear-gradient(90deg,
+    rgba(79, 172, 254, 0.65) 0%,
+    rgba(102, 126, 234, 0.55) 33%,
+    rgba(67, 233, 123, 0.65) 66%,
     rgba(79, 172, 254, 0.65) 100%);
   animation-delay: -26s;
 }
@@ -677,7 +677,7 @@ defineExpose({
 
 .dash-primary {
   border: 1px solid rgba(102, 126, 234, 0.5);
-  box-shadow: 
+  box-shadow:
     0 18px 50px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 0 40px rgba(102, 126, 234, 0.2);
@@ -685,7 +685,7 @@ defineExpose({
 
 .dash-secondary {
   border: 1px solid rgba(240, 147, 251, 0.5);
-  box-shadow: 
+  box-shadow:
     0 18px 50px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 0 40px rgba(240, 147, 251, 0.2);
@@ -693,7 +693,7 @@ defineExpose({
 
 .dash-accent {
   border: 1px solid rgba(79, 172, 254, 0.5);
-  box-shadow: 
+  box-shadow:
     0 18px 50px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 0 40px rgba(79, 172, 254, 0.2);

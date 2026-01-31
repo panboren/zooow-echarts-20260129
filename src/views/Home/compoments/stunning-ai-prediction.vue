@@ -293,10 +293,10 @@ const initChart = () => {
       }
     },
     grid: {
-      top: '10%',
+      top: '15%',
       left: '5%',
       right: '5%',
-      bottom: '12%',
+      bottom: '5%',
       containLabel: true
     },
     legend: {

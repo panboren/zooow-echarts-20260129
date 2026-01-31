@@ -155,7 +155,7 @@ const option = ref({
   },
   legend: {
     data: ['访问量', '转化率', '用户数'],
-    bottom: 85,
+    top: 110,
     textStyle: {
       color: '#ffffff',
       fontSize: 14,
@@ -168,8 +168,8 @@ const option = ref({
   grid: {
     left: '3%',
     right: '4%',
-    bottom: '7%',
-    top: '130px',
+    bottom: '5%',
+    top: '180px',
     containLabel: true
   },
   xAxis: [

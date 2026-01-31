@@ -256,14 +256,17 @@ const chartOption = computed(() => {
             value: item.children[0],
             itemStyle: {
               color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 1,
-                y2: 1,
+                type: 'radial',
+                x: 0.35,
+                y: 0.3,
+                r: 0.8,
                 colorStops: [
-                  { offset: 0, color: `rgba(67, 233, 123, ${0.45 + index * 0.07})` },
-                  { offset: 1, color: `rgba(56, 249, 215, ${0.55 + index * 0.07})` }
+                  { offset: 0, color: `rgba(255, 255, 255, 1)` },
+                  { offset: 0.15, color: `rgba(134, 239, 172, ${0.93 + index * 0.04})` },
+                  { offset: 0.3, color: `rgba(67, 233, 123, ${0.88 + index * 0.04})` },
+                  { offset: 0.5, color: `rgba(56, 249, 215, ${0.82 + index * 0.04})` },
+                  { offset: 0.7, color: `rgba(67, 233, 123, ${0.76 + index * 0.04})` },
+                  { offset: 1, color: `rgba(59, 130, 246, ${0.7 + index * 0.04})` }
                 ]
               }
             }
@@ -273,14 +276,17 @@ const chartOption = computed(() => {
             value: item.children[1],
             itemStyle: {
               color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 1,
-                y2: 1,
+                type: 'radial',
+                x: 0.35,
+                y: 0.3,
+                r: 0.8,
                 colorStops: [
-                  { offset: 0, color: `rgba(254, 225, 64, ${0.45 + index * 0.07})` },
-                  { offset: 1, color: `rgba(255, 159, 67, ${0.55 + index * 0.07})` }
+                  { offset: 0, color: `rgba(255, 255, 255, 1)` },
+                  { offset: 0.15, color: `rgba(253, 224, 71, ${0.93 + index * 0.04})` },
+                  { offset: 0.3, color: `rgba(254, 225, 64, ${0.88 + index * 0.04})` },
+                  { offset: 0.5, color: `rgba(255, 159, 67, ${0.82 + index * 0.04})` },
+                  { offset: 0.7, color: `rgba(254, 225, 64, ${0.76 + index * 0.04})` },
+                  { offset: 1, color: `rgba(234, 179, 8, ${0.7 + index * 0.04})` }
                 ]
               }
             }
@@ -403,13 +409,14 @@ onMounted(() => {
 .stat-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
+  gap: 10px;
+  padding: 12px 14px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 16px;
+  border-radius: 14px;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  min-height: 56px;
 }
 
 .stat-card:hover {
@@ -419,28 +426,46 @@ onMounted(() => {
 }
 
 .stat-icon {
-  font-size: 28px;
+  font-size: 22px;
   filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stat-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
 }
 
 .stat-value {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #ffffff;
   font-family: 'SF Mono', 'Monaco', monospace;
   text-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+  line-height: 1.2;
   margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .stat-label {
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
   letter-spacing: 0.3px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 图表标题 */

@@ -145,7 +145,8 @@ const option = ref({
   },
   legend: {
     data: ['线上销售', '线下销售', '总销售额'],
-    bottom: 85,
+    top: 110,
+    left: 'center',
     textStyle: {
       color: '#ffffff',
       fontSize: 14,
@@ -158,8 +159,8 @@ const option = ref({
   grid: {
     left: '3%',
     right: '4%',
-    bottom: '7%',
-    top: '120px',
+    bottom: '5%',
+    top: '180px',
     containLabel: true
   },
   xAxis: {

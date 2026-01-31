@@ -197,13 +197,13 @@ const chartOption = computed(() => {
         center: ['38%', '50%'],
         roseType: false,
         itemStyle: {
-          borderRadius: 10,
-          borderColor: 'rgba(26, 26, 46, 1)',
-          borderWidth: 4,
-          shadowBlur: 35,
+          borderRadius: 12,
+          borderColor: 'rgba(26, 26, 46, 0.8)',
+          borderWidth: 3,
+          shadowBlur: 45,
           shadowColor: 'rgba(0, 0, 0, 0.6)',
-          shadowOffsetX: 5,
-          shadowOffsetY: 5
+          shadowOffsetX: 6,
+          shadowOffsetY: 6
         },
         label: {
           show: true,
@@ -243,68 +243,86 @@ const chartOption = computed(() => {
           const colors = [
             {
               type: 'radial',
-              x: 0.5,
-              y: 0.5,
-              r: 0.6,
+              x: 0.35,
+              y: 0.3,
+              r: 0.8,
               colorStops: [
-                { offset: 0, color: 'rgba(102, 126, 234, 0.95)' },
+                { offset: 0, color: 'rgba(255, 255, 255, 1)' },
+                { offset: 0.15, color: 'rgba(167, 139, 250, 0.95)' },
+                { offset: 0.3, color: 'rgba(102, 126, 234, 0.9)' },
                 { offset: 0.5, color: 'rgba(118, 75, 162, 0.85)' },
-                { offset: 1, color: 'rgba(240, 147, 251, 0.7)' }
+                { offset: 0.7, color: 'rgba(102, 126, 234, 0.8)' },
+                { offset: 1, color: 'rgba(76, 29, 149, 0.75)' }
               ]
             },
             {
               type: 'radial',
-              x: 0.5,
-              y: 0.5,
-              r: 0.6,
+              x: 0.35,
+              y: 0.3,
+              r: 0.8,
               colorStops: [
-                { offset: 0, color: 'rgba(240, 147, 251, 0.95)' },
+                { offset: 0, color: 'rgba(255, 255, 255, 1)' },
+                { offset: 0.15, color: 'rgba(253, 164, 175, 0.95)' },
+                { offset: 0.3, color: 'rgba(240, 147, 251, 0.9)' },
                 { offset: 0.5, color: 'rgba(245, 87, 108, 0.85)' },
-                { offset: 1, color: 'rgba(255, 107, 108, 0.7)' }
+                { offset: 0.7, color: 'rgba(240, 147, 251, 0.8)' },
+                { offset: 1, color: 'rgba(225, 29, 72, 0.75)' }
               ]
             },
             {
               type: 'radial',
-              x: 0.5,
-              y: 0.5,
-              r: 0.6,
+              x: 0.35,
+              y: 0.3,
+              r: 0.8,
               colorStops: [
-                { offset: 0, color: 'rgba(67, 233, 123, 0.95)' },
+                { offset: 0, color: 'rgba(255, 255, 255, 1)' },
+                { offset: 0.15, color: 'rgba(134, 239, 172, 0.95)' },
+                { offset: 0.3, color: 'rgba(67, 233, 123, 0.9)' },
                 { offset: 0.5, color: 'rgba(56, 249, 215, 0.85)' },
-                { offset: 1, color: 'rgba(79, 172, 254, 0.7)' }
+                { offset: 0.7, color: 'rgba(67, 233, 123, 0.8)' },
+                { offset: 1, color: 'rgba(59, 130, 246, 0.75)' }
               ]
             },
             {
               type: 'radial',
-              x: 0.5,
-              y: 0.5,
-              r: 0.6,
+              x: 0.35,
+              y: 0.3,
+              r: 0.8,
               colorStops: [
-                { offset: 0, color: 'rgba(79, 172, 254, 0.95)' },
+                { offset: 0, color: 'rgba(255, 255, 255, 1)' },
+                { offset: 0.15, color: 'rgba(147, 197, 253, 0.95)' },
+                { offset: 0.3, color: 'rgba(79, 172, 254, 0.9)' },
                 { offset: 0.5, color: 'rgba(0, 242, 254, 0.85)' },
-                { offset: 1, color: 'rgba(67, 233, 123, 0.7)' }
+                { offset: 0.7, color: 'rgba(79, 172, 254, 0.8)' },
+                { offset: 1, color: 'rgba(56, 189, 128, 0.75)' }
               ]
             },
             {
               type: 'radial',
-              x: 0.5,
-              y: 0.5,
-              r: 0.6,
+              x: 0.35,
+              y: 0.3,
+              r: 0.8,
               colorStops: [
-                { offset: 0, color: 'rgba(254, 225, 64, 0.95)' },
+                { offset: 0, color: 'rgba(255, 255, 255, 1)' },
+                { offset: 0.15, color: 'rgba(253, 224, 71, 0.95)' },
+                { offset: 0.3, color: 'rgba(254, 225, 64, 0.9)' },
                 { offset: 0.5, color: 'rgba(255, 159, 67, 0.85)' },
-                { offset: 1, color: 'rgba(245, 87, 108, 0.7)' }
+                { offset: 0.7, color: 'rgba(254, 225, 64, 0.8)' },
+                { offset: 1, color: 'rgba(234, 179, 8, 0.75)' }
               ]
             },
             {
               type: 'radial',
-              x: 0.5,
-              y: 0.5,
-              r: 0.6,
+              x: 0.35,
+              y: 0.3,
+              r: 0.8,
               colorStops: [
-                { offset: 0, color: 'rgba(255, 107, 108, 0.95)' },
+                { offset: 0, color: 'rgba(255, 255, 255, 1)' },
+                { offset: 0.15, color: 'rgba(255, 156, 158, 0.95)' },
+                { offset: 0.3, color: 'rgba(255, 107, 108, 0.9)' },
                 { offset: 0.5, color: 'rgba(254, 225, 64, 0.85)' },
-                { offset: 1, color: 'rgba(240, 147, 251, 0.7)' }
+                { offset: 0.7, color: 'rgba(255, 107, 108, 0.8)' },
+                { offset: 1, color: 'rgba(220, 38, 38, 0.75)' }
               ]
             }
           ]
@@ -367,13 +385,14 @@ onMounted(() => {
 .stat-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
+  gap: 10px;
+  padding: 12px 14px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 16px;
+  border-radius: 14px;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  min-height: 56px;
 }
 
 .stat-card:hover {
@@ -383,28 +402,46 @@ onMounted(() => {
 }
 
 .stat-icon {
-  font-size: 28px;
+  font-size: 22px;
   filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stat-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
 }
 
 .stat-value {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #ffffff;
   font-family: 'SF Mono', 'Monaco', monospace;
   text-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+  line-height: 1.2;
   margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .stat-label {
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
   letter-spacing: 0.3px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 图表标题 */

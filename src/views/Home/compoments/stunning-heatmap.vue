@@ -58,7 +58,8 @@ const getHeatmapData = () => {
 const heatmapData = getHeatmapData();
 
 const option = ref({
-  backgroundColor: '#0f0f23',
+
+  backgroundColor: 'transparent',
   title: {
     text: '活跃度热力图',
     subtext: '2025年统计数据',
@@ -66,24 +67,28 @@ const option = ref({
     top: 20,
     textStyle: {
       color: '#ffffff',
-      fontSize: 32,
-      fontWeight: 'bold',
-      fontFamily: 'Arial, sans-serif',
-      textShadow: '0 4px 20px rgba(102, 126, 234, 0.5)'
+      fontSize: 34,
+      fontWeight: '900',
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
+      textShadow: '0 0 40px rgba(102, 126, 234, 0.9), 0 0 80px rgba(240, 147, 251, 0.6)',
+      letterSpacing: '2px'
     },
     subtextStyle: {
-      color: '#a0a0a0',
-      fontSize: 16,
-      fontFamily: 'Arial, sans-serif'
+      color: 'rgba(255, 255, 255, 0.7)',
+      fontSize: 14,
+      fontWeight: 'bold',
+      fontFamily: 'Arial, sans-serif',
+      textShadow: '0 0 30px rgba(102, 126, 234, 0.5)',
+      letterSpacing: '3px'
     }
   },
   tooltip: {
     position: 'top',
-    backgroundColor: 'rgba(15, 15, 35, 0.95)',
-    borderColor: '#667eea',
+    backgroundColor: 'rgba(10, 10, 20, 0.98)',
+    borderColor: 'rgba(102, 126, 234, 0.7)',
     borderWidth: 2,
-    borderRadius: 16,
-    padding: [15, 20],
+    borderRadius: 20,
+    padding: [20, 28],
     textStyle: {
       color: '#ffffff',
       fontSize: 14,
@@ -96,21 +101,33 @@ const option = ref({
       const value = params.data[2];
 
       return `
-        <div>
-          <div style="margin-bottom: 8px; font-size: 16px; font-weight: bold; color: #667eea;">
+        <div style="padding: 8px;">
+          <div style="font-size: 18px; font-weight: 900; margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;">
             ${category} ${time}
           </div>
-          <div style="display: flex; align-items: center;">
-            <span>活跃度:</span>
-            <span style="font-weight: bold; color: #f5576c; margin-left: 15px; font-size: 18px;">${value}</span>
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; padding: 10px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;">
+            <span style="display: flex; align-items: center;">
+              <span style="width: 12px; height: 12px; border-radius: 50%;
+                background: ${params.color}; box-shadow: 0 0 10px ${params.color}; margin-right: 10px;"></span>
+              <span style="color: rgba(255,255,255,0.7);">活跃度</span>
+            </span>
+            <span style="font-weight: 900; color: ${params.color};
+              text-shadow: 0 0 15px ${params.color}; font-size: 20px;">${value}</span>
           </div>
         </div>
       `;
     }
   },
   grid: {
-    height: '70%',
-    top: '100px'
+    height: '65%',
+    top: '120px',
+    bottom: '5%'
   },
   xAxis: {
     type: 'category',
@@ -119,14 +136,14 @@ const option = ref({
       show: true
     },
     axisLabel: {
-      color: '#a0a0a0',
+      color: 'rgba(255, 255, 255, 0.7)',
       fontSize: 13,
       fontFamily: 'Arial, sans-serif',
       margin: 15
     },
     axisLine: {
       lineStyle: {
-        color: '#333',
+        color: 'rgba(255, 255, 255, 0.2)',
         width: 2
       }
     },
@@ -141,13 +158,13 @@ const option = ref({
       show: true
     },
     axisLabel: {
-      color: '#a0a0a0',
+      color: 'rgba(255, 255, 255, 0.7)',
       fontSize: 14,
       fontFamily: 'Arial, sans-serif'
     },
     axisLine: {
       lineStyle: {
-        color: '#333',
+        color: 'rgba(255, 255, 255, 0.2)',
         width: 2
       }
     },
@@ -161,7 +178,7 @@ const option = ref({
     calculable: true,
     orient: 'horizontal',
     left: 'center',
-    bottom: '5%',
+    bottom: '2%',
     textStyle: {
       color: '#ffffff',
       fontSize: 14,
@@ -169,22 +186,22 @@ const option = ref({
     },
     inRange: {
       color: [
-        '#313695',
-        '#4575b4',
-        '#74add1',
-        '#abd9e9',
-        '#e0f3f8',
-        '#ffffbf',
-        '#fee090',
-        '#fdae61',
-        '#f46d43',
-        '#d73027',
-        '#a50026'
+        'rgba(102, 126, 234, 0.3)',
+        'rgba(79, 172, 254, 0.38)',
+        'rgba(67, 233, 123, 0.46)',
+        'rgba(56, 249, 215, 0.54)',
+        'rgba(240, 147, 251, 0.62)',
+        'rgba(255, 105, 180, 0.68)',
+        'rgba(245, 87, 108, 0.74)',
+        'rgba(254, 225, 64, 0.78)',
+        'rgba(255, 171, 0, 0.82)',
+        'rgba(255, 82, 82, 0.86)',
+        'rgba(102, 126, 234, 0.90)'
       ]
     },
     itemWidth: 20,
     itemHeight: 150,
-    borderColor: '#333',
+    borderColor: 'rgba(255, 255, 255, 0.2)',
     borderWidth: 1
   },
   series: [
@@ -197,15 +214,17 @@ const option = ref({
       },
       emphasis: {
         itemStyle: {
-          shadowBlur: 20,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
+          shadowBlur: 30,
+          shadowColor: 'rgba(102, 126, 234, 0.8)',
+          borderWidth: 2,
+          borderColor: 'rgba(255, 255, 255, 0.6)'
         }
       },
       itemStyle: {
-        borderColor: '#ffffff',
+        borderColor: 'rgba(255, 255, 255, 0.35)',
         borderWidth: 1,
-        shadowColor: 'rgba(0, 0, 0, 0.3)',
-        shadowBlur: 10
+        shadowColor: 'rgba(102, 126, 234, 0.4)',
+        shadowBlur: 15
       }
     }
   ]
@@ -224,15 +243,23 @@ defineExpose({
 .stunning-heatmap-container {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(240, 147, 251, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 60%),
+    linear-gradient(135deg, #080814 0%, #0f0f23 30%, #141428 60%, #0a0a18 100%);
+  border-radius: 32px;
+  padding: 28px;
+  box-shadow:
+    0 45px 140px rgba(0, 0, 0, 0.9),
+    0 0 120px rgba(102, 126, 234, 0.18),
+    0 0 180px rgba(240, 147, 251, 0.12),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.25);
 }
 
 .chart {
-  height: 500px;
+  height: 720px;
   width: 100%;
 }
 </style>

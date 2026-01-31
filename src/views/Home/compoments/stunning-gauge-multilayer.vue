@@ -208,9 +208,12 @@ const chartOption = computed(() => {
               x2: 1,
               y2: 0,
               colorStops: [
-                { offset: 0, color: 'rgba(102, 126, 234, 0.9)' },
-                { offset: 0.5, color: 'rgba(118, 75, 162, 0.95)' },
-                { offset: 1, color: 'rgba(240, 147, 251, 0.9)' }
+                { offset: 0, color: 'rgba(102, 126, 234, 0.92)' },
+                { offset: 0.2, color: 'rgba(118, 75, 162, 0.94)' },
+                { offset: 0.4, color: 'rgba(147, 51, 234, 0.95)' },
+                { offset: 0.6, color: 'rgba(192, 38, 211, 0.94)' },
+                { offset: 0.8, color: 'rgba(217, 70, 239, 0.92)' },
+                { offset: 1, color: 'rgba(240, 147, 251, 0.90)' }
               ]
             },
             shadowBlur: 25,
@@ -309,9 +312,12 @@ const chartOption = computed(() => {
               x2: 1,
               y2: 0,
               colorStops: [
-                { offset: 0, color: 'rgba(240, 147, 251, 0.9)' },
-                { offset: 0.5, color: 'rgba(245, 87, 108, 0.95)' },
-                { offset: 1, color: 'rgba(255, 159, 67, 0.9)' }
+                { offset: 0, color: 'rgba(240, 147, 251, 0.92)' },
+                { offset: 0.2, color: 'rgba(236, 72, 153, 0.94)' },
+                { offset: 0.4, color: 'rgba(225, 29, 72, 0.95)' },
+                { offset: 0.6, color: 'rgba(244, 63, 94, 0.94)' },
+                { offset: 0.8, color: 'rgba(251, 146, 60, 0.92)' },
+                { offset: 1, color: 'rgba(255, 159, 67, 0.90)' }
               ]
             },
             shadowBlur: 25,
@@ -410,9 +416,12 @@ const chartOption = computed(() => {
               x2: 1,
               y2: 0,
               colorStops: [
-                { offset: 0, color: 'rgba(67, 233, 123, 0.9)' },
-                { offset: 0.5, color: 'rgba(56, 249, 215, 0.95)' },
-                { offset: 1, color: 'rgba(254, 225, 64, 0.9)' }
+                { offset: 0, color: 'rgba(67, 233, 123, 0.92)' },
+                { offset: 0.2, color: 'rgba(52, 211, 153, 0.94)' },
+                { offset: 0.4, color: 'rgba(20, 184, 166, 0.95)' },
+                { offset: 0.6, color: 'rgba(56, 189, 248, 0.94)' },
+                { offset: 0.8, color: 'rgba(168, 237, 234, 0.92)' },
+                { offset: 1, color: 'rgba(254, 225, 64, 0.90)' }
               ]
             },
             shadowBlur: 25,
@@ -511,9 +520,12 @@ const chartOption = computed(() => {
               x2: 1,
               y2: 0,
               colorStops: [
-                { offset: 0, color: 'rgba(79, 172, 254, 0.9)' },
-                { offset: 0.5, color: 'rgba(0, 242, 254, 0.95)' },
-                { offset: 1, color: 'rgba(67, 233, 123, 0.9)' }
+                { offset: 0, color: 'rgba(79, 172, 254, 0.92)' },
+                { offset: 0.2, color: 'rgba(37, 99, 235, 0.94)' },
+                { offset: 0.4, color: 'rgba(30, 58, 138, 0.95)' },
+                { offset: 0.6, color: 'rgba(8, 145, 178, 0.94)' },
+                { offset: 0.8, color: 'rgba(45, 212, 191, 0.92)' },
+                { offset: 1, color: 'rgba(67, 233, 123, 0.90)' }
               ]
             },
             shadowBlur: 20,
@@ -612,9 +624,12 @@ const chartOption = computed(() => {
               x2: 1,
               y2: 0,
               colorStops: [
-                { offset: 0, color: 'rgba(254, 225, 64, 0.9)' },
-                { offset: 0.5, color: 'rgba(255, 159, 67, 0.95)' },
-                { offset: 1, color: 'rgba(245, 87, 108, 0.9)' }
+                { offset: 0, color: 'rgba(254, 225, 64, 0.92)' },
+                { offset: 0.2, color: 'rgba(251, 191, 36, 0.94)' },
+                { offset: 0.4, color: 'rgba(245, 158, 11, 0.95)' },
+                { offset: 0.6, color: 'rgba(249, 115, 22, 0.94)' },
+                { offset: 0.8, color: 'rgba(239, 68, 68, 0.92)' },
+                { offset: 1, color: 'rgba(245, 87, 108, 0.90)' }
               ]
             },
             shadowBlur: 20,

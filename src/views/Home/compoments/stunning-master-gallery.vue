@@ -49,43 +49,48 @@
       </h2>
       <div class="row">
         <div class="chart-card">
-          <LazyChart :component="StunningPie" />
+          <LazyChart :component="StunningLineMultilayer" />
+        </div>
+        <div class="chart-card">
+          <LazyChart :component="StunningBarMultilayer" />
         </div>
         <div class="chart-card">
           <LazyChart :component="StunningLine" />
         </div>
+      </div>
+      <div class="row">
+        <div class="chart-card">
+          <LazyChart :component="StunningRadarMultilayer" />
+        </div>
+        <div class="chart-card">
+          <LazyChart :component="StunningPieMultilayerNew" />
+        </div>
+
+        <div class="chart-card">
+          <LazyChart :component="StunningPieGalaxy" />
+        </div>
+      </div>
+      <div class="row">
         <div class="chart-card">
           <LazyChart :component="StunningBar" />
         </div>
-      </div>
-      <div class="row">
-        <div class="chart-card full-width">
-          <LazyChart :component="StunningPiePremium" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="chart-card full-width">
-          <LazyChart :component="StunningPieMultilayer" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="chart-card full-width">
-          <LazyChart :component="StunningPieArtistic" />
-        </div>
-      </div>
-      <div class="row">
         <div class="chart-card">
-          <LazyChart :component="StunningPieGalaxy" />
+          <LazyChart :component="StunningPie" />
         </div>
         <div class="chart-card">
           <LazyChart :component="StunningPieNature" />
         </div>
       </div>
-      <div class="row">
+<!--      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningPieArtistic" />
+        </div>
+      </div>-->
+<!--      <div class="row">
         <div class="chart-card full-width">
           <LazyChart :component="StunningPieCyber" />
         </div>
-      </div>
+      </div>-->
     </div>
 
     <!-- 第二批：高级图表 -->
@@ -105,16 +110,7 @@
           <LazyChart :component="StunningGauge" />
         </div>
       </div>
-      <div class="row">
-        <div class="chart-card full-width">
-          <LazyChart :component="StunningBarArtistic" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="chart-card full-width">
-          <LazyChart :component="StunningLineArtistic" />
-        </div>
-      </div>
+
     </div>
 
     <!-- 第三批：专业图表 -->
@@ -136,19 +132,6 @@
       </div>
     </div>
 
-    <!-- 第四批：树形图表 -->
-    <div  class="section">
-      <h2 class="section-title">
-        <span class="title-badge">04</span>
-        树形图表系列
-      </h2>
-      <div class="row">
-        <div class="chart-card">
-          <LazyChart :component="StunningTreemap" />
-        </div>
-      </div>
-    </div>
-
     <!-- 第五批：超酷炫图表 -->
     <div  class="section">
       <h2 class="section-title">
@@ -162,6 +145,9 @@
         <div class="chart-card">
           <LazyChart :component="StunningSunburst" />
         </div>
+        <div class="chart-card">
+          <LazyChart :component="StunningTreemap" />
+        </div>
       </div>
       <div class="row">
         <div class="chart-card">
@@ -170,9 +156,7 @@
         <div class="chart-card">
           <LazyChart :component="StunningWordcloud" />
         </div>
-      </div>
-      <div class="row">
-        <div class="chart-card full-width">
+        <div class="chart-card">
           <LazyChart :component="StunningRose" />
         </div>
       </div>
@@ -197,22 +181,7 @@
         <span class="title-badge">07</span>
         多层透明叠加系列
       </h2>
-      <div class="row">
-        <div class="chart-card">
-          <LazyChart :component="StunningLineMultilayer" />
-        </div>
-        <div class="chart-card">
-          <LazyChart :component="StunningBarMultilayer" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="chart-card">
-          <LazyChart :component="StunningPieMultilayerNew" />
-        </div>
-        <div class="chart-card">
-          <LazyChart :component="StunningRadarMultilayer" />
-        </div>
-      </div>
+
       <div class="row">
         <div class="chart-card full-width">
           <LazyChart :component="StunningHybridMultilayer" />
@@ -241,6 +210,21 @@
         <span class="title-badge">08</span>
         下一代图表系列
       </h2>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningBarArtistic" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningLineArtistic" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningPieArtistic" />
+        </div>
+      </div>
       <div class="row">
         <div class="chart-card full-width">
           <LazyChart :component="Stunning3DDynamic" />
@@ -327,12 +311,12 @@
     </div>
 
     <!-- 底部信息 -->
-    <div class="gallery-footer">
+<!--    <div class="gallery-footer">
       <div class="footer-info">
-        <p class="footer-text">使用 ECharts + Vue 3 构建</p>
+&lt;!&ndash;        <p class="footer-text">使用 ECharts + Vue 3 构建</p>&ndash;&gt;
         <p class="footer-text">包含多层渐变、发光效果、玻璃拟态、全息投影、透明叠加等高级视觉技术</p>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 

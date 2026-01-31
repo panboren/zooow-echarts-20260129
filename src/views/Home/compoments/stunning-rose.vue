@@ -44,9 +44,11 @@ const option = ref({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'item',
-    backgroundColor: 'rgba(15, 15, 35, 0.95)',
-    borderColor: 'rgba(102, 126, 234, 0.5)',
+    backgroundColor: 'rgba(10, 10, 20, 0.98)',
+    borderColor: 'rgba(102, 126, 234, 0.7)',
     borderWidth: 2,
+    borderRadius: 20,
+    padding: [20, 28],
     textStyle: {
       color: '#ffffff',
       fontSize: 14
@@ -54,14 +56,30 @@ const option = ref({
     formatter: function (params) {
       return `
         <div style="padding: 8px;">
-          <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px; color: ${params.color}">
+          <div style="font-size: 18px; font-weight: 900; margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;">
             ${params.name}
           </div>
-          <div style="font-size: 14px; color: #8b92b0;">
-            数量: <span style="color: #ffffff; font-weight: bold;">${params.value}</span>
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; padding: 10px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;">
+            <span style="display: flex; align-items: center;">
+              <span style="width: 12px; height: 12px; border-radius: 50%;
+                background: ${params.color}; box-shadow: 0 0 10px ${params.color}; margin-right: 10px;"></span>
+              <span style="color: rgba(255,255,255,0.7);">数量</span>
+            </span>
+            <span style="font-weight: 900; color: ${params.color};
+              text-shadow: 0 0 15px ${params.color};">${params.value}</span>
           </div>
-          <div style="font-size: 14px; color: #8b92b0;">
-            占比: <span style="color: #ffffff; font-weight: bold;">${params.percent}%</span>
+          <div style="display: flex; justify-content: space-between;
+            align-items: center; margin-top: 8px; padding: 10px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;">
+            <span style="color: rgba(255,255,255,0.7);">占比</span>
+            <span style="font-weight: 900; color: ${params.color};
+              text-shadow: 0 0 15px ${params.color};">${params.percent}%</span>
           </div>
         </div>
       `;
@@ -105,147 +123,177 @@ const option = ref({
           textShadowColor: 'rgba(0, 0, 0, 0.8)'
         },
         itemStyle: {
-          shadowBlur: 30,
-          shadowColor: 'rgba(0, 0, 0, 0.5)',
+          shadowBlur: 45,
+          shadowColor: 'rgba(102, 126, 234, 1)',
           borderWidth: 3,
-          borderColor: 'rgba(255, 255, 255, 0.5)'
+          borderColor: 'rgba(255, 255, 255, 0.85)',
+          shadowOffsetX: 12,
+          shadowOffsetY: 12
         }
       },
       data: [
-        { 
-          value: 320, 
+        {
+          value: 320,
           name: '产品A',
           itemStyle: {
             color: {
               type: 'linear',
-              x: 0, y: 0, x2: 1, y2: 1,
+              x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: 'rgba(102, 126, 234, 0.9)' },
-                { offset: 0.5, color: 'rgba(118, 75, 162, 0.9)' },
-                { offset: 1, color: 'rgba(102, 126, 234, 0.9)' }
+                { offset: 0, color: 'rgba(102, 126, 234, 0.85)' },
+                { offset: 0.2, color: 'rgba(118, 75, 162, 0.78)' },
+                { offset: 0.4, color: 'rgba(240, 147, 251, 0.72)' },
+                { offset: 0.6, color: 'rgba(118, 75, 162, 0.68)' },
+                { offset: 0.8, color: 'rgba(102, 126, 234, 0.62)' },
+                { offset: 1, color: 'rgba(102, 126, 234, 0.55)' }
               ]
             },
             shadowBlur: 25,
-            shadowColor: 'rgba(102, 126, 234, 0.5)'
+            shadowColor: 'rgba(102, 126, 234, 0.6)',
+            shadowOffsetX: 5,
+            shadowOffsetY: 5
           }
         },
-        { 
-          value: 240, 
+        {
+          value: 240,
           name: '产品B',
           itemStyle: {
             color: {
               type: 'linear',
-              x: 0, y: 0, x2: 1, y2: 1,
+              x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: 'rgba(79, 172, 254, 0.9)' },
-                { offset: 0.5, color: 'rgba(0, 242, 254, 0.9)' },
-                { offset: 1, color: 'rgba(79, 172, 254, 0.9)' }
+                { offset: 0, color: 'rgba(79, 172, 254, 0.85)' },
+                { offset: 0.3, color: 'rgba(0, 242, 254, 0.75)' },
+                { offset: 0.6, color: 'rgba(67, 233, 123, 0.65)' },
+                { offset: 1, color: 'rgba(79, 172, 254, 0.55)' }
               ]
             },
             shadowBlur: 25,
-            shadowColor: 'rgba(79, 172, 254, 0.5)'
+            shadowColor: 'rgba(79, 172, 254, 0.6)',
+            shadowOffsetX: 5,
+            shadowOffsetY: 5
           }
         },
-        { 
-          value: 280, 
+        {
+          value: 280,
           name: '产品C',
           itemStyle: {
             color: {
               type: 'linear',
-              x: 0, y: 0, x2: 1, y2: 1,
+              x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: 'rgba(67, 233, 123, 0.9)' },
-                { offset: 0.5, color: 'rgba(56, 249, 215, 0.9)' },
-                { offset: 1, color: 'rgba(67, 233, 123, 0.9)' }
+                { offset: 0, color: 'rgba(67, 233, 123, 0.85)' },
+                { offset: 0.3, color: 'rgba(56, 249, 215, 0.75)' },
+                { offset: 0.6, color: 'rgba(79, 172, 254, 0.65)' },
+                { offset: 1, color: 'rgba(67, 233, 123, 0.55)' }
               ]
             },
             shadowBlur: 25,
-            shadowColor: 'rgba(67, 233, 123, 0.5)'
+            shadowColor: 'rgba(67, 233, 123, 0.6)',
+            shadowOffsetX: 5,
+            shadowOffsetY: 5
           }
         },
-        { 
-          value: 180, 
+        {
+          value: 180,
           name: '产品D',
           itemStyle: {
             color: {
               type: 'linear',
-              x: 0, y: 0, x2: 1, y2: 1,
+              x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: 'rgba(240, 147, 251, 0.9)' },
-                { offset: 0.5, color: 'rgba(245, 87, 108, 0.9)' },
-                { offset: 1, color: 'rgba(240, 147, 251, 0.9)' }
+                { offset: 0, color: 'rgba(240, 147, 251, 0.85)' },
+                { offset: 0.25, color: 'rgba(255, 105, 180, 0.78)' },
+                { offset: 0.5, color: 'rgba(245, 87, 108, 0.72)' },
+                { offset: 0.75, color: 'rgba(255, 105, 180, 0.65)' },
+                { offset: 1, color: 'rgba(240, 147, 251, 0.58)' }
               ]
             },
             shadowBlur: 25,
-            shadowColor: 'rgba(240, 147, 251, 0.5)'
+            shadowColor: 'rgba(240, 147, 251, 0.6)',
+            shadowOffsetX: 5,
+            shadowOffsetY: 5
           }
         },
-        { 
-          value: 200, 
+        {
+          value: 200,
           name: '产品E',
           itemStyle: {
             color: {
               type: 'linear',
-              x: 0, y: 0, x2: 1, y2: 1,
+              x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: 'rgba(254, 225, 64, 0.9)' },
-                { offset: 0.5, color: 'rgba(255, 159, 67, 0.9)' },
-                { offset: 1, color: 'rgba(254, 225, 64, 0.9)' }
+                { offset: 0, color: 'rgba(254, 225, 64, 0.85)' },
+                { offset: 0.25, color: 'rgba(255, 171, 0, 0.78)' },
+                { offset: 0.5, color: 'rgba(245, 87, 108, 0.72)' },
+                { offset: 0.75, color: 'rgba(255, 171, 0, 0.65)' },
+                { offset: 1, color: 'rgba(254, 225, 64, 0.58)' }
               ]
             },
             shadowBlur: 25,
-            shadowColor: 'rgba(254, 225, 64, 0.5)'
+            shadowColor: 'rgba(254, 225, 64, 0.6)',
+            shadowOffsetX: 5,
+            shadowOffsetY: 5
           }
         },
-        { 
-          value: 150, 
+        {
+          value: 150,
           name: '产品F',
           itemStyle: {
             color: {
               type: 'linear',
-              x: 0, y: 0, x2: 1, y2: 1,
+              x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: 'rgba(161, 140, 209, 0.9)' },
-                { offset: 0.5, color: 'rgba(118, 75, 162, 0.9)' },
-                { offset: 1, color: 'rgba(161, 140, 209, 0.9)' }
+                { offset: 0, color: 'rgba(161, 140, 209, 0.85)' },
+                { offset: 0.3, color: 'rgba(118, 75, 162, 0.75)' },
+                { offset: 0.6, color: 'rgba(240, 147, 251, 0.65)' },
+                { offset: 1, color: 'rgba(161, 140, 209, 0.55)' }
               ]
             },
             shadowBlur: 25,
-            shadowColor: 'rgba(161, 140, 209, 0.5)'
+            shadowColor: 'rgba(161, 140, 209, 0.6)',
+            shadowOffsetX: 5,
+            shadowOffsetY: 5
           }
         },
-        { 
-          value: 220, 
+        {
+          value: 220,
           name: '产品G',
           itemStyle: {
             color: {
               type: 'linear',
-              x: 0, y: 0, x2: 1, y2: 1,
+              x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: 'rgba(245, 87, 108, 0.9)' },
-                { offset: 0.5, color: 'rgba(255, 111, 97, 0.9)' },
-                { offset: 1, color: 'rgba(245, 87, 108, 0.9)' }
+                { offset: 0, color: 'rgba(245, 87, 108, 0.85)' },
+                { offset: 0.3, color: 'rgba(255, 82, 82, 0.78)' },
+                { offset: 0.6, color: 'rgba(254, 225, 64, 0.72)' },
+                { offset: 1, color: 'rgba(245, 87, 108, 0.65)' }
               ]
             },
             shadowBlur: 25,
-            shadowColor: 'rgba(245, 87, 108, 0.5)'
+            shadowColor: 'rgba(245, 87, 108, 0.6)',
+            shadowOffsetX: 5,
+            shadowOffsetY: 5
           }
         },
-        { 
-          value: 190, 
+        {
+          value: 190,
           name: '产品H',
           itemStyle: {
             color: {
               type: 'linear',
-              x: 0, y: 0, x2: 1, y2: 1,
+              x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: 'rgba(45, 212, 191, 0.9)' },
-                { offset: 0.5, color: 'rgba(56, 249, 215, 0.9)' },
-                { offset: 1, color: 'rgba(45, 212, 191, 0.9)' }
+                { offset: 0, color: 'rgba(45, 212, 191, 0.85)' },
+                { offset: 0.3, color: 'rgba(56, 249, 215, 0.78)' },
+                { offset: 0.6, color: 'rgba(67, 233, 123, 0.72)' },
+                { offset: 1, color: 'rgba(45, 212, 191, 0.65)' }
               ]
             },
             shadowBlur: 25,
-            shadowColor: 'rgba(45, 212, 191, 0.5)'
+            shadowColor: 'rgba(45, 212, 191, 0.6)',
+            shadowOffsetX: 5,
+            shadowOffsetY: 5
           }
         }
       ]
@@ -261,14 +309,19 @@ const option = ref({
   min-height: 550px;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(240, 147, 251, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 60%),
+    linear-gradient(135deg, #080814 0%, #0f0f23 30%, #141428 60%, #0a0a18 100%);
   border-radius: 20px;
   padding: 24px;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.6),
-    0 0 40px rgba(102, 126, 234, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  box-shadow:
+    0 45px 140px rgba(0, 0, 0, 0.9),
+    0 0 120px rgba(102, 126, 234, 0.18),
+    0 0 180px rgba(240, 147, 251, 0.12),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.25);
   position: relative;
   overflow: hidden;
 }

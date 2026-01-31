@@ -97,10 +97,10 @@ use([
 const isChartVisible = ref(false)
 
 // 统计数据
-const totalVolume = ref('28,547')
-const peakValue = ref('3,240')
-const avgGrowth = ref('+18.5%')
-const trendIndex = ref('92.3')
+const totalVolume = ref('48,547')
+const peakValue = ref('7,600')
+const avgGrowth = ref('+24.5%')
+const trendIndex = ref('95.8')
 
 // 粒子系统
 const particles = ref< Array<{ style: Record<string, string> }> >([])
@@ -141,23 +141,23 @@ const generateAreaData = () => {
   return {
     xData: months,
     data1: [
-      3200, 2850, 2600, 2350, 2100, 1850, 1600, 1350, 1100, 850, 600, 350
-    ], // 基础流量
+      2800, 2950, 2700, 2550, 2400, 2250, 2100, 1950, 1800, 1650, 1500, 1350
+    ], // 基础流量 - 波动上升
     data2: [
-      3800, 3450, 3200, 2950, 2700, 2450, 2200, 1950, 1700, 1450, 1200, 950
-    ], // 稳定流量
+      3500, 3700, 3400, 3200, 3000, 2800, 2600, 2400, 2200, 2000, 1800, 1600
+    ], // 稳定流量 - 稳步上升
     data3: [
-      4500, 4150, 3900, 3650, 3400, 3150, 2900, 2650, 2400, 2150, 1900, 1650
-    ], // 活跃流量
+      4200, 4500, 4100, 3900, 3650, 3400, 3150, 2900, 2650, 2400, 2150, 1900
+    ], // 活跃流量 - 中期高峰
     data4: [
-      5200, 4850, 4600, 4350, 4100, 3850, 3600, 3350, 3100, 2850, 2600, 2350
-    ], // 热门流量
+      5100, 5400, 5000, 4700, 4400, 4100, 3800, 3500, 3200, 2900, 2600, 2300
+    ], // 热门流量 - 夏季高峰
     data5: [
-      6000, 5650, 5400, 5150, 4900, 4650, 4400, 4150, 3900, 3650, 3400, 3150
-    ], // 核心流量
+      6000, 6400, 5800, 5500, 5100, 4800, 4500, 4200, 3800, 3400, 3100, 2800
+    ], // 核心流量 - 年底冲刺
     data6: [
-      6800, 6450, 6200, 5950, 5700, 5450, 5200, 4950, 4700, 4450, 4200, 3950
-    ] // 总流量
+      7200, 7600, 7000, 6600, 6200, 5800, 5400, 5000, 4600, 4200, 3800, 3400
+    ] // 总流量 - 全面爆发
   }
 }
 
@@ -175,13 +175,53 @@ const chartOption = computed(() => {
           backgroundColor: 'rgba(26, 26, 46, 0.95)'
         }
       },
-      backgroundColor: 'rgba(26, 26, 46, 0.95)',
-      borderColor: 'rgba(102, 126, 234, 0.5)',
-      borderWidth: 1,
-      padding: [12, 16],
+      backgroundColor: 'rgba(10, 10, 20, 0.98)',
+      borderColor: 'rgba(102, 126, 234, 0.7)',
+      borderWidth: 2,
+      borderRadius: 20,
+      padding: [20, 28],
       textStyle: {
         color: '#ffffff',
         fontSize: 14
+      },
+      formatter: function (params) {
+        let result = `
+          <div style="padding: 8px;">
+            <div style="font-size: 18px; font-weight: 900; margin-bottom: 15px;
+              background: linear-gradient(135deg, #667eea, #f093fb);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;">
+              ${params[0].axisValue}
+            </div>
+        `
+
+        params.forEach((item, index) => {
+          const colors = [
+            'rgba(102, 126, 234, 0.8)',
+            'rgba(118, 75, 162, 0.8)',
+            'rgba(240, 147, 251, 0.8)',
+            'rgba(67, 233, 123, 0.8)',
+            'rgba(79, 172, 254, 0.8)',
+            'rgba(254, 225, 64, 0.8)'
+          ]
+          result += `
+            <div style="display: flex; justify-content: space-between;
+              align-items: center; margin: 8px 0; padding: 10px;
+              background: rgba(255,255,255,0.08); border-radius: 10px;">
+              <span style="display: flex; align-items: center;">
+                <span style="width: 12px; height: 12px; border-radius: 50%;
+                  background: ${colors[index]}; box-shadow: 0 0 10px ${colors[index]}; margin-right: 10px;"></span>
+                <span style="color: rgba(255,255,255,0.7);">${item.seriesName}</span>
+              </span>
+              <span style="font-weight: 900; color: ${colors[index]};
+                text-shadow: 0 0 15px ${colors[index]};">${item.value.toLocaleString()}</span>
+            </div>
+          `
+        })
+
+        result += '</div>'
+        return result
       },
       extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0,0,0,0.4);'
     },
@@ -257,7 +297,18 @@ const chartOption = computed(() => {
         sampling: 'lttb',
         lineStyle: {
           width: 2,
-          color: 'rgba(102, 126, 234, 0.4)'
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              { offset: 0, color: 'rgba(102, 126, 234, 0.5)' },
+              { offset: 0.5, color: 'rgba(118, 75, 162, 0.5)' },
+              { offset: 1, color: 'rgba(102, 126, 234, 0.5)' }
+            ]
+          }
         },
         areaStyle: {
           color: {
@@ -267,8 +318,10 @@ const chartOption = computed(() => {
             x2: 0,
             y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(102, 126, 234, 0.2)' },
-              { offset: 1, color: 'rgba(102, 126, 234, 0.02)' }
+              { offset: 0, color: 'rgba(102, 126, 234, 0.3)' },
+              { offset: 0.3, color: 'rgba(118, 75, 162, 0.25)' },
+              { offset: 0.6, color: 'rgba(102, 126, 234, 0.2)' },
+              { offset: 1, color: 'rgba(102, 126, 234, 0.05)' }
             ]
           }
         }
@@ -283,7 +336,18 @@ const chartOption = computed(() => {
         sampling: 'lttb',
         lineStyle: {
           width: 2,
-          color: 'rgba(118, 75, 162, 0.5)'
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              { offset: 0, color: 'rgba(118, 75, 162, 0.6)' },
+              { offset: 0.5, color: 'rgba(240, 147, 251, 0.6)' },
+              { offset: 1, color: 'rgba(118, 75, 162, 0.6)' }
+            ]
+          }
         },
         areaStyle: {
           color: {
@@ -293,8 +357,10 @@ const chartOption = computed(() => {
             x2: 0,
             y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(118, 75, 162, 0.25)' },
-              { offset: 1, color: 'rgba(118, 75, 162, 0.03)' }
+              { offset: 0, color: 'rgba(118, 75, 162, 0.35)' },
+              { offset: 0.4, color: 'rgba(240, 147, 251, 0.28)' },
+              { offset: 0.7, color: 'rgba(118, 75, 162, 0.2)' },
+              { offset: 1, color: 'rgba(118, 75, 162, 0.06)' }
             ]
           }
         }
@@ -309,7 +375,19 @@ const chartOption = computed(() => {
         sampling: 'lttb',
         lineStyle: {
           width: 2.5,
-          color: 'rgba(240, 147, 251, 0.55)'
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              { offset: 0, color: 'rgba(240, 147, 251, 0.7)' },
+              { offset: 0.3, color: 'rgba(255, 105, 180, 0.7)' },
+              { offset: 0.6, color: 'rgba(240, 147, 251, 0.7)' },
+              { offset: 1, color: 'rgba(240, 147, 251, 0.7)' }
+            ]
+          }
         },
         areaStyle: {
           color: {
@@ -319,8 +397,10 @@ const chartOption = computed(() => {
             x2: 0,
             y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(240, 147, 251, 0.3)' },
-              { offset: 1, color: 'rgba(240, 147, 251, 0.04)' }
+              { offset: 0, color: 'rgba(240, 147, 251, 0.4)' },
+              { offset: 0.3, color: 'rgba(255, 105, 180, 0.32)' },
+              { offset: 0.6, color: 'rgba(245, 87, 108, 0.25)' },
+              { offset: 1, color: 'rgba(240, 147, 251, 0.07)' }
             ]
           }
         }
@@ -335,7 +415,19 @@ const chartOption = computed(() => {
         sampling: 'lttb',
         lineStyle: {
           width: 3,
-          color: 'rgba(67, 233, 123, 0.6)'
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              { offset: 0, color: 'rgba(67, 233, 123, 0.75)' },
+              { offset: 0.3, color: 'rgba(56, 249, 215, 0.75)' },
+              { offset: 0.6, color: 'rgba(79, 172, 254, 0.75)' },
+              { offset: 1, color: 'rgba(67, 233, 123, 0.75)' }
+            ]
+          }
         },
         areaStyle: {
           color: {
@@ -345,8 +437,10 @@ const chartOption = computed(() => {
             x2: 0,
             y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(67, 233, 123, 0.35)' },
-              { offset: 1, color: 'rgba(67, 233, 123, 0.05)' }
+              { offset: 0, color: 'rgba(67, 233, 123, 0.45)' },
+              { offset: 0.3, color: 'rgba(56, 249, 215, 0.38)' },
+              { offset: 0.6, color: 'rgba(79, 172, 254, 0.3)' },
+              { offset: 1, color: 'rgba(67, 233, 123, 0.08)' }
             ]
           }
         }
@@ -361,7 +455,19 @@ const chartOption = computed(() => {
         sampling: 'lttb',
         lineStyle: {
           width: 3.5,
-          color: 'rgba(79, 172, 254, 0.7)'
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              { offset: 0, color: 'rgba(79, 172, 254, 0.8)' },
+              { offset: 0.3, color: 'rgba(0, 242, 254, 0.8)' },
+              { offset: 0.6, color: 'rgba(67, 233, 123, 0.8)' },
+              { offset: 1, color: 'rgba(79, 172, 254, 0.8)' }
+            ]
+          }
         },
         areaStyle: {
           color: {
@@ -371,8 +477,10 @@ const chartOption = computed(() => {
             x2: 0,
             y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(79, 172, 254, 0.4)' },
-              { offset: 1, color: 'rgba(79, 172, 254, 0.06)' }
+              { offset: 0, color: 'rgba(79, 172, 254, 0.5)' },
+              { offset: 0.3, color: 'rgba(0, 242, 254, 0.42)' },
+              { offset: 0.6, color: 'rgba(67, 233, 123, 0.35)' },
+              { offset: 1, color: 'rgba(79, 172, 254, 0.09)' }
             ]
           }
         }
@@ -396,7 +504,9 @@ const chartOption = computed(() => {
             y2: 0,
             colorStops: [
               { offset: 0, color: 'rgba(254, 225, 64, 0.95)' },
-              { offset: 0.5, color: 'rgba(255, 159, 67, 0.95)' },
+              { offset: 0.2, color: 'rgba(255, 171, 0, 0.92)' },
+              { offset: 0.4, color: 'rgba(255, 82, 82, 0.92)' },
+              { offset: 0.6, color: 'rgba(255, 171, 0, 0.92)' },
               { offset: 1, color: 'rgba(254, 225, 64, 0.95)' }
             ]
           },
@@ -418,9 +528,11 @@ const chartOption = computed(() => {
             x2: 0,
             y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(254, 225, 64, 0.45)' },
-              { offset: 0.3, color: 'rgba(255, 159, 67, 0.35)' },
-              { offset: 1, color: 'rgba(254, 225, 64, 0.05)' }
+              { offset: 0, color: 'rgba(254, 225, 64, 0.5)' },
+              { offset: 0.25, color: 'rgba(255, 171, 0, 0.42)' },
+              { offset: 0.5, color: 'rgba(255, 82, 82, 0.35)' },
+              { offset: 0.75, color: 'rgba(255, 171, 0, 0.28)' },
+              { offset: 1, color: 'rgba(254, 225, 64, 0.08)' }
             ]
           }
         },
@@ -465,10 +577,10 @@ const chartOption = computed(() => {
 // 实时更新统计数据
 const updateStats = () => {
   setInterval(() => {
-    totalVolume.value = `${Math.floor(28000 + Math.random() * 1000).toLocaleString()}`
-    peakValue.value = `${Math.floor(3200 + Math.random() * 100).toLocaleString()}`
-    avgGrowth.value = `+${(17 + Math.random() * 3).toFixed(1)}%`
-    trendIndex.value = (91 + Math.random() * 2).toFixed(1)
+    totalVolume.value = `${Math.floor(48000 + Math.random() * 1000).toLocaleString()}`
+    peakValue.value = `${Math.floor(7500 + Math.random() * 200).toLocaleString()}`
+    avgGrowth.value = `+${(23 + Math.random() * 3).toFixed(1)}%`
+    trendIndex.value = (94 + Math.random() * 3).toFixed(1)
   }, 5000)
 }
 

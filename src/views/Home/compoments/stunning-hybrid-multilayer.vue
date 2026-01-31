@@ -216,7 +216,7 @@ const option = ref({
     left: '4%',
     right: '4%',
     top: '20%',
-    bottom: '18%',
+    bottom: '5%',
     containLabel: true
   },
   xAxis: {
