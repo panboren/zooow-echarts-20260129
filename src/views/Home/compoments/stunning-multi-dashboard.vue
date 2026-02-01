@@ -245,6 +245,10 @@ const generateTimeLabels = (points: number) => {
 const initChart1 = () => {
   if (!chartRef1.value) return
 
+  if (chartInstance1) {
+    chartInstance1.dispose()
+  }
+
   chartInstance1 = echarts.init(chartRef1.value)
 
   const data = generateRealtimeData(30, 50, 20)
@@ -370,6 +374,10 @@ const initChart1 = () => {
 const initChart2 = () => {
   if (!chartRef2.value) return
 
+  if (chartInstance2) {
+    chartInstance2.dispose()
+  }
+
   chartInstance2 = echarts.init(chartRef2.value)
 
   const data = generateRealtimeData(10, 45, 15)
@@ -459,6 +467,10 @@ const initChart2 = () => {
 // 初始化图表3：内存使用
 const initChart3 = () => {
   if (!chartRef3.value) return
+
+  if (chartInstance3) {
+    chartInstance3.dispose()
+  }
 
   chartInstance3 = echarts.init(chartRef3.value)
 
@@ -686,6 +698,10 @@ const initChart3 = () => {
 // 初始化图表4：网络延迟
 const initChart4 = () => {
   if (!chartRef4.value) return
+
+  if (chartInstance4) {
+    chartInstance4.dispose()
+  }
 
   chartInstance4 = echarts.init(chartRef4.value)
 
@@ -954,7 +970,7 @@ const updateGlobalStats = () => {
   setInterval(() => {
     totalVisits.value += Math.floor(Math.random() * 100)
     avgResponseTime.value = Math.floor(Math.random() * 20) + 35
-    healthScore.value = (96 + Math.random() * 4).toFixed(1)
+    healthScore.value = parseFloat((96 + Math.random() * 4).toFixed(1))
   }, 5000)
 }
 

@@ -287,18 +287,7 @@ const option = ref({
     }
   },
   legend: {
-    data: categories,
-    bottom: 15,
-    textStyle: {
-      color: '#ffffff',
-      fontSize: 15,
-      fontWeight: 'bold',
-      fontFamily: 'Arial, sans-serif'
-    },
-    itemWidth: 24,
-    itemHeight: 12,
-    itemGap: 35,
-    formatter: (name) => name // 直接显示类别名称
+    show: false // 关闭 legend，因为这是一个图关系，不需要图例
   },
   series: [
     {

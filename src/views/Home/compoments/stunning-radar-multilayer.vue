@@ -180,7 +180,7 @@ const chartOption = computed(() => {
       radius: '65%',
       shape: 'polygon',
       splitNumber: 5,
-      name: {
+      axisName: {
         color: 'rgba(255, 255, 255, 0.85)',
         fontSize: 12,
         fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -471,8 +471,8 @@ const chartOption = computed(() => {
 // 实时更新统计数据
 const updateStats = () => {
   setInterval(() => {
-    overallScore.value = (86 + Math.random() * 3).toFixed(1)
-    trendScore.value = `+${(10 + Math.random() * 5).toFixed(1)}%`
+    overallScore.value = parseFloat((86 + Math.random() * 3).toFixed(1))
+    trendScore.value = parseFloat(`+${(10 + Math.random() * 5).toFixed(1)}%`.replace('+', '').replace('%', ''))
   }, 5000)
 }
 

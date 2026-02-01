@@ -365,9 +365,9 @@ const chartOption = computed(() => {
 // 实时更新统计数据
 const updateStats = () => {
   setInterval(() => {
-    totalValue.value = `${Math.floor(2800 + Math.random() * 100)}`
-    mainCategory.value = `${(34 + Math.random() * 3).toFixed(1)}%`
-    growthRate.value = `+${(25 + Math.random() * 8).toFixed(1)}%`
+    totalValue.value = Math.floor(2800 + Math.random() * 100)
+    mainCategory.value = parseFloat(`${(34 + Math.random() * 3).toFixed(1)}%`.replace('%', ''))
+    growthRate.value = parseFloat(`+${(25 + Math.random() * 8).toFixed(1)}%`.replace('+', '').replace('%', ''))
   }, 5000)
 }
 

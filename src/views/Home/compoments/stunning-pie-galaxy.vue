@@ -342,8 +342,8 @@ const chartOption = computed(() => {
 // 实时更新统计数据
 const updateStats = () => {
   setInterval(() => {
-    totalValue.value = `${(2.8 + Math.random() * 0.1).toFixed(3)}M`
-    growthRate.value = `${(11 + Math.random() * 3).toFixed(1)}%`
+    totalValue.value = parseFloat(`${(2.8 + Math.random() * 0.1).toFixed(3)}M`.replace('M', ''))
+    growthRate.value = parseFloat(`${(11 + Math.random() * 3).toFixed(1)}%`.replace('%', ''))
   }, 5000)
 }
 
