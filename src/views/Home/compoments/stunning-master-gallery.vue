@@ -6,7 +6,7 @@
         <span class="title-icon">🎨</span>
         <span>ECharts 精美图表现场</span>
       </h1>
-      <p class="gallery-subtitle">51个超酷炫图表组件 - 完整展示</p>
+      <p class="gallery-subtitle">61个超酷炫图表组件 - 完整展示</p>
     </div>
 
     <!-- 统计卡片 -->
@@ -268,6 +268,80 @@
       </div>
     </div>
 
+    <!-- 第十批：终极系列 -->
+    <div  class="section">
+      <h2 class="section-title">
+        <span class="title-badge">05</span>
+        终极系列
+      </h2>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningHyperNeuralQuantum" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningQuantumVerse" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningUltimateFluid" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 第十一批：突破系列 -->
+    <div  class="section">
+      <h2 class="section-title">
+        <span class="title-badge">06</span>
+        突破系列
+      </h2>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningQuantumField" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningNeuralCortex" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningHolographicMatrix" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningThreeDCosmos" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 第十二批：宇宙系列 -->
+    <div  class="section">
+      <h2 class="section-title">
+        <span class="title-badge">07</span>
+        宇宙系列
+      </h2>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningFractalUniverse" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningMolecularDynamics" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningCosmicWeb" />
+        </div>
+      </div>
+    </div>
+
     <!-- 底部信息 -->
 <!--    <div class="gallery-footer">
       <div class="footer-info">
@@ -308,10 +382,10 @@ const animateNumber = (start, end, duration, callback) => {
 onMounted(() => {
   // 延迟启动动画
   setTimeout(() => {
-    animateNumber(0, 51, 2500, (value) => {
+    animateNumber(0, 61, 2500, (value) => {
       animatedStats.value.components = value
     })
-    animateNumber(0, 18, 2200, (value) => {
+    animateNumber(0, 21, 2200, (value) => {
       animatedStats.value.series = value
     })
     animateNumber(0, 27, 2000, (value) => {
@@ -508,6 +582,46 @@ const StunningRealtimeDataflow = defineAsyncComponent({
 })
 const StunningGlassmorphismDashboard = defineAsyncComponent({
   loader: () => import('./stunning-glassmorphism-dashboard.vue'),
+  delay: 200
+})
+const StunningHyperNeuralQuantum = defineAsyncComponent({
+  loader: () => import('./stunning-hyper-neural-quantum.vue'),
+  delay: 200
+})
+const StunningQuantumVerse = defineAsyncComponent({
+  loader: () => import('./stunning-quantum-verse.vue'),
+  delay: 200
+})
+const StunningUltimateFluid = defineAsyncComponent({
+  loader: () => import('./stunning-ultimate-fluid.vue'),
+  delay: 200
+})
+const StunningQuantumField = defineAsyncComponent({
+  loader: () => import('./stunning-quantum-field.vue'),
+  delay: 200
+})
+const StunningNeuralCortex = defineAsyncComponent({
+  loader: () => import('./stunning-neural-cortex.vue'),
+  delay: 200
+})
+const StunningHolographicMatrix = defineAsyncComponent({
+  loader: () => import('./stunning-holographic-matrix.vue'),
+  delay: 200
+})
+const StunningThreeDCosmos = defineAsyncComponent({
+  loader: () => import('./stunning-3d-cosmos.vue'),
+  delay: 200
+})
+const StunningFractalUniverse = defineAsyncComponent({
+  loader: () => import('./stunning-fractal-universe.vue'),
+  delay: 200
+})
+const StunningMolecularDynamics = defineAsyncComponent({
+  loader: () => import('./stunning-molecular-dynamics.vue'),
+  delay: 200
+})
+const StunningCosmicWeb = defineAsyncComponent({
+  loader: () => import('./stunning-cosmic-web.vue'),
   delay: 200
 })
 </script>
