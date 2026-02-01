@@ -149,10 +149,10 @@ const chartInstance = ref<echarts.ECharts>()
 
 // 分形指标
 const fractalMetrics = ref([
-  { icon: '🌿', label: '复杂度', value: 2.18, unit: 'Hausdorff', color: '#00ff88' },
-  { icon: '🔄', label: '迭代次数', value: 7, unit: '次', color: '#ff00ff' },
-  { icon: '📊', label: '相似度', value: 0.85, unit: '自相似', color: '#00ffff' },
-  { icon: '🌀', label: '分形点数', value: 12547, unit: '点', color: '#ffaa00' }
+  { icon: '🌿', label: '复杂度', value: 2.18, unit: 'Hausdorff', color: '#00ffaa' },
+  { icon: '🔄', label: '迭代次数', value: 7, unit: '次', color: '#ff44ff' },
+  { icon: '📊', label: '相似度', value: 0.85, unit: '自相似', color: '#00eeff' },
+  { icon: '🌀', label: '分形点数', value: 12547, unit: '点', color: '#ffcc00' }
 ])
 
 // 获取分形光晕样式
@@ -160,11 +160,11 @@ const getFractalHaloStyle = (index: number) => {
   const angle = (index * 360) / 70
   const scale = 0.3 + (index / 70) * 0.7
   const colors = [
-    'rgba(0, 255, 136, 0.08)',
-    'rgba(255, 0, 255, 0.06)',
-    'rgba(0, 255, 255, 0.08)',
-    'rgba(255, 170, 0, 0.06)',
-    'rgba(100, 0, 255, 0.08)'
+    'rgba(0, 255, 170, 0.12)',
+    'rgba(255, 68, 255, 0.10)',
+    'rgba(0, 238, 255, 0.12)',
+    'rgba(255, 204, 0, 0.10)',
+    'rgba(0, 170, 255, 0.12)'
   ]
   const color = colors[index % colors.length]
 
@@ -183,7 +183,7 @@ const getFractalNodeStyle = (index: number) => {
   const x = 50 + Math.cos(angle * Math.PI / 180) * radius
   const y = 50 + Math.sin(angle * Math.PI / 180) * radius
 
-  const colors = ['#00ff88', '#ff00ff', '#00ffff', '#ffaa00', '#0088ff']
+  const colors = ['#00ffaa', '#ff44ff', '#00eeff', '#ffcc00', '#00aaff']
   const color = colors[index % colors.length]
 
   return {
@@ -206,7 +206,7 @@ const getFractalParticleStyle = (index: number) => {
   const x = 50 + Math.cos(baseAngle * Math.PI / 180) * radius * (0.8 + Math.random() * 0.4)
   const y = 50 + Math.sin(baseAngle * Math.PI / 180) * radius * (0.8 + Math.random() * 0.4)
 
-  const colors = ['rgba(0, 255, 136, 0.6)', 'rgba(255, 0, 255, 0.5)', 'rgba(0, 255, 255, 0.6)']
+  const colors = ['rgba(0, 255, 170, 0.75)', 'rgba(255, 68, 255, 0.65)', 'rgba(0, 238, 255, 0.75)']
   const color = colors[index % colors.length]
 
   return {
@@ -230,7 +230,7 @@ const getFractalConnectionStyle = (index: number) => {
   const x2 = 50 + Math.cos(angle2 * Math.PI / 180) * radius
   const y2 = 50 + Math.sin(angle2 * Math.PI / 180) * radius
 
-  const colors = ['#00ff88', '#ff00ff', '#00ffff']
+  const colors = ['#00ffaa', '#ff44ff', '#00eeff']
   const color = colors[index % colors.length]
 
   return {
@@ -524,29 +524,35 @@ const updateFractalChart = () => {
         itemStyle: {
           color: (params: any) => {
             const colors = [
+              // 亮紫色到亮青色渐变（更高饱和度）
               new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                { offset: 0, color: '#00ff88' },
-                { offset: 1, color: '#00ffff' }
+                { offset: 0, color: 'rgba(255, 120, 255, 0.98)' },
+                { offset: 0.5, color: 'rgba(0, 255, 255, 0.95)' },
+                { offset: 1, color: 'rgba(255, 100, 255, 0.90)' }
               ]),
-              new echarts.graphic.RadialGradient(0.5, 0.5, 1, [
-                { offset: 0, color: '#ff00ff' },
-                { offset: 1, color: '#ff0088' }
+              // 亮青色到亮橙色渐变（更高饱和度）
+              new echarts.graphic.RadialGradient(0.5, 0.5, 0.5, [
+                { offset: 0, color: 'rgba(0, 255, 255, 0.98)' },
+                { offset: 0.5, color: 'rgba(255, 200, 50, 0.95)' },
+                { offset: 1, color: 'rgba(0, 255, 255, 0.90)' }
               ]),
+              // 亮橙色到亮紫色渐变（更高饱和度）
               new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: '#ffaa00' },
-                { offset: 1, color: '#ff4400' }
+                { offset: 0, color: 'rgba(255, 220, 80, 0.98)' },
+                { offset: 0.5, color: 'rgba(255, 120, 255, 0.95)' },
+                { offset: 1, color: 'rgba(100, 200, 255, 0.90)' }
               ])
             ]
             return colors[params.dataIndex % colors.length]
           },
-          opacity: 0.8,
-          shadowBlur: 10,
-          shadowColor: 'rgba(0, 255, 136, 0.5)'
+          opacity: 0.95,
+          shadowBlur: 20,
+          shadowColor: 'rgba(255, 120, 255, 0.9)'
         },
         emphasis: {
           itemStyle: {
-            shadowBlur: 20,
-            shadowColor: '#00ffff'
+            shadowBlur: 25,
+            shadowColor: 'rgba(0, 255, 255, 1.0)'
           }
         },
         animationDuration: 3000,
@@ -559,7 +565,13 @@ const updateFractalChart = () => {
           return {
             type: 'circle',
             shape: { cx: point[0], cy: point[1], r: 2 },
-            style: { fill: '#ffffff', opacity: 0.3 }
+            style: {
+              fill: new echarts.graphic.RadialGradient(0.5, 0.5, 1, [
+                { offset: 0, color: 'rgba(255, 255, 255, 0.5)' },
+                { offset: 1, color: 'rgba(255, 255, 255, 0.1)' }
+              ]),
+              opacity: 0.4
+            }
           }
         },
         data: data.slice(0, 500),
@@ -600,10 +612,10 @@ const resetFractal = () => {
 // 更新指标
 const updateMetrics = () => {
   fractalMetrics.value = [
-    { icon: '🌿', label: '复杂度', value: fractalDimension.value, unit: 'Hausdorff', color: '#00ff88' },
-    { icon: '🔄', label: '迭代次数', value: iterations.value, unit: '次', color: '#ff00ff' },
-    { icon: '📊', label: '相似度', value: (0.7 + Math.random() * 0.2).toFixed(2), unit: '自相似', color: '#00ffff' },
-    { icon: '🌀', label: '分形点数', value: 5000 + Math.floor(Math.random() * 8000), unit: '点', color: '#ffaa00' }
+    { icon: '🌿', label: '复杂度', value: fractalDimension.value, unit: 'Hausdorff', color: '#00ffaa' },
+    { icon: '🔄', label: '迭代次数', value: iterations.value, unit: '次', color: '#ff44ff' },
+    { icon: '📊', label: '相似度', value: (0.7 + Math.random() * 0.2).toFixed(2), unit: '自相似', color: '#00eeff' },
+    { icon: '🌀', label: '分形点数', value: 5000 + Math.floor(Math.random() * 8000), unit: '点', color: '#ffcc00' }
   ]
 }
 
@@ -643,7 +655,7 @@ const animateFractalCanvas = () => {
     const y = canvas.height / 2 + Math.sin(angle * Math.PI / 180) * radius
 
     const gradient = ctx.createRadialGradient(x, y, 0, x, y, 30)
-    gradient.addColorStop(0, i % 2 === 0 ? 'rgba(0, 255, 136, 0.3)' : 'rgba(255, 0, 255, 0.3)')
+    gradient.addColorStop(0, i % 2 === 0 ? 'rgba(0, 255, 170, 0.45)' : 'rgba(255, 68, 255, 0.45)')
     gradient.addColorStop(1, 'transparent')
 
     ctx.beginPath()
@@ -829,7 +841,7 @@ onUnmounted(() => {
 .main-title {
   font-size: 48px;
   font-weight: 700;
-  background: linear-gradient(135deg, #00ff88, #00ffff, #ff00ff);
+  background: linear-gradient(135deg, #00ffaa, #00eeff, #ff44ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -842,17 +854,17 @@ onUnmounted(() => {
 
 .title-icon {
   font-size: 56px;
-  filter: drop-shadow(0 0 20px #00ff88);
+  filter: drop-shadow(0 0 25px #00ffaa);
 }
 
 .title-badge {
   font-size: 14px;
-  background: rgba(0, 255, 255, 0.2);
+  background: rgba(0, 238, 255, 0.3);
   padding: 5px 15px;
   border-radius: 20px;
-  border: 1px solid #00ffff;
+  border: 1px solid #00eeff;
   -webkit-text-fill-color: initial;
-  text-shadow: 0 0 10px #00ffff;
+  text-shadow: 0 0 12px #00eeff;
 }
 
 .subtitle {
@@ -939,9 +951,9 @@ onUnmounted(() => {
 
 .chart-frame {
   position: relative;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(0, 255, 136, 0.2);
+  background: rgb(112 65 113 / 10%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgb(112 65 113 / 20%);
   border-radius: 20px;
   padding: 20px;
   overflow: hidden;
@@ -1021,7 +1033,7 @@ onUnmounted(() => {
   width: 100%;
   height: 6px;
   border-radius: 3px;
-  background: linear-gradient(90deg, #00ff88, #ff00ff);
+  background: linear-gradient(90deg, #00ffaa, #ff44ff);
   outline: none;
 }
 
@@ -1060,23 +1072,23 @@ onUnmounted(() => {
 }
 
 .primary-btn {
-  background: linear-gradient(135deg, #00ff88, #00ffff);
+  background: linear-gradient(135deg, #00ffaa, #00eeff);
   color: #000000;
 }
 
 .primary-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 255, 170, 0.5);
 }
 
 .secondary-btn {
-  background: linear-gradient(135deg, #ff00ff, #ff0088);
+  background: linear-gradient(135deg, #ff44ff, #ff66aa);
   color: #ffffff;
 }
 
 .secondary-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(255, 0, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(255, 68, 255, 0.5);
 }
 
 .reset-btn {
@@ -1094,9 +1106,9 @@ onUnmounted(() => {
   text-align: center;
   margin-top: 25px;
   padding: 15px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 10px;
-  border: 1px solid rgba(0, 255, 136, 0.2);
+  border: 1px solid rgba(0, 255, 170, 0.3);
 }
 
 .type-label {
@@ -1108,7 +1120,7 @@ onUnmounted(() => {
 .type-name {
   font-size: 20px;
   font-weight: 700;
-  background: linear-gradient(135deg, #00ff88, #ff00ff);
+  background: linear-gradient(135deg, #00ffaa, #ff44ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

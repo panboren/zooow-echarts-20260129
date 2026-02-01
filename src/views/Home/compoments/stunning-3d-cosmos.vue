@@ -142,22 +142,22 @@ const showWireframe = ref(false)
 let cosmosTime = 0
 let currentAngle = 0
 
-// 宇宙参数
+// 宇宙参数 - 绿粉黄绿配色
 const cosmicParams = ref([
-  { icon: '🌌', label: '星系数量', value: '1,247', unit: '个', color: '#667eea' },
-  { icon: '⭐', label: '恒星质量', value: '4.23', unit: '×10¹¹M☉', color: '#f093fb' },
-  { icon: '🌍', label: '行星系统', value: '8,942', unit: '个', color: '#43e97b' },
-  { icon: '🔭', label: '可观测半径', value: '46.5', unit: '亿光年', color: '#4facfe' }
+  { icon: '🌌', label: '星系数量', value: '1,247', unit: '个', color: '#98fb98' },
+  { icon: '⭐', label: '恒星质量', value: '4.23', unit: '×10¹¹M☉', color: '#ffb6c1' },
+  { icon: '🌍', label: '行星系统', value: '8,942', unit: '个', color: '#adff2f' },
+  { icon: '🔭', label: '可观测半径', value: '46.5', unit: '亿光年', color: '#32cd32' }
 ])
 
-// 获取星云样式
+// 获取星云样式 - 绿粉黄绿配色
 const getNebulaStyle = (i: number) => {
   const colors = [
-    'rgba(102, 126, 234, 0.04)',
-    'rgba(240, 147, 251, 0.04)',
-    'rgba(67, 233, 123, 0.04)',
-    'rgba(79, 172, 254, 0.04)',
-    'rgba(254, 225, 64, 0.04)'
+    'rgba(152, 251, 152, 0.04)',
+    'rgba(255, 182, 193, 0.04)',
+    'rgba(173, 255, 47, 0.04)',
+    'rgba(50, 205, 50, 0.04)',
+    'rgba(255, 105, 180, 0.04)'
   ]
   const size = 100 + i * 22
   return {
@@ -182,7 +182,7 @@ const getArmStyle = (i: number) => {
     top: `calc(50% + ${Math.sin(angle) * distance}px)`,
     width: `${10 + Math.random() * 15}px`,
     height: `${10 + Math.random() * 15}px`,
-    background: `radial-gradient(circle, rgba(102, 126, 234, 0.25), rgba(240, 147, 251, 0.15))`,
+    background: `radial-gradient(circle, rgba(152, 251, 152, 0.25), rgba(255, 182, 193, 0.15))`,
     filter: 'blur(5px)',
     animation: `arm-rotate ${10 + Math.random() * 7}s linear infinite`,
     animationDelay: `${i * 0.4}s`,
@@ -214,7 +214,7 @@ const getRayStyle = (i: number) => {
     left: '0',
     width: '100%',
     height: '0.8px',
-    background: `linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.35), rgba(240, 147, 251, 0.35), transparent)`,
+    background: `linear-gradient(90deg, transparent, rgba(152, 251, 152, 0.35), rgba(255, 182, 193, 0.35), transparent)`,
     filter: `blur(${Math.random() * 1.2 + 0.3}px)`,
     animation: `ray-move ${9 + i * 2}s ease-in-out infinite`,
     animationDelay: `${i * 0.8}s`,
@@ -239,7 +239,7 @@ const getGlowRingStyle = (i: number) => {
     top: '50%',
     width: `${80 + i * 35}px`,
     height: `${80 + i * 35}px`,
-    border: '1px solid rgba(102, 126, 234, 0.08)',
+    border: '1px solid rgba(152, 251, 152, 0.08)',
     borderRadius: '50%',
     transform: `translate(-50%, -50%) rotate(${angle}deg)`,
     animation: `glow-rotate ${12 + i * 2.5}s linear infinite`,
@@ -252,61 +252,436 @@ const generate3DCosmosData = () => {
   const particles: any[] = []
   const density = particleDensity.value
 
-  // 生成恒星粒子
-  for (let i = 0; i < density; i++) {
+  // 生成银河系旋臂恒星（双螺旋结构）
+  const spiralArms = 4
+  const armLength = 220
+  for (let arm = 0; arm < spiralArms; arm++) {
+    // 主旋臂
+    const armOffset = (arm / spiralArms) * Math.PI * 2
+    for (let i = 0; i < Math.floor(density / 5); i++) {
+      const t = i / (Math.floor(density / 5))
+      // 双螺旋公式
+      const angle = armOffset + t * Math.PI * 4
+      const radius = 15 + t * armLength * (1 - t * 0.25)
+
+      const angleSpread = (Math.random() - 0.5) * (0.4 + t * 0.4)
+      const radiusSpread = (Math.random() - 0.5) * (12 + t * 18)
+
+      const x = radius * Math.cos(angle + angleSpread) + radiusSpread
+      const y = radius * Math.sin(angle + angleSpread) + radiusSpread
+      const z = (Math.random() - 0.5) * (15 + t * 25)
+
+      const starType = Math.floor(Math.random() * 5)
+      const starTypes = ['主序星', '巨星', '超巨星', '白矮星', '中子星']
+      const typeColors = [
+        'rgba(152, 251, 152, 0.95)',
+        'rgba(255, 182, 193, 0.95)',
+        'rgba(173, 255, 47, 0.95)',
+        'rgba(50, 205, 50, 0.95)',
+        'rgba(255, 105, 180, 0.95)'
+      ]
+
+      particles.push({
+        name: `恒星-${arm}-${i}`,
+        value: [x, y, z],
+        symbolSize: 2.5 + Math.random() * 5,
+        starType: starTypes[starType],
+        luminosity: 100 + Math.random() * 900,
+        temperature: 4000 + Math.random() * 26000,
+        age: Math.random() * 12,
+        itemStyle: {
+          color: typeColors[starType],
+          opacity: 0.65 + Math.random() * 0.35
+        }
+      })
+    }
+
+    // 次旋臂（交错分布）
+    const secondaryOffset = armOffset + Math.PI / 4
+    for (let i = 0; i < Math.floor(density / 10); i++) {
+      const t = i / (Math.floor(density / 10))
+      const angle = secondaryOffset + t * Math.PI * 3.5
+      const radius = 20 + t * armLength * 0.9 * (1 - t * 0.3)
+
+      const angleSpread = (Math.random() - 0.5) * 0.5
+      const radiusSpread = (Math.random() - 0.5) * (15 + t * 20)
+
+      const x = radius * Math.cos(angle + angleSpread) + radiusSpread
+      const y = radius * Math.sin(angle + angleSpread) + radiusSpread
+      const z = (Math.random() - 0.5) * (18 + t * 28)
+
+      const starType = Math.floor(Math.random() * 4)
+      const typeColors = [
+        'rgba(152, 251, 152, 0.9)',
+        'rgba(255, 182, 193, 0.9)',
+        'rgba(173, 255, 47, 0.9)',
+        'rgba(255, 105, 180, 0.9)'
+      ]
+
+      particles.push({
+        name: `次旋臂-${arm}-${i}`,
+        value: [x, y, z],
+        symbolSize: 2 + Math.random() * 4,
+        starType: ['主序星', '巨星', '白矮星', '中子星'][starType],
+        luminosity: 80 + Math.random() * 500,
+        temperature: 3500 + Math.random() * 22000,
+        age: Math.random() * 11,
+        itemStyle: {
+          color: typeColors[starType],
+          opacity: 0.6 + Math.random() * 0.35
+        }
+      })
+    }
+  }
+
+  // 生成全向填充恒星（均匀分布）
+  const uniformStars = Math.floor(density / 5)
+  for (let i = 0; i < uniformStars; i++) {
     const phi = Math.random() * Math.PI * 2
     const theta = Math.random() * Math.PI
-    const radius = 50 + Math.random() * 450
+    const radius = 30 + Math.random() * 180
 
     const x = radius * Math.sin(theta) * Math.cos(phi)
     const y = radius * Math.sin(theta) * Math.sin(phi)
-    const z = radius * Math.cos(theta)
+    const z = radius * Math.cos(theta) * 0.4
 
-    const starType = Math.floor(Math.random() * 5)
-    const starTypes = ['主序星', '巨星', '超巨星', '白矮星', '中子星']
+    const starType = Math.floor(Math.random() * 3)
     const typeColors = [
-      'rgba(254, 225, 64, 0.9)',
-      'rgba(255, 150, 100, 0.9)',
-      'rgba(102, 126, 234, 0.9)',
-      'rgba(240, 147, 251, 0.9)',
-      'rgba(79, 172, 254, 0.9)'
+      'rgba(152, 251, 152, 0.85)',
+      'rgba(255, 182, 193, 0.85)',
+      'rgba(173, 255, 47, 0.85)'
     ]
 
     particles.push({
-      name: `恒星-${i}`,
+      name: `均匀恒星-${i}`,
       value: [x, y, z],
-      symbolSize: 2 + Math.random() * 4,
-      starType: starTypes[starType],
-      luminosity: Math.random() * 1000,
-      temperature: 3000 + Math.random() * 27000,
-      age: Math.random() * 10,
+      symbolSize: 1.5 + Math.random() * 3.5,
+      starType: ['主序星', '红巨星', '蓝巨星'][starType],
+      luminosity: 40 + Math.random() * 350,
+      temperature: 3000 + Math.random() * 18000,
+      age: Math.random() * 14,
       itemStyle: {
         color: typeColors[starType],
-        opacity: 0.6 + Math.random() * 0.4
+        opacity: 0.45 + Math.random() * 0.45
       }
     })
   }
 
-  // 生成星云数据
-  const nebulae: any[] = []
-  for (let i = 0; i < 15; i++) {
+  // 添加右上角区域的恒星（填充空缺）
+  const rightUpperStars = Math.floor(density / 6)
+  for (let i = 0; i < rightUpperStars; i++) {
+    // 在右上象限均匀分布
+    const phi = Math.PI * 0.25 + Math.random() * Math.PI * 0.5 // 右上象限
+    const theta = Math.random() * Math.PI
+    const radius = 40 + Math.random() * 160
+
+    const x = radius * Math.sin(theta) * Math.cos(phi)
+    const y = radius * Math.sin(theta) * Math.sin(phi)
+    const z = (Math.random() - 0.5) * 28
+
+    const starType = Math.floor(Math.random() * 4)
+    const typeColors = [
+      'rgba(152, 251, 152, 0.88)',
+      'rgba(255, 182, 193, 0.88)',
+      'rgba(173, 255, 47, 0.88)',
+      'rgba(255, 105, 180, 0.88)'
+    ]
+
+    particles.push({
+      name: `右上恒星-${i}`,
+      value: [x, y, z],
+      symbolSize: 2 + Math.random() * 4.5,
+      starType: ['主序星', '红巨星', '蓝巨星', '白矮星'][starType],
+      luminosity: 80 + Math.random() * 500,
+      temperature: 4000 + Math.random() * 20000,
+      age: Math.random() * 12,
+      itemStyle: {
+        color: typeColors[starType],
+        opacity: 0.52 + Math.random() * 0.38
+      }
+    })
+  }
+
+  // 添加左上、左下、右下区域的恒星（四象限平衡）
+  const quadrantStars = Math.floor(density / 8)
+  const quadrants = [
+    { phiMin: Math.PI * 0.75, phiMax: Math.PI * 1.25, name: '左上' },
+    { phiMin: Math.PI * 1.25, phiMax: Math.PI * 1.75, name: '左下' },
+    { phiMin: Math.PI * 1.75, phiMax: Math.PI * 0.25, name: '右下' }
+  ]
+
+  quadrants.forEach(quadrant => {
+    for (let i = 0; i < Math.floor(quadrantStars / 3); i++) {
+      const phi = quadrant.phiMin + Math.random() * (quadrant.phiMax - quadrant.phiMin)
+      const theta = Math.random() * Math.PI
+      const radius = 35 + Math.random() * 170
+
+      const x = radius * Math.sin(theta) * Math.cos(phi)
+      const y = radius * Math.sin(theta) * Math.sin(phi)
+      const z = (Math.random() - 0.5) * 26
+
+      const starType = Math.floor(Math.random() * 3)
+      const typeColors = [
+        'rgba(152, 251, 152, 0.82)',
+        'rgba(255, 182, 193, 0.82)',
+        'rgba(173, 255, 47, 0.82)'
+      ]
+
+      particles.push({
+        name: `${quadrant.name}恒星-${i}`,
+        value: [x, y, z],
+        symbolSize: 1.8 + Math.random() * 3.8,
+        starType: ['主序星', '红巨星', '白矮星'][starType],
+        luminosity: 60 + Math.random() * 400,
+        temperature: 3500 + Math.random() * 19000,
+        age: Math.random() * 13,
+        itemStyle: {
+          color: typeColors[starType],
+          opacity: 0.48 + Math.random() * 0.42
+        }
+      })
+    }
+  })
+
+  // 生成中心球状星团（高密度，球形分布）
+  const bulgeStars = Math.floor(density / 4)
+  for (let i = 0; i < bulgeStars; i++) {
+    // 使用高斯分布使中心更密集
+    const gaussianRandom = () => {
+      let u = 0, v = 0
+      while (u === 0) u = Math.random()
+      while (v === 0) v = Math.random()
+      return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v)
+    }
+
+    const radius = Math.abs(gaussianRandom()) * 20
+    const phi = Math.random() * Math.PI * 2
+    const theta = Math.acos(2 * Math.random() - 1)
+
+    const x = radius * Math.sin(theta) * Math.cos(phi)
+    const y = radius * Math.sin(theta) * Math.sin(phi)
+    const z = radius * Math.cos(theta) * 0.7 // 稍扁的球形
+
+    particles.push({
+      name: `球状星团-${i}`,
+      value: [x, y, z],
+      symbolSize: 1.5 + Math.random() * 2.5,
+      starType: '老年星',
+      luminosity: 30 + Math.random() * 200,
+      temperature: 3000 + Math.random() * 6000,
+      age: 8 + Math.random() * 5,
+      itemStyle: {
+        color: 'rgba(255, 215, 0, 0.9)',
+        opacity: 0.75 + Math.random() * 0.25
+      }
+    })
+  }
+
+  // 生成外围恒星环（环状分布）
+  const haloStars = Math.floor(density / 5)
+  for (let i = 0; i < haloStars; i++) {
     const phi = Math.random() * Math.PI * 2
     const theta = Math.random() * Math.PI
-    const radius = 100 + Math.random() * 300
+
+    // 在外围形成环状
+    const ringRadius = 180 + Math.random() * 120
+    const ringThickness = 60
+    const radius = ringRadius + (Math.random() - 0.5) * ringThickness
+
+    const x = radius * Math.sin(theta) * Math.cos(phi)
+    const y = radius * Math.sin(theta) * Math.sin(phi)
+    const z = radius * Math.cos(theta) * 0.3
+
+    const starType = Math.floor(Math.random() * 3)
+    const typeColors = [
+      'rgba(152, 251, 152, 0.8)',
+      'rgba(255, 182, 193, 0.8)',
+      'rgba(173, 255, 47, 0.8)'
+    ]
+
+    particles.push({
+      name: `外围恒星-${i}`,
+      value: [x, y, z],
+      symbolSize: 1 + Math.random() * 2.5,
+      starType: ['矮星', '红巨星', '蓝巨星'][starType],
+      luminosity: 15 + Math.random() * 250,
+      temperature: 3000 + Math.random() * 18000,
+      age: Math.random() * 15,
+      itemStyle: {
+        color: typeColors[starType],
+        opacity: 0.4 + Math.random() * 0.4
+      }
+    })
+  }
+
+  // 生成明亮的超巨星（沿旋臂分布）
+  for (let i = 0; i < 10; i++) {
+    const arm = Math.floor(Math.random() * spiralArms)
+    const armOffset = (arm / spiralArms) * Math.PI * 2 + Math.PI / 6
+    const t = 0.3 + Math.random() * 0.6
+
+    const angle = armOffset + Math.log(1 + t * 10) * 2
+    const radius = 10 + t * armLength * (1 - t * 0.3)
+
+    const x = radius * Math.cos(angle)
+    const y = radius * Math.sin(angle)
+    const z = (Math.random() - 0.5) * 25
+
+    particles.push({
+      name: `超巨星-${i}`,
+      value: [x, y, z],
+      symbolSize: 14 + Math.random() * 10,
+      starType: '超巨星',
+      luminosity: 8000 + Math.random() * 12000,
+      temperature: 25000 + Math.random() * 35000,
+      age: Math.random() * 5,
+      itemStyle: {
+        color: 'rgba(255, 255, 255, 1)',
+        opacity: 1,
+        shadowBlur: 35,
+        shadowColor: 'rgba(255, 255, 255, 0.9)'
+      }
+    })
+  }
+
+  // 生成星云数据（沿旋臂和外围分布）
+  const nebulae: any[] = []
+  const nebulaColors = [
+    'rgba(152, 251, 152, 0.38)',
+    'rgba(255, 182, 193, 0.38)',
+    'rgba(173, 255, 47, 0.38)',
+    'rgba(255, 105, 180, 0.38)',
+    'rgba(135, 206, 250, 0.38)'
+  ]
+
+  // 沿旋臂分布的星云
+  for (let i = 0; i < 10; i++) {
+    const arm = Math.floor(Math.random() * spiralArms)
+    const armOffset = (arm / spiralArms) * Math.PI * 2
+    const t = 0.25 + Math.random() * 0.65
+
+    const angle = armOffset + t * Math.PI * 4 + (Math.random() - 0.5) * 0.4
+    const radius = 15 + t * armLength * (1 - t * 0.25)
+
+    const x = radius * Math.cos(angle)
+    const y = radius * Math.sin(angle)
+    const z = (Math.random() - 0.5) * 22
 
     nebulae.push({
-      name: `星云-${i}`,
+      name: `旋臂星云-${i}`,
+      value: [x, y, z],
+      symbolSize: 85 + Math.random() * 75,
+      nebulaType: ['发射星云', '反射星云', '暗星云'][Math.floor(Math.random() * 3)],
+      composition: ['氢', '氦', '尘埃'][Math.floor(Math.random() * 3)],
+      itemStyle: {
+        color: nebulaColors[i % nebulaColors.length],
+        opacity: 0.35 + (nebulaIntensity.value / 100) * 0.38
+      }
+    })
+  }
+
+  // 四象限星云分布（更均匀）
+  const quadrantsNebula = [
+    { phiMin: -Math.PI * 0.25, phiMax: Math.PI * 0.25, name: '右上' },
+    { phiMin: Math.PI * 0.25, phiMax: Math.PI * 0.75, name: '右下' },
+    { phiMin: Math.PI * 0.75, phiMax: Math.PI * 1.25, name: '左下' },
+    { phiMin: Math.PI * 1.25, phiMax: Math.PI * 1.75, name: '左上' }
+  ]
+
+  quadrantsNebula.forEach(quadrant => {
+    for (let i = 0; i < 3; i++) {
+      const phi = quadrant.phiMin + Math.random() * (quadrant.phiMax - quadrant.phiMin)
+      const theta = Math.random() * Math.PI
+      const radius = 60 + Math.random() * 140
+
+      const x = radius * Math.sin(theta) * Math.cos(phi)
+      const y = radius * Math.sin(theta) * Math.sin(phi)
+      const z = (Math.random() - 0.5) * 28
+
+      nebulae.push({
+        name: `${quadrant.name}星云-${i}`,
+        value: [x, y, z],
+        symbolSize: 70 + Math.random() * 65,
+        nebulaType: ['发射星云', '反射星云'][Math.floor(Math.random() * 2)],
+        composition: ['氢', '氦', '离子'][Math.floor(Math.random() * 3)],
+        itemStyle: {
+          color: nebulaColors[(quadrant.name.length + i) % nebulaColors.length],
+          opacity: 0.30 + (nebulaIntensity.value / 100) * 0.35
+        }
+      })
+    }
+  })
+
+  // 次旋臂星云
+  for (let i = 0; i < 4; i++) {
+    const arm = Math.floor(Math.random() * spiralArms)
+    const armOffset = (arm / spiralArms) * Math.PI * 2 + Math.PI / 4
+    const t = 0.35 + Math.random() * 0.5
+
+    const angle = armOffset + t * Math.PI * 3.5
+    const radius = 25 + t * armLength * 0.85
+
+    const x = radius * Math.cos(angle)
+    const y = radius * Math.sin(angle)
+    const z = (Math.random() - 0.5) * 24
+
+    nebulae.push({
+      name: `次旋臂星云-${i}`,
+      value: [x, y, z],
+      symbolSize: 75 + Math.random() * 55,
+      nebulaType: ['反射星云', '行星状星云'][Math.floor(Math.random() * 2)],
+      composition: ['氦', '离子'][Math.floor(Math.random() * 2)],
+      itemStyle: {
+        color: nebulaColors[(i + 3) % nebulaColors.length],
+        opacity: 0.28 + (nebulaIntensity.value / 100) * 0.32
+      }
+    })
+  }
+
+  // 外围环状星云
+  for (let i = 0; i < 8; i++) {
+    const phi = Math.random() * Math.PI * 2
+    const theta = Math.random() * Math.PI
+
+    const ringRadius = 190 + Math.random() * 100
+    const radius = ringRadius + (Math.random() - 0.5) * 50
+
+    const x = radius * Math.sin(theta) * Math.cos(phi)
+    const y = radius * Math.sin(theta) * Math.sin(phi)
+    const z = radius * Math.cos(theta) * 0.25
+
+    nebulae.push({
+      name: `外围星云-${i}`,
+      value: [x, y, z],
+      symbolSize: 70 + Math.random() * 50,
+      nebulaType: ['暗星云', '超新星遗迹', '行星状星云'][Math.floor(Math.random() * 3)],
+      composition: ['尘埃', '金属', '离子'][Math.floor(Math.random() * 3)],
+      itemStyle: {
+        color: nebulaColors[(i + 3) % nebulaColors.length],
+        opacity: 0.25 + (nebulaIntensity.value / 100) * 0.3
+      }
+    })
+  }
+
+  // 中心附近的亮星云
+  for (let i = 0; i < 4; i++) {
+    const phi = Math.random() * Math.PI * 2
+    const theta = Math.random() * Math.PI
+    const radius = 30 + Math.random() * 40
+
+    nebulae.push({
+      name: `中心星云-${i}`,
       value: [
         radius * Math.sin(theta) * Math.cos(phi),
         radius * Math.sin(theta) * Math.sin(phi),
-        radius * Math.cos(theta)
+        radius * Math.cos(theta) * 0.6
       ],
-      symbolSize: 80 + Math.random() * 60,
-      nebulaType: ['发射星云', '反射星云', '暗星云', '行星状星云'][Math.floor(Math.random() * 4)],
-      composition: ['氢', '氦', '尘埃', '离子'][Math.floor(Math.random() * 4)],
+      symbolSize: 50 + Math.random() * 35,
+      nebulaType: '发射星云',
+      composition: '电离氢',
       itemStyle: {
-        color: `rgba(102, 126, 234, ${nebulaIntensity.value / 100 * 0.3})`,
-        opacity: 0.2
+        color: 'rgba(0, 255, 255, 0.45)',
+        opacity: 0.5 + (nebulaIntensity.value / 100) * 0.35
       }
     })
   }
@@ -327,7 +702,7 @@ const initCosmosChart = () => {
     tooltip: {
       trigger: 'item',
       backgroundColor: 'rgba(10, 10, 25, 0.95)',
-      borderColor: 'rgba(102, 126, 234, 0.7)',
+      borderColor: 'rgba(152, 251, 152, 0.7)',
       borderWidth: 2,
       borderRadius: 16,
       padding: [16, 20],
@@ -336,7 +711,7 @@ const initCosmosChart = () => {
         fontSize: 13,
         fontWeight: 600
       },
-      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 12px 48px rgba(102, 126, 234, 0.4);',
+      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 12px 48px rgba(152, 251, 152, 0.4);',
       formatter: (params: any) => {
         const [x, y, z] = params.value
         const isNebula = params.name.includes('星云')
@@ -349,15 +724,15 @@ const initCosmosChart = () => {
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                 <span style="color: rgba(255,255,255,0.7);">类型</span>
-                <span style="font-weight: 700; color: #667eea;">${params.data.nebulaType}</span>
+                <span style="font-weight: 700; color: #98fb98;">${params.data.nebulaType}</span>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                 <span style="color: rgba(255,255,255,0.7);">成分</span>
-                <span style="font-weight: 700; color: #f093fb;">${params.data.composition}</span>
+                <span style="font-weight: 700; color: #ffb6c1;">${params.data.composition}</span>
               </div>
               <div style="display: flex; justify-content: space-between;">
                 <span style="color: rgba(255,255,255,0.7);">坐标</span>
-                <span style="font-weight: 700; color: #43e97b;">(${x.toFixed(0)}, ${y.toFixed(0)}, ${z.toFixed(0)})</span>
+                <span style="font-weight: 700; color: #adff2f;">(${x.toFixed(0)}, ${y.toFixed(0)}, ${z.toFixed(0)})</span>
               </div>
             </div>
           `
@@ -369,19 +744,19 @@ const initCosmosChart = () => {
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                 <span style="color: rgba(255,255,255,0.7);">类型</span>
-                <span style="font-weight: 700; color: #667eea;">${params.data.starType}</span>
+                <span style="font-weight: 700; color: #98fb98;">${params.data.starType}</span>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                 <span style="color: rgba(255,255,255,0.7);">光度</span>
-                <span style="font-weight: 700; color: #f093fb;">${params.data.luminosity.toFixed(1)} L☉</span>
+                <span style="font-weight: 700; color: #ffb6c1;">${params.data.luminosity.toFixed(1)} L☉</span>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                 <span style="color: rgba(255,255,255,0.7);">温度</span>
-                <span style="font-weight: 700; color: #43e97b;">${params.data.temperature.toFixed(0)} K</span>
+                <span style="font-weight: 700; color: #adff2f;">${params.data.temperature.toFixed(0)} K</span>
               </div>
               <div style="display: flex; justify-content: space-between;">
                 <span style="color: rgba(255,255,255,0.7);">年龄</span>
-                <span style="font-weight: 700; color: #4facfe;">${params.data.age.toFixed(1)} Gyr</span>
+                <span style="font-weight: 700; color: #32cd32;">${params.data.age.toFixed(1)} Gyr</span>
               </div>
             </div>
           `
@@ -408,34 +783,74 @@ const initCosmosChart = () => {
     },
     series: [
       {
+        name: '超巨星',
+        type: 'effectScatter',
+        data: particles.filter(p => p.starType === '超巨星').map(p => [p.value[0], p.value[1], p.symbolSize]),
+        symbolSize: (data: any) => data[2],
+        itemStyle: {
+          color: '#ffffff',
+          shadowBlur: 25,
+          shadowColor: 'rgba(255, 255, 255, 0.9)'
+        },
+        rippleEffect: {
+          brushType: 'stroke',
+          scale: 4,
+          period: 3
+        },
+        zlevel: 3
+      },
+      {
         name: '恒星',
         type: 'effectScatter',
-        data: particles.map(p => [p.value[0], p.value[1]]),
-        symbolSize: (data: any) => data[2] || 10,
+        data: particles.filter(p => p.starType !== '超巨星').map(p => [p.value[0], p.value[1], p.symbolSize]),
+        symbolSize: (data: any) => data[2],
         itemStyle: {
           color: (params: any) => {
-            const colors = ['#ffddaa', '#ffffff', '#ffaa88', '#88ccff', '#ff8866']
+            const colors = ['#98fb98', '#ffb6c1', '#adff2f', '#32cd32', '#ff69b4', '#ffd700']
             return colors[params.dataIndex % colors.length]
           },
-          shadowBlur: 10,
-          shadowColor: '#ffddaa'
+          shadowBlur: 12,
+          shadowColor: 'rgba(152, 251, 152, 0.8)'
         },
         rippleEffect: {
           brushType: 'stroke',
           scale: 3,
           period: 4
-        }
+        },
+        zlevel: 2
+      },
+      {
+        name: '球状星团',
+        type: 'scatter',
+        data: particles.filter(p => p.starType === '老年星').map(p => [p.value[0], p.value[1], p.symbolSize]),
+        symbolSize: (data: any) => data[2] * 1.5,
+        itemStyle: {
+          color: 'rgba(255, 215, 0, 0.9)',
+          opacity: 0.85
+        },
+        zlevel: 1
       },
       {
         name: '星云',
         type: 'scatter',
-        data: nebulae.map(n => [n.value[0], n.value[1]]),
-        symbolSize: (data: any) => (data[2] || 20) * 1.5,
+        data: nebulae.map(n => [n.value[0], n.value[1], n.symbolSize]),
+        symbolSize: (data: any) => data[2],
         itemStyle: {
-          color: 'rgba(102, 126, 234, 0.4)',
-          opacity: 0.5
+          color: (params: any) => {
+            const colors = [
+              'rgba(152, 251, 152, 0.4)',
+              'rgba(255, 182, 193, 0.4)',
+              'rgba(173, 255, 47, 0.4)',
+              'rgba(255, 105, 180, 0.4)',
+              'rgba(135, 206, 250, 0.4)',
+              'rgba(0, 255, 255, 0.4)'
+            ]
+            return colors[params.dataIndex % colors.length]
+          },
+          opacity: 0.45
         },
-        silent: true
+        silent: true,
+        zlevel: 0
       }
     ]
   }
@@ -576,19 +991,19 @@ onUnmounted(() => {
   min-height: 1350px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 10% 90%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 10%, rgba(240, 147, 251, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(67, 233, 123, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 10% 90%, rgba(152, 251, 152, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 10%, rgba(255, 182, 193, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(173, 255, 47, 0.08) 0%, transparent 60%),
     linear-gradient(135deg, #000005 0%, #0a0a18 20%, #101028 40%, #0a0a18 70%, #000005 100%);
   padding: 36px;
   box-sizing: border-box;
   border-radius: 36px;
   box-shadow:
     0 60px 180px rgba(0, 0, 0, 1),
-    0 0 200px rgba(102, 126, 234, 0.15),
-    0 0 300px rgba(240, 147, 251, 0.1),
+    0 0 200px rgba(152, 251, 152, 0.15),
+    0 0 300px rgba(255, 182, 193, 0.1),
     inset 0 4px 0 rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(102, 126, 234, 0.25);
+  border: 2px solid rgba(152, 251, 152, 0.25);
 }
 
 /* 宇宙星云 */
@@ -714,8 +1129,8 @@ onUnmounted(() => {
   gap: 18px;
   color: #ffffff;
   text-shadow:
-    0 0 35px rgba(102, 126, 234, 0.85),
-    0 0 70px rgba(240, 147, 251, 0.65);
+    0 0 35px rgba(152, 251, 152, 0.85),
+    0 0 70px rgba(255, 182, 193, 0.65);
 }
 
 .title-icon {
@@ -739,13 +1154,13 @@ onUnmounted(() => {
 
 .title-badge {
   padding: 10px 30px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(240, 147, 251, 0.85));
+  background: linear-gradient(135deg, rgba(152, 251, 152, 0.85), rgba(255, 182, 193, 0.85));
   border-radius: 26px;
   font-size: 16px;
   font-weight: 800;
   backdrop-filter: blur(12px);
   border: 2px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.55);
+  box-shadow: 0 10px 40px rgba(152, 251, 152, 0.55);
   letter-spacing: 3px;
 }
 
@@ -755,7 +1170,7 @@ onUnmounted(() => {
   margin: 0;
   letter-spacing: 4px;
   text-transform: uppercase;
-  text-shadow: 0 0 25px rgba(102, 126, 234, 0.65);
+  text-shadow: 0 0 25px rgba(152, 251, 152, 0.65);
 }
 
 /* 宇宙参数 */
@@ -769,7 +1184,7 @@ onUnmounted(() => {
 .param-card {
   position: relative;
   background: rgba(10, 10, 25, 0.8);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(152, 251, 152, 0.3);
   border-radius: 20px;
   padding: 20px 24px;
   overflow: hidden;
@@ -777,7 +1192,7 @@ onUnmounted(() => {
   backdrop-filter: blur(20px);
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.7),
-    0 0 60px rgba(102, 126, 234, 0.15);
+    0 0 60px rgba(152, 251, 152, 0.15);
   display: flex;
   align-items: center;
   gap: 16px;
@@ -790,16 +1205,16 @@ onUnmounted(() => {
   left: 0;
   width: 3px;
   height: 100%;
-  background: linear-gradient(180deg, #667eea, #764ba2, #f093fb);
+  background: linear-gradient(180deg, #98fb98, #ffb6c1, #adff2f);
   border-radius: 20px 0 0 20px;
 }
 
 .param-card:hover {
   transform: translateY(-10px) scale(1.03);
-  border-color: rgba(102, 126, 234, 0.6);
+  border-color: rgba(152, 251, 152, 0.6);
   box-shadow:
     0 30px 70px rgba(0, 0, 0, 0.8),
-    0 0 80px rgba(102, 126, 234, 0.3);
+    0 0 80px rgba(152, 251, 152, 0.3);
 }
 
 .param-glow {
@@ -809,8 +1224,8 @@ onUnmounted(() => {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #667eea;
-  box-shadow: 0 0 10px #667eea;
+  background: #98fb98;
+  box-shadow: 0 0 10px #98fb98;
   animation: param-glow-pulse 2s ease-in-out infinite;
 }
 
@@ -832,7 +1247,7 @@ onUnmounted(() => {
 .param-icon {
   font-size: 32px;
   margin-bottom: 8px;
-  filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.7));
+  filter: drop-shadow(0 0 10px rgba(152, 251, 152, 0.7));
 }
 
 .param-label {
@@ -877,23 +1292,23 @@ onUnmounted(() => {
   flex: 1;
   min-height: 600px;
   background: rgba(8, 8, 20, 0.7);
-  border: 2px solid rgba(102, 126, 234, 0.3);
+  border: 2px solid rgba(152, 251, 152, 0.3);
   border-radius: 28px;
   padding: 28px;
   margin-bottom: 28px;
   backdrop-filter: blur(25px);
   box-shadow:
     0 35px 100px rgba(0, 0, 0, 0.8),
-    0 0 120px rgba(102, 126, 234, 0.2);
+    0 0 120px rgba(152, 251, 152, 0.2);
   transition: all 0.4s ease;
   overflow: hidden;
 }
 
 .three-d-cosmos-wrapper:hover {
-  border-color: rgba(102, 126, 234, 0.6);
+  border-color: rgba(152, 251, 152, 0.6);
   box-shadow:
     0 45px 120px rgba(0, 0, 0, 0.9),
-    0 0 180px rgba(102, 126, 234, 0.35);
+    0 0 180px rgba(152, 251, 152, 0.35);
 }
 
 .cosmos-frame {
@@ -940,12 +1355,12 @@ onUnmounted(() => {
   gap: 28px;
   padding: 28px 36px;
   background: rgba(8, 8, 20, 0.85);
-  border: 2px solid rgba(102, 126, 234, 0.35);
+  border: 2px solid rgba(152, 251, 152, 0.35);
   border-radius: 24px;
   backdrop-filter: blur(25px);
   box-shadow:
     0 25px 70px rgba(0, 0, 0, 0.7),
-    0 0 80px rgba(102, 126, 234, 0.2);
+    0 0 80px rgba(152, 251, 152, 0.2);
 }
 
 .control-section {
@@ -979,7 +1394,7 @@ onUnmounted(() => {
   height: 6px;
   -webkit-appearance: none;
   appearance: none;
-  background: rgba(102, 126, 234, 0.3);
+  background: rgba(152, 251, 152, 0.3);
   border-radius: 3px;
   outline: none;
   cursor: pointer;
@@ -990,22 +1405,22 @@ onUnmounted(() => {
   appearance: none;
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #98fb98, #ffb6c1);
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.85);
+  box-shadow: 0 0 20px rgba(152, 251, 152, 0.85);
   transition: all 0.3s ease;
 }
 
 .cosmos-slider::-webkit-slider-thumb:hover {
   transform: scale(1.25);
-  box-shadow: 0 0 30px rgba(102, 126, 234, 1);
+  box-shadow: 0 0 30px rgba(152, 251, 152, 1);
 }
 
 .control-value {
   font-size: 14px;
   font-weight: 800;
-  color: #667eea;
+  color: #98fb98;
   text-align: center;
 }
 
@@ -1033,50 +1448,50 @@ onUnmounted(() => {
 }
 
 .primary-btn {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #98fb98, #ffb6c1);
   color: #ffffff;
-  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.65);
+  box-shadow: 0 8px 32px rgba(152, 251, 152, 0.65);
 }
 
 .primary-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.85);
+  box-shadow: 0 12px 40px rgba(152, 251, 152, 0.85);
 }
 
 .secondary-btn {
-  background: rgba(240, 147, 251, 0.2);
-  color: #f093fb;
-  border: 1px solid rgba(240, 147, 251, 0.4);
+  background: rgba(255, 182, 193, 0.2);
+  color: #ffb6c1;
+  border: 1px solid rgba(255, 182, 193, 0.4);
 }
 
 .secondary-btn:hover {
-  background: rgba(240, 147, 251, 0.3);
+  background: rgba(255, 182, 193, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(240, 147, 251, 0.4);
+  box-shadow: 0 8px 32px rgba(255, 182, 193, 0.4);
 }
 
 .wireframe-btn {
-  background: rgba(67, 233, 123, 0.2);
-  color: #43e97b;
-  border: 1px solid rgba(67, 233, 123, 0.4);
+  background: rgba(173, 255, 47, 0.2);
+  color: #adff2f;
+  border: 1px solid rgba(173, 255, 47, 0.4);
 }
 
 .wireframe-btn:hover {
-  background: rgba(67, 233, 123, 0.3);
+  background: rgba(173, 255, 47, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(67, 233, 123, 0.4);
+  box-shadow: 0 8px 32px rgba(173, 255, 47, 0.4);
 }
 
 .explore-btn {
-  background: rgba(79, 172, 254, 0.2);
-  color: #4facfe;
-  border: 1px solid rgba(79, 172, 254, 0.4);
+  background: rgba(50, 205, 50, 0.2);
+  color: #32cd32;
+  border: 1px solid rgba(50, 205, 50, 0.4);
 }
 
 .explore-btn:hover {
-  background: rgba(79, 172, 254, 0.3);
+  background: rgba(50, 205, 50, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 8px 32px rgba(50, 205, 50, 0.4);
 }
 
 /* 响应式 */

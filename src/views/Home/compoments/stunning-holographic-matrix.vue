@@ -1,23 +1,23 @@
 <template>
   <div class="holographic-matrix-container">
-    <!-- 45层全息光晕 -->
+    <!-- 25层全息光晕 -->
     <div class="holographic-halos">
-      <div v-for="i in 45" :key="`halo-${i}`" class="holographic-halo" :style="getHaloStyle(i)"></div>
+      <div v-for="i in 25" :key="`halo-${i}`" class="holographic-halo" :style="getHaloStyle(i)"></div>
     </div>
 
-    <!-- 20个全息晶体 -->
+    <!-- 12个全息晶体 -->
     <div class="holographic-crystals">
-      <div v-for="i in 20" :key="`crystal-${i}`" class="crystal" :style="getCrystalStyle(i)"></div>
+      <div v-for="i in 12" :key="`crystal-${i}`" class="crystal" :style="getCrystalStyle(i)"></div>
     </div>
 
-    <!-- 700个光子粒子 -->
+    <!-- 150个光子粒子 - 优化性能 -->
     <div class="photon-particles">
-      <div v-for="i in 700" :key="`photon-${i}`" class="photon-particle" :style="getPhotonStyle(i)"></div>
+      <div v-for="i in 150" :key="`photon-${i}`" class="photon-particle" :style="getPhotonStyle(i)"></div>
     </div>
 
-    <!-- 15条光线束 -->
+    <!-- 8条光线束 -->
     <div class="light-beams">
-      <div v-for="i in 15" :key="`beam-${i}`" class="light-beam" :style="getBeamStyle(i)"></div>
+      <div v-for="i in 8" :key="`beam-${i}`" class="light-beam" :style="getBeamStyle(i)"></div>
     </div>
 
     <!-- 内容层 -->
@@ -121,17 +121,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted, watch, computed, shallowRef } from 'vue'
 import * as echarts from 'echarts'
 import type { EChartsOption } from 'echarts'
 
-// 图表引用
-const matrixChart = ref<HTMLElement | null>(null)
+// 图表引用 - 使用shallowRef优化性能
+const matrixChart = shallowRef<HTMLElement | null>(null)
 let chartInstance: echarts.ECharts | null = null
 let animationId: number | null = null
+let lastUpdateTime = 0
+const UPDATE_INTERVAL = 16 // 60fps 约16ms
 
 // 控制参数
-const matrixDimension = ref(4)
+const matrixDimension = ref(5)
 const computeSpeed = ref(3)
 const hologramIntensity = ref(75)
 const transformSpeed = ref(1)
@@ -144,16 +146,26 @@ let matrixTime = 0
 let matrixData: number[][] = []
 let targetMatrixData: number[][] = []
 
-// 矩阵状态
-const matrixStatus = ref([
+// 缓存样式计算结果
+const haloStyleCache = new Map<number, Record<string, string>>()
+const crystalStyleCache = new Map<number, Record<string, string>>()
+const photonStyleCache = new Map<number, Record<string, string>>()
+const beamStyleCache = new Map<number, Record<string, string>>()
+
+// 矩阵状态 - 使用shallowRef优化
+const matrixStatus = shallowRef([
   { icon: '🔢', label: '行列式', value: '42.35', matrix: 'det(A)', color: '#667eea' },
   { icon: '📊', label: '特征值', value: 'λ₁=5.23', matrix: 'eig(A)', color: '#f093fb' },
   { icon: '🔮', label: '秩', value: '4', matrix: 'rank(A)', color: '#43e97b' },
   { icon: '⚡', label: '范数', value: '3.87', matrix: '||A||', color: '#4facfe' }
 ])
 
-// 获取光晕样式
+// 获取光晕样式 - 带缓存
 const getHaloStyle = (i: number) => {
+  if (haloStyleCache.has(i)) {
+    return haloStyleCache.get(i)!
+  }
+
   const colors = [
     'rgba(102, 126, 234, 0.05)',
     'rgba(240, 147, 251, 0.05)',
@@ -161,67 +173,100 @@ const getHaloStyle = (i: number) => {
     'rgba(79, 172, 254, 0.05)',
     'rgba(254, 225, 64, 0.05)'
   ]
-  const size = 130 + i * 28
-  return {
+  const size = 130 + i * 36
+  const style: Record<string, string> = {
     width: `${size}px`,
     height: `${size}px`,
-    top: `${(i / 45) * 100 - 10}%`,
-    left: `${(i / 45) * 100 - 10}%`,
+    top: `${(i / 25) * 100 - 10}%`,
+    left: `${(i / 25) * 100 - 10}%`,
     background: `radial-gradient(circle, ${colors[i % 5]}, transparent 70%)`,
     filter: 'blur(70px)',
-    animation: `holographic-pulse ${16 + i * 0.5}s ease-in-out infinite`,
-    animationDelay: `${i * 0.25}s`,
-    transform: `rotate(${(i / 45) * 360}deg)`
+    animation: `holographic-pulse ${16 + i * 0.6}s ease-in-out infinite`,
+    animationDelay: `${i * 0.3}s`,
+    transform: `rotate(${(i / 25) * 360}deg)`
   }
+  haloStyleCache.set(i, style)
+  return style
 }
 
-// 获取晶体样式
+// 获取晶体样式 - 带缓存
 const getCrystalStyle = (i: number) => {
-  const angle = (i / 20) * Math.PI * 2
-  const distance = 80 + Math.random() * 180
-  return {
+  if (crystalStyleCache.has(i)) {
+    return crystalStyleCache.get(i)!
+  }
+
+  const angle = (i / 12) * Math.PI * 2
+  const distance = 80 + (i * 15)
+  const size = 12 + (i % 3) * 6
+  const style: Record<string, string> = {
     left: `calc(50% + ${Math.cos(angle) * distance}px)`,
     top: `calc(50% + ${Math.sin(angle) * distance}px)`,
-    width: `${12 + Math.random() * 18}px`,
-    height: `${12 + Math.random() * 18}px`,
-    background: `linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(240, 147, 251, 0.3))`,
-    filter: 'blur(4px)',
-    animation: `crystal-rotate ${12 + Math.random() * 8}s linear infinite`,
-    animationDelay: `${i * 0.45}s`,
-    transform: `rotate(${angle}deg)`
-  }
-}
-
-// 获取光子样式
-const getPhotonStyle = (i: number) => {
-  const size = Math.random() * 2 + 0.5
-  return {
     width: `${size}px`,
     height: `${size}px`,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    background: `radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent)`,
-    filter: 'blur(0.5px)',
-    animation: `photon-float ${Math.random() * 8 + 5}s ease-in-out infinite`,
-    animationDelay: `${Math.random() * 5}s`,
-    opacity: Math.random() * 0.5 + 0.2
+    background: `linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(240, 147, 251, 0.3))`,
+    filter: 'blur(4px)',
+    animation: `crystal-rotate ${12 + i * 0.8}s linear infinite`,
+    animationDelay: `${i * 0.5}s`,
+    transform: `rotate(${angle}deg)`
   }
+  crystalStyleCache.set(i, style)
+  return style
 }
 
-// 获取光线样式
+// 获取光子样式 - 带缓存
+const getPhotonStyle = (i: number) => {
+  if (photonStyleCache.has(i)) {
+    return photonStyleCache.get(i)!
+  }
+
+  // 使用确定性随机数确保样式一致
+  const seed = i * 7919
+  const size = 0.5 + ((seed * 9301 + 49297) % 233280) / 233280 * 2
+  const left = ((seed * 9301 + 49297) % 233280) / 233280 * 100
+  const top = ((seed * 9301 + 49297) % 233280) / 233280 * 100
+  const duration = 5 + ((seed * 9301 + 49297) % 233280) / 233280 * 8
+  const delay = ((seed * 9301 + 49297) % 233280) / 233280 * 5
+  const opacity = 0.2 + ((seed * 9301 + 49297) % 233280) / 233280 * 0.3
+
+  const style: Record<string, string> = {
+    width: `${size}px`,
+    height: `${size}px`,
+    left: `${left}%`,
+    top: `${top}%`,
+    background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent)',
+    filter: 'blur(0.5px)',
+    animation: `photon-float ${duration}s ease-in-out infinite`,
+    animationDelay: `${delay}s`,
+    opacity: opacity.toString()
+  }
+  photonStyleCache.set(i, style)
+  return style
+}
+
+// 获取光线样式 - 带缓存
 const getBeamStyle = (i: number) => {
-  const angle = (i / 15) * 180
-  return {
-    top: `${(i / 15) * 100}%`,
+  if (beamStyleCache.has(i)) {
+    return beamStyleCache.get(i)!
+  }
+
+  const seed = i * 7919
+  const blur = 0.5 + ((seed * 9301 + 49297) % 233280) / 233280 * 1.5
+  const opacity = 0.1 + ((seed * 9301 + 49297) % 233280) / 233280 * 0.2
+  const duration = 10 + i * 3
+
+  const style: Record<string, string> = {
+    top: `${(i / 8) * 100}%`,
     left: '0',
     width: '100%',
     height: '1px',
-    background: `linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.4), rgba(240, 147, 251, 0.4), transparent)`,
-    filter: `blur(${Math.random() * 1.5 + 0.5}px)`,
-    animation: `beam-move ${10 + i * 2.5}s ease-in-out infinite`,
-    animationDelay: `${i * 1}s`,
-    opacity: Math.random() * 0.3 + 0.1
+    background: 'linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.4), rgba(240, 147, 251, 0.4), transparent)',
+    filter: `blur(${blur}px)`,
+    animation: `beam-move ${duration}s ease-in-out infinite`,
+    animationDelay: `${i * 1.2}s`,
+    opacity: opacity.toString()
   }
+  beamStyleCache.set(i, style)
+  return style
 }
 
 // 获取波形样式
@@ -249,7 +294,7 @@ const getProjectionStyle = (i: number) => {
   }
 }
 
-// 初始化矩阵数据
+// 初始化矩阵数据 - 优化版本,更美观的分布
 const initMatrixData = () => {
   const dim = matrixDimension.value
   matrixData = []
@@ -257,7 +302,15 @@ const initMatrixData = () => {
   for (let i = 0; i < dim; i++) {
     const row: number[] = []
     for (let j = 0; j < dim; j++) {
-      row.push(Math.random() * 2 - 1)
+      // 生成更有层次感的数值
+      const base = Math.sin((i + j) * 0.8) * 0.6
+      const variation = (Math.random() - 0.5) * 0.4
+      const wave = Math.cos(i * 0.5 - j * 0.5) * 0.2
+      const value = base + variation + wave
+
+      // 归一化并确保有正有负
+      const normalizedValue = Math.max(-0.95, Math.min(0.95, value))
+      row.push(normalizedValue)
     }
     matrixData.push(row)
   }
@@ -265,147 +318,300 @@ const initMatrixData = () => {
   targetMatrixData = JSON.parse(JSON.stringify(matrixData))
 }
 
-// 生成Graphic元素
+// 颜色计算缓存
+const colorCache = new Map<string, { color: string; strokeColor: string }>()
+
+// 计算颜色 - 带缓存
+const calculateColor = (value: number, absValue: number) => {
+  const cacheKey = `${value.toFixed(2)}-${absValue.toFixed(2)}`
+  if (colorCache.has(cacheKey)) {
+    return colorCache.get(cacheKey)!
+  }
+
+  let color, strokeColor
+  if (value >= 0) {
+    const gradientProgress = absValue
+    const r = Math.floor(102 + (67 - 102) * gradientProgress)
+    const g = Math.floor(126 + (233 - 126) * gradientProgress)
+    const b = Math.floor(234 + (123 - 234) * gradientProgress)
+    const alpha = 0.25 + absValue * 0.55
+    color = `rgba(${r}, ${g}, ${b}, ${alpha})`
+    const strokeAlpha = 0.65 + absValue * 0.35
+    strokeColor = `rgba(${r}, ${g}, ${b}, ${strokeAlpha})`
+  } else {
+    const gradientProgress = absValue
+    const r = Math.floor(102 + (245 - 102) * gradientProgress)
+    const g = Math.floor(126 + (87 - 126) * gradientProgress)
+    const b = Math.floor(234 + (108 - 234) * gradientProgress)
+    const alpha = 0.25 + absValue * 0.55
+    color = `rgba(${r}, ${g}, ${b}, ${alpha})`
+    const strokeAlpha = 0.65 + absValue * 0.35
+    strokeColor = `rgba(${r}, ${g}, ${b}, ${strokeAlpha})`
+  }
+
+  const result = { color, strokeColor }
+  colorCache.set(cacheKey, result)
+  return result
+}
+
+// 布局参数缓存
+let cachedLayout: {
+  containerWidth: number
+  containerHeight: number
+  minDimension: number
+  margin: number
+  availableWidth: number
+  availableHeight: number
+  cellWidth: number
+  cellHeight: number
+  gap: number
+  cellSize: number
+  offsetX: number
+  offsetY: number
+} | null = null
+let cachedDim = 0
+
+// 生成Graphic元素 - 优化性能
 const generateGraphicElements = () => {
   const elements: any[] = []
   const dim = matrixDimension.value
-  const spacing = 80
-  const offsetX = (100 - (dim - 1) * spacing) / 2
-  const offsetY = (100 - (dim - 1) * spacing) / 2
+
+  // 获取图表容器的实际尺寸
+  const containerWidth = chartInstance?.getWidth() || 600
+  const containerHeight = chartInstance?.getHeight() || 600
+  const minDimension = Math.min(containerWidth, containerHeight)
+
+  // 检查是否需要重新计算布局
+  if (!cachedLayout || cachedDim !== dim ||
+      Math.abs(cachedLayout.containerWidth - containerWidth) > 10 ||
+      Math.abs(cachedLayout.containerHeight - containerHeight) > 10) {
+
+    const margin = minDimension * 0.08
+    const availableWidth = minDimension - margin * 2
+    const availableHeight = minDimension - margin * 2
+    const cellWidth = availableWidth / dim
+    const cellHeight = availableHeight / dim
+    const gap = minDimension * 0.015
+    const cellSize = Math.min(cellWidth, cellHeight) - gap * 2
+    const totalMatrixWidth = cellSize * dim + gap * (dim - 1)
+    const totalMatrixHeight = cellSize * dim + gap * (dim - 1)
+    const offsetX = (containerWidth - totalMatrixWidth) / 2
+    const offsetY = (containerHeight - totalMatrixHeight) / 2
+
+    cachedLayout = {
+      containerWidth,
+      containerHeight,
+      minDimension,
+      margin,
+      availableWidth,
+      availableHeight,
+      cellWidth,
+      cellHeight,
+      gap,
+      cellSize,
+      offsetX,
+      offsetY
+    }
+    cachedDim = dim
+  }
+
+  const { cellSize, gap, offsetX, offsetY } = cachedLayout
+  const showHologram = hologramIntensity.value > 25
+  const holoCount = showHologram ? Math.min(2, Math.floor((hologramIntensity.value - 25) / 30) + 1) : 0
 
   // 生成矩阵单元格
   for (let i = 0; i < dim; i++) {
     for (let j = 0; j < dim; j++) {
-      const x = offsetX + j * spacing
-      const y = offsetY + i * spacing
+      const centerX = offsetX + j * (cellSize + gap) + cellSize / 2
+      const centerY = offsetY + i * (cellSize + gap) + cellSize / 2
       const value = matrixData[i][j]
       const absValue = Math.abs(value)
-      const intensity = (absValue / 1) * (hologramIntensity.value / 100)
 
-      const color = value >= 0
-        ? `rgba(67, 233, 123, ${0.3 + intensity * 0.7})`
-        : `rgba(245, 87, 108, ${0.3 + intensity * 0.7})`
+      const { color, strokeColor } = calculateColor(value, absValue)
+      const size = cellSize * (0.65 + absValue * 0.35)
 
-      const size = 30 + absValue * 50
-
+      // 主矩形
       elements.push({
         type: 'rect',
-        left: x - size / 2,
-        top: y - size / 2,
+        left: centerX - size / 2,
+        top: centerY - size / 2,
         width: size,
         height: size,
-        shape: {
-          x: -size / 2,
-          y: -size / 2,
-          width: size,
-          height: size,
-          r: 4
-        },
+        shape: { x: -size / 2, y: -size / 2, width: size, height: size, r: 6 },
         style: {
           fill: color,
-          stroke: color.replace(/[\d.]+\)$/, '1)'),
-          lineWidth: 2,
-          shadowBlur: 20,
-          shadowColor: color
+          stroke: strokeColor,
+          lineWidth: 2.5,
+          shadowBlur: 18 + absValue * 12,
+          shadowColor: strokeColor
         },
-        z: 1
+        z: 1,
+        silent: true
       })
 
-      // 添加数值标签
+      // 内部装饰环
+      if (absValue > 0.5) {
+        const ringSize = size * 0.6
+        elements.push({
+          type: 'circle',
+          left: centerX,
+          top: centerY,
+          shape: { r: ringSize / 2 },
+          style: {
+            fill: 'transparent',
+            stroke: strokeColor.replace(/[\d.]+\)$/, '0.45)'),
+            lineWidth: 1.5,
+            lineDash: [4, 3],
+            lineDashOffset: -matrixTime * 0.2,
+            shadowBlur: 8,
+            shadowColor: strokeColor
+          },
+          z: 2,
+          silent: true
+        })
+      }
+
+      // 内部小点
+      if (absValue > 0.7) {
+        const dotSize = size * 0.15
+        elements.push({
+          type: 'circle',
+          left: centerX,
+          top: centerY,
+          shape: { r: dotSize / 2 },
+          style: {
+            fill: strokeColor,
+            stroke: strokeColor.replace(/[\d.]+\)$/, '1)'),
+            lineWidth: 0,
+            shadowBlur: 10,
+            shadowColor: strokeColor
+          },
+          z: 2.5,
+          silent: true
+        })
+      }
+
+      // 数值标签
+      const fontSize = Math.max(10, Math.floor(cellSize * 0.16))
       elements.push({
         type: 'text',
-        left: x,
-        top: y,
+        left: centerX,
+        top: centerY,
         style: {
           text: value.toFixed(2),
           fill: '#ffffff',
-          fontSize: 12,
+          fontSize: fontSize,
           fontWeight: 'bold',
           textAlign: 'center',
-          textVerticalAlign: 'middle'
+          textVerticalAlign: 'middle',
+          textShadowColor: 'rgba(0,0,0,0.7)',
+          textShadowBlur: 5
         },
-        z: 2
+        z: 3
       })
 
-      // 添加全息效果
-      if (hologramIntensity.value > 50) {
+      // 全息投影效果
+      if (showHologram) {
+        for (let h = 1; h <= holoCount; h++) {
+          const holoSize = size + h * 8
+          const holoAlpha = 0.22 - h * 0.06
+
+          elements.push({
+            type: 'rect',
+            left: centerX - holoSize / 2,
+            top: centerY - holoSize / 2,
+            width: holoSize,
+            height: holoSize,
+            shape: {
+              x: -holoSize / 2,
+              y: -holoSize / 2,
+              width: holoSize,
+              height: holoSize,
+              r: 8
+            },
+            style: {
+              fill: 'transparent',
+              stroke: strokeColor.replace(/[\d.]+\)$/, `${holoAlpha})`),
+              lineWidth: 1.2,
+              lineDash: [6, 4],
+              lineDashOffset: matrixTime * 0.5 + h * 2
+            },
+            z: -h,
+            silent: true
+          })
+        }
+      }
+    }
+  }
+
+  // 添加连接线 - 简化逻辑
+  for (let i = 0; i < dim; i++) {
+    for (let j = 0; j < dim; j++) {
+      const centerX = offsetX + j * (cellSize + gap) + cellSize / 2
+      const centerY = offsetY + i * (cellSize + gap) + cellSize / 2
+
+      // 水平连接
+      if (j < dim - 1) {
+        const nextCenterX = offsetX + (j + 1) * (cellSize + gap) + cellSize / 2
+        const avgAbsValue = (Math.abs(matrixData[i][j]) + Math.abs(matrixData[i][j + 1])) / 2
         elements.push({
-          type: 'rect',
-          left: x - size / 2 - 5,
-          top: y - size / 2 - 5,
-          width: size + 10,
-          height: size + 10,
-          shape: {
-            x: -size / 2 - 5,
-            y: -size / 2 - 5,
-            width: size + 10,
-            height: size + 10,
-            r: 6
-          },
+          type: 'line',
+          shape: { x1: centerX, y1: centerY, x2: nextCenterX, y2: centerY },
           style: {
-            fill: 'transparent',
-            stroke: color.replace(/[\d.]+\)$/, '0.3)'),
-            lineWidth: 1,
-            lineDash: [5, 5]
+            stroke: `rgba(102, 126, 234, ${0.35 + avgAbsValue * 0.4})`,
+            lineWidth: 2.5 + avgAbsValue * 2,
+            shadowBlur: 10,
+            shadowColor: 'rgba(102, 126, 234, 0.6)'
           },
-          z: 0,
-          cursor: 'default'
+          z: -2,
+          silent: true
+        })
+      }
+
+      // 垂直连接
+      if (i < dim - 1) {
+        const nextCenterY = offsetY + (i + 1) * (cellSize + gap) + cellSize / 2
+        const avgAbsValue = (Math.abs(matrixData[i][j]) + Math.abs(matrixData[i + 1][j])) / 2
+        elements.push({
+          type: 'line',
+          shape: { x1: centerX, y1: centerY, x2: centerX, y2: nextCenterY },
+          style: {
+            stroke: `rgba(240, 147, 251, ${0.35 + avgAbsValue * 0.4})`,
+            lineWidth: 2.5 + avgAbsValue * 2,
+            shadowBlur: 10,
+            shadowColor: 'rgba(240, 147, 251, 0.6)'
+          },
+          z: -2,
+          silent: true
         })
       }
     }
   }
 
-  // 添加连接线
-  for (let i = 0; i < dim; i++) {
-    for (let j = 0; j < dim; j++) {
-      if (j < dim - 1) {
-        const x1 = offsetX + j * spacing
-        const y1 = offsetY + i * spacing
-        const x2 = offsetX + (j + 1) * spacing
-        const y2 = offsetY + i * spacing
+  // 对角线连接
+  if (dim >= 3) {
+    for (let i = 0; i < dim - 1; i++) {
+      for (let j = 0; j < dim - 1; j++) {
+        const centerX = offsetX + j * (cellSize + gap) + cellSize / 2
+        const centerY = offsetY + i * (cellSize + gap) + cellSize / 2
+        const avgAbsValue = (Math.abs(matrixData[i][j]) + Math.abs(matrixData[i + 1][j + 1])) / 2
 
-        const value1 = matrixData[i][j]
-        const value2 = matrixData[i][j + 1]
-
-        elements.push({
-          type: 'line',
-          shape: {
-            x1: x1,
-            y1: y1,
-            x2: x2,
-            y2: y2
-          },
-          style: {
-            stroke: `rgba(102, 126, 234, ${(Math.abs(value1) + Math.abs(value2)) / 2 * 0.5})`,
-            lineWidth: 1
-          },
-          z: 0
-        })
-      }
-
-      if (i < dim - 1) {
-        const x1 = offsetX + j * spacing
-        const y1 = offsetY + i * spacing
-        const x2 = offsetX + j * spacing
-        const y2 = offsetY + (i + 1) * spacing
-
-        const value1 = matrixData[i][j]
-        const value2 = matrixData[i + 1][j]
-
-        elements.push({
-          type: 'line',
-          shape: {
-            x1: x1,
-            y1: y1,
-            x2: x2,
-            y2: y2
-          },
-          style: {
-            stroke: `rgba(240, 147, 251, ${(Math.abs(value1) + Math.abs(value2)) / 2 * 0.5})`,
-            lineWidth: 1
-          },
-          z: 0
-        })
+        if (avgAbsValue > 0.3) {
+          const nextCenterX = offsetX + (j + 1) * (cellSize + gap) + cellSize / 2
+          const nextCenterY = offsetY + (i + 1) * (cellSize + gap) + cellSize / 2
+          elements.push({
+            type: 'line',
+            shape: { x1: centerX, y1: centerY, x2: nextCenterX, y2: nextCenterY },
+            style: {
+              stroke: `rgba(67, 233, 123, ${avgAbsValue * 0.3})`,
+              lineWidth: 1 + avgAbsValue,
+              shadowBlur: 5,
+              shadowColor: 'rgba(67, 233, 123, 0.3)'
+            },
+            z: -3,
+            silent: true
+          })
+        }
       }
     }
   }
@@ -421,25 +627,35 @@ const initMatrixChart = () => {
 
   initMatrixData()
 
+  // 获取容器尺寸以设置正确的坐标系
+  const containerWidth = matrixChart.value?.clientWidth || 600
+  const containerHeight = matrixChart.value?.clientHeight || 600
+
   const option: EChartsOption = {
     backgroundColor: 'transparent',
     grid: {
-      left: '5%',
-      right: '5%',
-      top: '5%',
-      bottom: '5%'
+      left: '0',
+      right: '0',
+      top: '0',
+      bottom: '0',
+      containLabel: false
     },
     xAxis: {
       type: 'value',
       min: 0,
-      max: 100,
-      show: false
+      max: containerWidth,  // 动态坐标范围,适应容器大小
+      show: false,
+      scale: false,
+      axisPointer: { show: false }
     },
     yAxis: {
       type: 'value',
       min: 0,
-      max: 100,
-      show: false
+      max: containerHeight,  // 动态坐标范围,适应容器大小
+      show: false,
+      scale: false,
+      inverse: false,
+      axisPointer: { show: false }
     },
     tooltip: {
       trigger: 'item',
@@ -487,55 +703,109 @@ const initMatrixChart = () => {
   chartInstance.setOption(option)
 }
 
-// 矩阵动画
-const animateMatrix = () => {
+// 矩阵动画 - 优化版本,带节流
+const animateMatrix = (timestamp: number) => {
   if (!isMatrixActive.value || !chartInstance) return
 
-  matrixTime += 5 * computeSpeed.value
+  // 节流: 控制更新频率
+  if (timestamp - lastUpdateTime < UPDATE_INTERVAL) {
+    animationId = requestAnimationFrame(animateMatrix)
+    return
+  }
+  lastUpdateTime = timestamp
 
-  // 矩阵值渐变
-  matrixData = matrixData.map((row, i) => {
-    return row.map((value, j) => {
-      const targetValue = targetMatrixData[i][j]
-      const diff = targetValue - value
-      const speed = 0.02 * transformSpeed.value
-      return value + diff * speed
-    })
-  })
+  matrixTime += 3 * computeSpeed.value
 
-  // 更新图表
+  // 矩阵值渐变 - 优化计算
+  const speed = 0.015 * transformSpeed.value
+  for (let i = 0; i < matrixData.length; i++) {
+    const row = matrixData[i]
+    const targetRow = targetMatrixData[i]
+    for (let j = 0; j < row.length; j++) {
+      const diff = targetRow[j] - row[j]
+      row[j] += diff * speed
+    }
+  }
+
+  // 获取当前容器尺寸
+  const containerWidth = chartInstance.getWidth()
+  const containerHeight = chartInstance.getHeight()
+
+  // 更新图表 - 使用replaceMerge模式正确更新graphic
   chartInstance.setOption({
-    graphic: generateGraphicElements()
+    xAxis: { max: containerWidth },
+    yAxis: { max: containerHeight },
+    graphic: { elements: generateGraphicElements() }
+  }, {
+    notMerge: false,
+    replaceMerge: ['graphic'], // 完全替换graphic配置
+    lazyUpdate: true,
+    silent: true
   })
 
   // 随机更新目标矩阵
-  if (Math.random() < 0.02) {
-    targetMatrixData = targetMatrixData.map(row => {
-      return row.map(() => Math.random() * 2 - 1)
-    })
+  if (Math.random() < 0.012) {
+    const matrixType = Math.floor(Math.random() * 3)
+    for (let i = 0; i < targetMatrixData.length; i++) {
+      const row = targetMatrixData[i]
+      for (let j = 0; j < row.length; j++) {
+        let newValue: number
+        if (matrixType === 0) {
+          newValue = row[j] + (Math.random() - 0.5) * 1.2
+        } else if (matrixType === 1) {
+          newValue = (i + j) % 2 === 0 ? row[j] + (Math.random() - 0.5) : -row[j]
+        } else {
+          newValue = Math.sin(i * j * 0.2 + matrixTime * 0.1) * 0.9 + (Math.random() - 0.5) * 0.3
+        }
+        row[j] = Math.max(-1, Math.min(1, newValue))
+      }
+    }
   }
 
-  // 更新状态
+  // 更新状态 - 降低频率
   updateMatrixStatus()
 
   animationId = requestAnimationFrame(animateMatrix)
 }
 
-// 更新矩阵状态
+// 更新矩阵状态 - 优化性能,降低更新频率
 const updateMatrixStatus = () => {
-  if (Math.random() < 0.05) {
-    matrixStatus.value.forEach((status, index) => {
-      const baseValues = [42.35, 5.23, 4, 3.87]
-      const variation = (Math.random() - 0.5) * (index === 1 ? 1.5 : 2)
-      const newValue = baseValues[index] + variation
+  if (Math.random() > 0.05) return // 降低更新频率
 
-      if (index === 2) {
-        status.value = Math.abs(Math.round(newValue)).toString()
-      } else {
-        status.value = Math.abs(newValue).toFixed(2)
-      }
-    })
-  }
+  const flatData = matrixData.flat()
+  const absData = flatData.map(v => Math.abs(v))
+
+  // 预计算范数,避免重复计算
+  const frobeniusNorm = Math.sqrt(absData.reduce((acc, v) => acc + v * v, 0))
+
+  matrixStatus.value.forEach((status, index) => {
+    let newValue: number
+    switch (index) {
+      case 0: // 行列式
+        newValue = Math.abs(flatData.reduce((acc, v, i) => acc + v * ((i + 1) % 3 + 1), 0) * 8.5)
+        break
+      case 1: // 特征值
+        newValue = frobeniusNorm * 2.3
+        break
+      case 2: // 秩
+        newValue = Math.ceil(absData.filter(v => v > 0.3).length / matrixDimension.value * 0.8 + 1)
+        break
+      case 3: // 范数
+        newValue = frobeniusNorm * 1.8
+        break
+      default:
+        newValue = 0
+    }
+
+    const currentValue = parseFloat(status.value)
+    const smoothedValue = currentValue + (newValue - currentValue) * 0.3
+
+    if (index === 2) {
+      status.value = Math.abs(Math.round(smoothedValue)).toString()
+    } else {
+      status.value = Math.abs(smoothedValue).toFixed(2)
+    }
+  })
 }
 
 // 控制函数
@@ -545,12 +815,35 @@ const toggleMatrix = () => {
 
 const resetMatrix = () => {
   matrixTime = 0
-  matrixDimension.value = 4
+  matrixDimension.value = 5
   computeSpeed.value = 3
   hologramIntensity.value = 75
   transformSpeed.value = 1
+  isMatrixActive.value = true
+
+  // 清除缓存
+  cachedLayout = null
+  colorCache.clear()
+
   initMatrixData()
-  initMatrixChart()
+
+  // 如果图表已存在,直接更新而不是重新初始化
+  if (chartInstance) {
+    const containerWidth = chartInstance.getWidth()
+    const containerHeight = chartInstance.getHeight()
+
+    chartInstance.setOption({
+      xAxis: { max: containerWidth },
+      yAxis: { max: containerHeight },
+      graphic: { elements: generateGraphicElements() }
+    }, {
+      replaceMerge: ['graphic'],
+      notMerge: false,
+      lazyUpdate: true
+    })
+  } else {
+    initMatrixChart()
+  }
 }
 
 const applyTransform = () => {
@@ -561,12 +854,17 @@ const applyTransform = () => {
     })
 
     chartInstance.setOption({
-      graphic: generateGraphicElements()
+      graphic: { elements: generateGraphicElements() }
+    }, {
+      replaceMerge: ['graphic'],
+      notMerge: false,
+      lazyUpdate: true
     })
 
     // 恢复
     setTimeout(() => {
       initMatrixData()
+      colorCache.clear() // 清除颜色缓存
     }, 2000)
   }
 }
@@ -584,26 +882,43 @@ const visualizeMatrix = () => {
   }
 }
 
-// 监听参数变化
-watch([matrixDimension, hologramIntensity], () => {
-  if (chartInstance && !isMatrixActive.value) {
-    initMatrixData()
-    initMatrixChart()
-  }
-})
-
-// 窗口大小改变
+// 防抖处理resize
+let resizeTimer: number | null = null
 const handleResize = () => {
-  chartInstance?.resize()
+  if (resizeTimer) {
+    clearTimeout(resizeTimer)
+  }
+  resizeTimer = window.setTimeout(() => {
+    chartInstance?.resize()
+    // 清除缓存以重新计算布局
+    cachedLayout = null
+    colorCache.clear()
+  }, 200) as unknown as number
 }
+
+// 优化的参数监听 - 带防抖
+const debouncedUpdate = (() => {
+  let timer: number | null = null
+  return () => {
+    if (timer) clearTimeout(timer)
+    timer = window.setTimeout(() => {
+      if (chartInstance) {
+        initMatrixData()
+        initMatrixChart()
+      }
+    }, 300) as unknown as number
+  }
+})()
+
+watch([matrixDimension, hologramIntensity], debouncedUpdate)
 
 onMounted(() => {
   setTimeout(() => {
     initMatrixChart()
-    animateMatrix()
+    animateMatrix(0)
   }, 500)
 
-  window.addEventListener('resize', handleResize)
+  window.addEventListener('resize', handleResize, { passive: true })
 })
 
 onUnmounted(() => {
@@ -611,8 +926,20 @@ onUnmounted(() => {
     cancelAnimationFrame(animationId)
   }
 
+  if (resizeTimer) {
+    clearTimeout(resizeTimer)
+  }
+
   chartInstance?.dispose()
   window.removeEventListener('resize', handleResize)
+
+  // 清理缓存
+  haloStyleCache.clear()
+  crystalStyleCache.clear()
+  photonStyleCache.clear()
+  beamStyleCache.clear()
+  colorCache.clear()
+  cachedLayout = null
 })
 </script>
 
@@ -620,7 +947,7 @@ onUnmounted(() => {
 .holographic-matrix-container {
   position: relative;
   width: 100%;
-  min-height: 1300px;
+  min-height: 1200px;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 10% 90%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
@@ -636,6 +963,8 @@ onUnmounted(() => {
     0 0 300px rgba(240, 147, 251, 0.1),
     inset 0 4px 0 rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(102, 126, 234, 0.25);
+  will-change: transform; /* 提示浏览器优化 */
+  contain: content; /* 性能优化 */
 }
 
 /* 全息光晕 */
@@ -705,6 +1034,9 @@ onUnmounted(() => {
   position: absolute;
   border-radius: 50%;
   will-change: transform, opacity;
+  /* 使用GPU加速 */
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 @keyframes photon-float {
@@ -1174,7 +1506,7 @@ onUnmounted(() => {
 
 @media (max-width: 900px) {
   .holographic-matrix-container {
-    min-height: 1500px;
+    min-height: 1400px;
     padding: 28px;
   }
 
@@ -1204,7 +1536,7 @@ onUnmounted(() => {
 
 @media (max-width: 600px) {
   .holographic-matrix-container {
-    min-height: 1700px;
+    min-height: 1600px;
     padding: 24px;
   }
 

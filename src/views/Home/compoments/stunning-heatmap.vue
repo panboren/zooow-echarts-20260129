@@ -70,7 +70,7 @@ const option = ref({
       fontSize: 34,
       fontWeight: '900',
       fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
-      textShadow: '0 0 40px rgba(102, 126, 234, 0.9), 0 0 80px rgba(240, 147, 251, 0.6)',
+      textShadow: '0 0 40px rgba(200, 80, 255, 0.95), 0 0 80px rgba(80, 200, 255, 0.70)',
       letterSpacing: '2px'
     },
     subtextStyle: {
@@ -78,14 +78,14 @@ const option = ref({
       fontSize: 14,
       fontWeight: 'bold',
       fontFamily: 'Arial, sans-serif',
-      textShadow: '0 0 30px rgba(102, 126, 234, 0.5)',
+      textShadow: '0 0 30px rgba(200, 80, 255, 0.55)',
       letterSpacing: '3px'
     }
   },
   tooltip: {
     position: 'top',
     backgroundColor: 'rgba(10, 10, 20, 0.98)',
-    borderColor: 'rgba(102, 126, 234, 0.7)',
+    borderColor: 'rgba(200, 80, 255, 0.75)',
     borderWidth: 2,
     borderRadius: 20,
     padding: [20, 28],
@@ -103,7 +103,7 @@ const option = ref({
       return `
         <div style="padding: 8px;">
           <div style="font-size: 18px; font-weight: 900; margin-bottom: 15px;
-            background: linear-gradient(135deg, #667eea, #f093fb);
+            background: linear-gradient(135deg, #C850FF, #50C8FF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;">
@@ -143,7 +143,7 @@ const option = ref({
     },
     axisLine: {
       lineStyle: {
-        color: 'rgba(255, 255, 255, 0.2)',
+        color: 'rgba(200, 80, 255, 0.25)',
         width: 2
       }
     },
@@ -164,7 +164,7 @@ const option = ref({
     },
     axisLine: {
       lineStyle: {
-        color: 'rgba(255, 255, 255, 0.2)',
+        color: 'rgba(200, 80, 255, 0.25)',
         width: 2
       }
     },
@@ -186,17 +186,17 @@ const option = ref({
     },
     inRange: {
       color: [
-        'rgba(102, 126, 234, 0.3)',
-        'rgba(79, 172, 254, 0.38)',
-        'rgba(67, 233, 123, 0.46)',
-        'rgba(56, 249, 215, 0.54)',
-        'rgba(240, 147, 251, 0.62)',
-        'rgba(255, 105, 180, 0.68)',
-        'rgba(245, 87, 108, 0.74)',
-        'rgba(254, 225, 64, 0.78)',
-        'rgba(255, 171, 0, 0.82)',
-        'rgba(255, 82, 82, 0.86)',
-        'rgba(102, 126, 234, 0.90)'
+        'rgba(200, 80, 255, 0.25)',
+        'rgba(80, 200, 255, 0.35)',
+        'rgba(255, 120, 200, 0.45)',
+        'rgba(120, 255, 180, 0.52)',
+        'rgba(255, 184, 77, 0.58)',
+        'rgba(157, 80, 255, 0.64)',
+        'rgba(200, 80, 255, 0.70)',
+        'rgba(80, 200, 255, 0.76)',
+        'rgba(255, 120, 200, 0.82)',
+        'rgba(120, 255, 180, 0.88)',
+        'rgba(255, 184, 77, 0.92)'
       ]
     },
     itemWidth: 20,
@@ -215,15 +215,15 @@ const option = ref({
       emphasis: {
         itemStyle: {
           shadowBlur: 30,
-          shadowColor: 'rgba(102, 126, 234, 0.8)',
+          shadowColor: 'rgba(200, 80, 255, 0.85)',
           borderWidth: 2,
-          borderColor: 'rgba(255, 255, 255, 0.6)'
+          borderColor: 'rgba(255, 255, 255, 0.7)'
         }
       },
       itemStyle: {
-        borderColor: 'rgba(255, 255, 255, 0.35)',
+        borderColor: 'rgba(200, 80, 255, 0.40)',
         borderWidth: 1,
-        shadowColor: 'rgba(102, 126, 234, 0.4)',
+        shadowColor: 'rgba(200, 80, 255, 0.45)',
         shadowBlur: 15
       }
     }
@@ -244,18 +244,18 @@ defineExpose({
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(240, 147, 251, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 60%),
-    linear-gradient(135deg, #080814 0%, #0f0f23 30%, #141428 60%, #0a0a18 100%);
+    radial-gradient(ellipse at 20% 80%, rgba(200, 80, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(80, 200, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 120, 200, 0.10) 0%, transparent 60%),
+    linear-gradient(135deg, #020208 0%, #060612 20%, #0a0a1c 40%, #060612 70%, #020208 100%);
   border-radius: 32px;
   padding: 28px;
   box-shadow:
     0 45px 140px rgba(0, 0, 0, 0.9),
-    0 0 120px rgba(102, 126, 234, 0.18),
-    0 0 180px rgba(240, 147, 251, 0.12),
+    0 0 120px rgba(200, 80, 255, 0.20),
+    0 0 180px rgba(80, 200, 255, 0.14),
     inset 0 2px 0 rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(102, 126, 234, 0.25);
+  border: 2px solid rgba(200, 80, 255, 0.30);
   min-height: 450px;
   display: flex;
   flex-direction: column;

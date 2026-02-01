@@ -41,7 +41,7 @@ const chartRef = ref(null);
 const generateScatterData = () => {
   const data = [];
   const categories = ['电子产品', '服装', '食品', '家居', '运动', '图书'];
-  const colors = ['#667eea', '#f5576c', '#4facfe', '#fee140', '#43e97b', '#a18cd1'];
+  const colors = ['#C850FF', '#50C8FF', '#FF78C8', '#78FFB4', '#FFB84D', '#9D50FF'];
 
   for (let i = 0; i < categories.length; i++) {
     for (let j = 0; j < 20; j++) {
@@ -58,7 +58,7 @@ const generateScatterData = () => {
 };
 
 const option = ref({
-  backgroundColor: '#0f172a',
+  backgroundColor: 'transparent',
   title: {
     text: '产品性能分析',
     subtext: '销售额 vs 利润率',
@@ -69,7 +69,7 @@ const option = ref({
       fontSize: 32,
       fontWeight: 'bold',
       fontFamily: 'Arial, sans-serif',
-      textShadow: '0 4px 20px rgba(102, 126, 234, 0.5)'
+      textShadow: '0 4px 20px rgba(200, 80, 255, 0.6)'
     },
     subtextStyle: {
       color: '#94a3b8',
@@ -80,7 +80,7 @@ const option = ref({
   tooltip: {
     trigger: 'item',
     backgroundColor: 'rgba(15, 23, 42, 0.95)',
-    borderColor: '#667eea',
+    borderColor: '#C850FF',
     borderWidth: 2,
     borderRadius: 16,
     padding: [20, 25],
@@ -97,15 +97,15 @@ const option = ref({
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
           <span style="color: #94a3b8;">销售额</span>
-          <span style="font-weight: bold; color: #667eea; font-size: 16px;">¥${Math.round(data[0])}</span>
+          <span style="font-weight: bold; color: #C850FF; font-size: 16px;">¥${Math.round(data[0])}</span>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
           <span style="color: #94a3b8;">利润率</span>
-          <span style="font-weight: bold; color: #f5576c; font-size: 16px;">${data[1].toFixed(1)}%</span>
+          <span style="font-weight: bold; color: #50C8FF; font-size: 16px;">${data[1].toFixed(1)}%</span>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0;">
           <span style="color: #94a3b8;">市场份额</span>
-          <span style="font-weight: bold; color: #4facfe; font-size: 16px;">${data[2].toFixed(1)}%</span>
+          <span style="font-weight: bold; color: #FF78C8; font-size: 16px;">${data[2].toFixed(1)}%</span>
         </div>
       `;
     }
@@ -194,34 +194,108 @@ const option = ref({
   series: (() => {
     const allData = generateScatterData();
     const categories = ['电子产品', '服装', '食品', '家居', '运动', '图书'];
-    const colors = ['#667eea', '#f5576c', '#4facfe', '#fee140', '#43e97b', '#a18cd1'];
+    const colors = ['#a248cb', '#50C8FF', '#FF78C8', '#63d093', '#FFB84D', '#9D50FF'];
 
-    return categories.map((category, index) => ({
-      name: category,
-      type: 'scatter',
-      symbolSize: (data) => data[2] * 8,
-      itemStyle: {
-        color: colors[index],
-        borderColor: '#ffffff',
-        borderWidth: 2,
-        shadowColor: colors[index],
-        shadowBlur: 15,
-        shadowOffsetX: 3,
-        shadowOffsetY: 3
-      },
-      emphasis: {
+    // 创建多层透明叠加效果
+    const series = [];
+
+    // 第一层：背景晕影层（大透明圆）
+    categories.forEach((category, index) => {
+      series.push({
+        name: category + '_bg',
+        type: 'scatter',
+        symbolSize: (data) => data[2] * 20,
         itemStyle: {
-          shadowColor: colors[index],
-          shadowBlur: 25,
-          shadowOffsetX: 5,
-          shadowOffsetY: 5,
-          borderColor: '#ffffff',
-          borderWidth: 3
+          color: {
+            type: 'radial',
+            x: 0.5,
+            y: 0.5,
+            r: 0.5,
+            colorStops: [
+              { offset: 0, color: colors[index] + '25' },
+              { offset: 1, color: 'transparent' }
+            ]
+          },
+          opacity: 0.6,
+          shadowBlur: 0
         },
-        scale: true
-      },
-      data: allData.filter(item => item[3] === category)
-    }));
+        silent: true,
+        z: 0,
+        data: allData.filter(item => item[3] === category)
+      });
+    });
+
+    // 第二层：中层光晕层（中等透明度）
+    categories.forEach((category, index) => {
+      series.push({
+        name: category + '_mid',
+        type: 'scatter',
+        symbolSize: (data) => data[2] * 12,
+        itemStyle: {
+          color: colors[index] + '55',
+          opacity: 0.7,
+          shadowBlur: 10,
+          shadowColor: colors[index] + '40'
+        },
+        silent: true,
+        z: 1,
+        data: allData.filter(item => item[3] === category)
+      });
+    });
+
+    // 第三层：核心散点层（主要数据点）
+    categories.forEach((category, index) => {
+      series.push({
+        name: category,
+        type: 'scatter',
+        symbolSize: (data) => data[2] * 8,
+        itemStyle: {
+          color: {
+            type: 'radial',
+            x: 0.5,
+            y: 0.5,
+            r: 0.5,
+            colorStops: [
+              { offset: 0, color: '#ffffff' },
+              { offset: 0.3, color: colors[index] },
+              { offset: 1, color: colors[index] + 'AA' }
+            ]
+          },
+          borderColor: colors[index],
+          borderWidth: 2,
+          shadowColor: colors[index],
+          shadowBlur: 20,
+          shadowOffsetX: 4,
+          shadowOffsetY: 4
+        },
+        emphasis: {
+          itemStyle: {
+            color: {
+              type: 'radial',
+              x: 0.5,
+              y: 0.5,
+              r: 0.5,
+              colorStops: [
+                { offset: 0, color: '#ffffff' },
+                { offset: 0.2, color: colors[index] },
+                { offset: 1, color: colors[index] }
+              ]
+            },
+            shadowColor: colors[index],
+            shadowBlur: 35,
+            shadowOffsetX: 6,
+            shadowOffsetY: 6,
+            borderColor: '#ffffff',
+            borderWidth: 3
+          },
+          scale: true
+        },
+        z: 2,
+        data: allData.filter(item => item[3] === category)
+      });
+    });
+
+    return series;
   })()
 });
 
@@ -238,11 +312,18 @@ defineExpose({
 .stunning-scatter-container {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background:
+    radial-gradient(ellipse at 10% 90%, rgba(200, 80, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 10%, rgba(80, 200, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 120, 200, 0.08) 0%, transparent 60%),
+    linear-gradient(135deg, #020208 0%, #060612 20%, #0a0a1c 40%, #060612 70%, #020208 100%);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(200, 80, 255, 0.15),
+    0 0 120px rgba(80, 200, 255, 0.10);
+  border: 2px solid rgba(200, 80, 255, 0.25);
 }
 
 .chart {

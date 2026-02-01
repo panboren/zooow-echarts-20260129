@@ -6,7 +6,7 @@
         <span class="title-icon">🎨</span>
         <span>ECharts 精美图表现场</span>
       </h1>
-      <p class="gallery-subtitle">61个超酷炫图表组件 - 完整展示</p>
+      <p class="gallery-subtitle">63个超酷炫图表组件 - 完整展示</p>
     </div>
 
     <!-- 统计卡片 -->
@@ -342,6 +342,24 @@
       </div>
     </div>
 
+    <!-- 第十三批：极限探索系列 -->
+    <div  class="section">
+      <h2 class="section-title">
+        <span class="title-badge">08</span>
+        极限探索系列
+      </h2>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningQuantumCascade" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningTemporalManifold" />
+        </div>
+      </div>
+    </div>
+
     <!-- 底部信息 -->
 <!--    <div class="gallery-footer">
       <div class="footer-info">
@@ -382,7 +400,7 @@ const animateNumber = (start, end, duration, callback) => {
 onMounted(() => {
   // 延迟启动动画
   setTimeout(() => {
-    animateNumber(0, 61, 2500, (value) => {
+    animateNumber(0, 63, 2500, (value) => {
       animatedStats.value.components = value
     })
     animateNumber(0, 21, 2200, (value) => {
@@ -622,6 +640,14 @@ const StunningMolecularDynamics = defineAsyncComponent({
 })
 const StunningCosmicWeb = defineAsyncComponent({
   loader: () => import('./stunning-cosmic-web.vue'),
+  delay: 200
+})
+const StunningQuantumCascade = defineAsyncComponent({
+  loader: () => import('./stunning-quantum-cascade.vue'),
+  delay: 200
+})
+const StunningTemporalManifold = defineAsyncComponent({
+  loader: () => import('./stunning-temporal-manifold.vue'),
   delay: 200
 })
 </script>

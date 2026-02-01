@@ -187,9 +187,11 @@ const generateTunnelData = () => {
         name: `P${i}_${j}`,
         symbolSize: (6 + Math.random() * 6) * scale,
         itemStyle: {
-          color: `rgba(102, 126, 234, ${alpha})`,
+          color: `rgba(130, 76, 240, ${alpha * 0.9})`,  // 略微调整当前色彩平衡
+
+
           shadowBlur: 15 * scale,
-          shadowColor: `rgba(102, 126, 234, ${alpha * 0.8})`
+          shadowColor: `rgba(154, 199, 15, ${alpha * 0.5})`
         }
       })
     }
@@ -208,7 +210,7 @@ const generateTunnelData = () => {
       data: ringPoints,
       lineStyle: {
         width: 2,
-        color: `rgba(102, 126, 234, ${0.4 + (i / tunnelLayers.value) * 0.4})`
+        color: `rgba(147, 112, 219, ${0.35 + (i / tunnelLayers.value) * 0.35})`
       }
     })
   }
@@ -229,30 +231,30 @@ const initChart = () => {
     tooltip: {
       trigger: 'item',
       backgroundColor: 'rgba(10, 10, 25, 0.95)',
-      borderColor: 'rgba(102, 126, 234, 0.7)',
+      borderColor: 'rgba(147, 112, 219, 0.7)',
       borderWidth: 2,
       borderRadius: 16,
       padding: [14, 18],
       textStyle: { color: '#ffffff', fontSize: 13, fontWeight: 600 },
-      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 12px 48px rgba(102, 126, 234, 0.4);',
+      extraCssText: 'backdrop-filter: blur(10px); box-shadow: 0 12px 48px rgba(147, 112, 219, 0.4);',
       formatter: (params: any) => {
         const [x, y, z] = params.value
         return `
           <div style="padding: 8px;">
-            <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; background: linear-gradient(135deg, #9370db, #ffb6c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
               ${params.name}
             </div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
               <span>X 坐标</span>
-              <span style="color: #667eea; font-weight: 700;">${x.toFixed(0)}</span>
+              <span style="color: #9370db; font-weight: 700;">${x.toFixed(0)}</span>
             </div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
               <span>Y 坐标</span>
-              <span style="color: #f093fb; font-weight: 700;">${y.toFixed(0)}</span>
+              <span style="color: #ffb6c1; font-weight: 700;">${y.toFixed(0)}</span>
             </div>
             <div style="display: flex; justify-content: space-between;">
               <span>Z 深度</span>
-              <span style="color: #43e97b; font-weight: 700;">${z.toFixed(0)}</span>
+              <span style="color: #32cd32; font-weight: 700;">${z.toFixed(0)}</span>
             </div>
           </div>
         `
@@ -268,7 +270,7 @@ const initChart = () => {
       type: 'value',
       min: -300,
       max: 300,
-      axisLine: { lineStyle: { color: 'rgba(102, 126, 234, 0.2)' } },
+      axisLine: { lineStyle: { color: 'rgba(147, 112, 219, 0.2)' } },
       axisLabel: { show: false },
       splitLine: { show: false }
     },
@@ -276,7 +278,7 @@ const initChart = () => {
       type: 'value',
       min: -300,
       max: 300,
-      axisLine: { lineStyle: { color: 'rgba(102, 126, 234, 0.2)' } },
+      axisLine: { lineStyle: { color: 'rgba(147, 112, 219, 0.2)' } },
       axisLabel: { show: false },
       splitLine: { show: false }
     },
@@ -286,9 +288,9 @@ const initChart = () => {
         data: points,
         symbolSize: 8,
         itemStyle: {
-          color: 'rgba(102, 126, 234, 0.9)',
+          color: 'rgba(134,80,246,1)',
           shadowBlur: 20,
-          shadowColor: 'rgba(102, 126, 234, 0.6)'
+          shadowColor: 'rgba(84,13,229,1)'
         },
         rippleEffect: {
           brushType: 'stroke',
@@ -369,23 +371,24 @@ watch([tunnelLayers, rotationSpeed, particleDensity], () => {
   }
 })
 
-// 粒子样式
+// 粒子样式 - 多层透明叠加
 const particleStyle = (i: number) => {
-  const colors = [
-    'rgba(102, 126, 234, 0.8)',
-    'rgba(240, 147, 251, 0.8)',
-    'rgba(67, 233, 123, 0.8)',
-    'rgba(79, 172, 254, 0.8)',
-    'rgba(254, 225, 64, 0.8)'
+  const colorGroups = [
+    ['rgba(147, 112, 219, 0.8)', 'rgba(255, 182, 193, 0.6)', 'rgba(50, 205, 50, 0.4)'],
+    ['rgba(255, 182, 193, 0.8)', 'rgba(147, 112, 219, 0.6)', 'rgba(72, 209, 204, 0.4)'],
+    ['rgba(50, 205, 50, 0.8)', 'rgba(255, 182, 193, 0.6)', 'rgba(147, 112, 219, 0.4)'],
+    ['rgba(72, 209, 204, 0.8)', 'rgba(50, 205, 50, 0.6)', 'rgba(255, 182, 193, 0.4)'],
+    ['rgba(147, 112, 219, 0.8)', 'rgba(72, 209, 204, 0.6)', 'rgba(50, 205, 50, 0.4)']
   ]
-  const randomColor = colors[Math.floor(Math.random() * colors.length)]
+  const randomGroup = colorGroups[Math.floor(Math.random() * colorGroups.length)]
+  const gradientColors = randomGroup.map(c => `rgba(${c.match(/\d+/g)?.join(', ')}, 1)`)
 
   return {
     width: `${Math.random() * 6 + 2}px`,
     height: `${Math.random() * 6 + 2}px`,
     left: `${Math.random() * 100}%`,
     top: `${Math.random() * 100}%`,
-    background: `radial-gradient(circle, ${randomColor}, transparent)`,
+    background: `radial-gradient(circle, ${randomGroup[0]}, ${randomGroup[1]}, ${randomGroup[2]}, transparent)`,
     filter: 'blur(1.5px)',
     animation: `particle-float ${Math.random() * 10 + 15}s ease-in-out infinite`,
     animationDelay: `${Math.random() * 5}s`
@@ -427,7 +430,11 @@ onUnmounted(() => {
   width: 100%;
   min-height: 980px;
   overflow: hidden;
-  background: linear-gradient(135deg, #080814 0%, #0f0f23 30%, #141428 60%, #0a0a18 100%);
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(147, 112, 219, 0.15), transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 182, 193, 0.12), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(50, 205, 50, 0.08), transparent 60%),
+    linear-gradient(135deg, #080814 0%, #0f0f23 30%, #141428 60%, #0a0a18 100%);
   padding: 28px;
   box-sizing: border-box;
   border-radius: 24px;
@@ -452,9 +459,10 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.12), transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(240, 147, 251, 0.12), transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(79, 172, 254, 0.08), transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(147, 112, 219, 0.18), transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 182, 193, 0.15), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(50, 205, 50, 0.12), transparent 60%),
+    radial-gradient(ellipse at 30% 70%, rgba(72, 209, 204, 0.10), transparent 55%),
     linear-gradient(135deg, #080814 0%, #0f0f23 30%, #141428 60%, #0a0a18 100%);
 }
 
@@ -466,18 +474,18 @@ onUnmounted(() => {
   animation: halo-pulse 14s ease-in-out infinite;
 }
 
-.halo-1 { width: 400px; height: 400px; top: -100px; left: -100px; background: radial-gradient(circle, rgba(102, 126, 234, 0.4), transparent 70%); animation-delay: 0s; }
-.halo-2 { width: 360px; height: 360px; bottom: -100px; right: -100px; background: radial-gradient(circle, rgba(240, 147, 251, 0.35), transparent 70%); animation-delay: 1.3s; }
-.halo-3 { width: 320px; height: 320px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(67, 233, 123, 0.3), transparent 70%); animation-delay: 2.6s; }
-.halo-4 { width: 300px; height: 300px; top: 25%; right: 18%; background: radial-gradient(circle, rgba(79, 172, 254, 0.3), transparent 70%); animation-delay: 3.9s; }
-.halo-5 { width: 340px; height: 340px; bottom: 30%; left: 12%; background: radial-gradient(circle, rgba(254, 225, 64, 0.25), transparent 70%); animation-delay: 5.2s; }
-.halo-6 { width: 320px; height: 320px; top: 35%; right: 8%; background: radial-gradient(circle, rgba(245, 87, 108, 0.25), transparent 70%); animation-delay: 6.5s; }
-.halo-7 { width: 300px; height: 300px; bottom: 35%; right: 25%; background: radial-gradient(circle, rgba(155, 89, 182, 0.25), transparent 70%); animation-delay: 7.8s; }
-.halo-8 { width: 280px; height: 280px; top: 45%; left: 5%; background: radial-gradient(circle, rgba(46, 204, 113, 0.25), transparent 70%); animation-delay: 9.1s; }
-.halo-9 { width: 310px; height: 310px; bottom: 20%; left: 20%; background: radial-gradient(circle, rgba(231, 76, 60, 0.25), transparent 70%); animation-delay: 10.4s; }
-.halo-10 { width: 290px; height: 290px; top: 15%; right: 30%; background: radial-gradient(circle, rgba(52, 152, 219, 0.25), transparent 70%); animation-delay: 11.7s; }
-.halo-11 { width: 270px; height: 270px; top: 40%; left: 25%; background: radial-gradient(circle, rgba(142, 68, 173, 0.25), transparent 70%); animation-delay: 0.65s; }
-.halo-12 { width: 280px; height: 280px; bottom: 25%; right: 35%; background: radial-gradient(circle, rgba(22, 160, 133, 0.25), transparent 70%); animation-delay: 1.95s; }
+.halo-1 { width: 400px; height: 400px; top: -100px; left: -100px; background: radial-gradient(circle, rgba(147, 112, 219, 0.4), rgba(255, 182, 193, 0.25), rgba(50, 205, 50, 0.15), transparent 70%); animation-delay: 0s; }
+.halo-2 { width: 360px; height: 360px; bottom: -100px; right: -100px; background: radial-gradient(circle, rgba(255, 182, 193, 0.35), rgba(147, 112, 219, 0.25), rgba(72, 209, 204, 0.15), transparent 70%); animation-delay: 1.3s; }
+.halo-3 { width: 320px; height: 320px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(50, 205, 50, 0.3), rgba(255, 182, 193, 0.2), rgba(147, 112, 219, 0.15), transparent 70%); animation-delay: 2.6s; }
+.halo-4 { width: 300px; height: 300px; top: 25%; right: 18%; background: radial-gradient(circle, rgba(72, 209, 204, 0.3), rgba(50, 205, 50, 0.2), rgba(255, 182, 193, 0.15), transparent 70%); animation-delay: 3.9s; }
+.halo-5 { width: 340px; height: 340px; bottom: 30%; left: 12%; background: radial-gradient(circle, rgba(147, 112, 219, 0.25), rgba(72, 209, 204, 0.18), rgba(50, 205, 50, 0.12), transparent 70%); animation-delay: 5.2s; }
+.halo-6 { width: 320px; height: 320px; top: 35%; right: 8%; background: radial-gradient(circle, rgba(255, 182, 193, 0.25), rgba(147, 112, 219, 0.18), rgba(72, 209, 204, 0.12), transparent 70%); animation-delay: 6.5s; }
+.halo-7 { width: 300px; height: 300px; bottom: 35%; right: 25%; background: radial-gradient(circle, rgba(50, 205, 50, 0.25), rgba(255, 182, 193, 0.18), rgba(147, 112, 219, 0.12), transparent 70%); animation-delay: 7.8s; }
+.halo-8 { width: 280px; height: 280px; top: 45%; left: 5%; background: radial-gradient(circle, rgba(72, 209, 204, 0.25), rgba(50, 205, 50, 0.18), rgba(255, 182, 193, 0.12), transparent 70%); animation-delay: 9.1s; }
+.halo-9 { width: 310px; height: 310px; bottom: 20%; left: 20%; background: radial-gradient(circle, rgba(147, 112, 219, 0.25), rgba(72, 209, 204, 0.18), rgba(50, 205, 50, 0.12), transparent 70%); animation-delay: 10.4s; }
+.halo-10 { width: 290px; height: 290px; top: 15%; right: 30%; background: radial-gradient(circle, rgba(255, 182, 193, 0.25), rgba(147, 112, 219, 0.18), rgba(72, 209, 204, 0.12), transparent 70%); animation-delay: 11.7s; }
+.halo-11 { width: 270px; height: 270px; top: 40%; left: 25%; background: radial-gradient(circle, rgba(50, 205, 50, 0.25), rgba(255, 182, 193, 0.18), rgba(72, 209, 204, 0.12), transparent 70%); animation-delay: 0.65s; }
+.halo-12 { width: 280px; height: 280px; bottom: 25%; right: 35%; background: radial-gradient(circle, rgba(72, 209, 204, 0.25), rgba(147, 112, 219, 0.18), rgba(50, 205, 50, 0.12), transparent 70%); animation-delay: 1.95s; }
 
 @keyframes halo-pulse {
   0%, 100% { opacity: 0.4; transform: scale(1); }
@@ -492,16 +500,16 @@ onUnmounted(() => {
   animation: nebula-float 70s ease-in-out infinite;
 }
 
-.nebula-1 { width: 640px; height: 640px; top: -160px; left: -160px; background: radial-gradient(circle, rgba(102, 126, 234, 0.2), transparent 75%); animation-delay: 0s; }
-.nebula-2 { width: 590px; height: 590px; bottom: -160px; right: -160px; background: radial-gradient(circle, rgba(240, 147, 251, 0.18), transparent 75%); animation-delay: 17.5s; }
-.nebula-3 { width: 540px; height: 540px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(67, 233, 123, 0.15), transparent 75%); animation-delay: 35s; }
-.nebula-4 { width: 510px; height: 510px; top: 30%; right: 22%; background: radial-gradient(circle, rgba(79, 172, 254, 0.15), transparent 75%); animation-delay: 26.25s; }
-.nebula-5 { width: 490px; height: 490px; bottom: 28%; left: 15%; background: radial-gradient(circle, rgba(254, 225, 64, 0.15), transparent 75%); animation-delay: 8.75s; }
-.nebula-6 { width: 470px; height: 470px; top: 40%; right: 10%; background: radial-gradient(circle, rgba(245, 87, 108, 0.15), transparent 75%); animation-delay: 43.75s; }
-.nebula-7 { width: 450px; height: 450px; bottom: 40%; left: 12%; background: radial-gradient(circle, rgba(155, 89, 182, 0.15), transparent 75%); animation-delay: 52.5s; }
-.nebula-8 { width: 430px; height: 430px; top: 35%; right: 15%; background: radial-gradient(circle, rgba(46, 204, 113, 0.15), transparent 75%); animation-delay: 61.25s; }
-.nebula-9 { width: 460px; height: 460px; top: 20%; left: 20%; background: radial-gradient(circle, rgba(231, 76, 60, 0.15), transparent 75%); animation-delay: 13.125s; }
-.nebula-10 { width: 440px; height: 440px; bottom: 15%; right: 25%; background: radial-gradient(circle, rgba(52, 152, 219, 0.15), transparent 75%); animation-delay: 30.625s; }
+.nebula-1 { width: 640px; height: 640px; top: -160px; left: -160px; background: radial-gradient(circle, rgba(147, 112, 219, 0.25), rgba(255, 182, 193, 0.15), rgba(50, 205, 50, 0.08), transparent 75%); animation-delay: 0s; }
+.nebula-2 { width: 590px; height: 590px; bottom: -160px; right: -160px; background: radial-gradient(circle, rgba(255, 182, 193, 0.22), rgba(147, 112, 219, 0.12), rgba(72, 209, 204, 0.06), transparent 75%); animation-delay: 17.5s; }
+.nebula-3 { width: 540px; height: 540px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(50, 205, 50, 0.2), rgba(255, 182, 193, 0.1), rgba(147, 112, 219, 0.05), transparent 75%); animation-delay: 35s; }
+.nebula-4 { width: 510px; height: 510px; top: 30%; right: 22%; background: radial-gradient(circle, rgba(72, 209, 204, 0.2), rgba(50, 205, 50, 0.1), rgba(255, 182, 193, 0.05), transparent 75%); animation-delay: 26.25s; }
+.nebula-5 { width: 490px; height: 490px; bottom: 28%; left: 15%; background: radial-gradient(circle, rgba(147, 112, 219, 0.18), rgba(72, 209, 204, 0.1), rgba(50, 205, 50, 0.05), transparent 75%); animation-delay: 8.75s; }
+.nebula-6 { width: 470px; height: 470px; top: 40%; right: 10%; background: radial-gradient(circle, rgba(255, 182, 193, 0.18), rgba(147, 112, 219, 0.1), rgba(72, 209, 204, 0.05), transparent 75%); animation-delay: 43.75s; }
+.nebula-7 { width: 450px; height: 450px; bottom: 40%; left: 12%; background: radial-gradient(circle, rgba(50, 205, 50, 0.18), rgba(255, 182, 193, 0.1), rgba(147, 112, 219, 0.05), transparent 75%); animation-delay: 52.5s; }
+.nebula-8 { width: 430px; height: 430px; top: 35%; right: 15%; background: radial-gradient(circle, rgba(72, 209, 204, 0.18), rgba(50, 205, 50, 0.1), rgba(255, 182, 193, 0.05), transparent 75%); animation-delay: 61.25s; }
+.nebula-9 { width: 460px; height: 460px; top: 20%; left: 20%; background: radial-gradient(circle, rgba(147, 112, 219, 0.18), rgba(72, 209, 204, 0.1), rgba(50, 205, 50, 0.05), transparent 75%); animation-delay: 13.125s; }
+.nebula-10 { width: 440px; height: 440px; bottom: 15%; right: 25%; background: radial-gradient(circle, rgba(255, 182, 193, 0.18), rgba(147, 112, 219, 0.1), rgba(72, 209, 204, 0.05), transparent 75%); animation-delay: 30.625s; }
 
 @keyframes nebula-float {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -540,7 +548,7 @@ onUnmounted(() => {
   text-align: center;
   margin-bottom: 28px;
   color: #ffffff;
-  text-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+  text-shadow: 0 0 30px rgba(147, 112, 219, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -552,18 +560,18 @@ onUnmounted(() => {
 }
 
 .title-badge {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, rgba(147, 112, 219, 0.8), rgba(255, 182, 193, 0.8));
   padding: 6px 16px;
   border-radius: 20px;
   font-size: 14px;
   font-weight: 600;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 20px rgba(147, 112, 219, 0.5);
   animation: badge-pulse 3s ease-in-out infinite;
 }
 
 @keyframes badge-pulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5); }
-  50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(102, 126, 234, 0.7); }
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(147, 112, 219, 0.5); }
+  50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(147, 112, 219, 0.7); }
 }
 
 /* 统计卡片 */
@@ -576,7 +584,7 @@ onUnmounted(() => {
 
 .stat-card {
   background: rgba(10, 10, 25, 0.7);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(147, 112, 219, 0.3);
   border-radius: 16px;
   padding: 16px 20px;
   backdrop-filter: blur(20px);
@@ -596,8 +604,8 @@ onUnmounted(() => {
 
 .stat-card:hover {
   transform: translateY(-8px) scale(1.02);
-  border-color: rgba(102, 126, 234, 0.7);
-  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+  border-color: rgba(147, 112, 219, 0.7);
+  box-shadow: 0 20px 40px rgba(147, 112, 219, 0.3);
 }
 
 .stat-icon {
@@ -615,7 +623,7 @@ onUnmounted(() => {
 .stat-value {
   font-size: 24px;
   font-weight: 800;
-  background: linear-gradient(135deg, #667eea, #f093fb);
+  background: linear-gradient(135deg, rgba(147, 112, 219, 1), rgba(255, 182, 193, 1));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
@@ -638,8 +646,8 @@ onUnmounted(() => {
 }
 
 .change-neutral {
-  background: rgba(102, 126, 234, 0.2);
-  color: #667eea;
+  background: rgba(147, 112, 219, 0.2);
+  color: #9370db;
 }
 
 .change-icon {
@@ -651,7 +659,7 @@ onUnmounted(() => {
   flex: 1;
   min-height: 540px;
   background: rgba(10, 10, 25, 0.6);
-  border: 2px solid rgba(102, 126, 234, 0.3);
+  border: 2px solid rgba(147, 112, 219, 0.3);
   border-radius: 20px;
   padding: 20px;
   backdrop-filter: blur(20px);
@@ -660,8 +668,8 @@ onUnmounted(() => {
 }
 
 .chart-container:hover {
-  border-color: rgba(102, 126, 234, 0.6);
-  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+  border-color: rgba(147, 112, 219, 0.6);
+  box-shadow: 0 20px 60px rgba(147, 112, 219, 0.2);
 }
 
 /* 控制面板 */
@@ -671,7 +679,7 @@ onUnmounted(() => {
   align-items: center;
   padding: 20px 28px;
   background: rgba(10, 10, 25, 0.7);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(147, 112, 219, 0.3);
   border-radius: 16px;
   backdrop-filter: blur(20px);
   flex-wrap: wrap;
@@ -696,7 +704,7 @@ onUnmounted(() => {
   height: 6px;
   -webkit-appearance: none;
   appearance: none;
-  background: rgba(102, 126, 234, 0.3);
+  background: rgba(147, 112, 219, 0.3);
   border-radius: 3px;
   outline: none;
   transition: all 0.3s ease;
@@ -707,22 +715,22 @@ onUnmounted(() => {
   appearance: none;
   width: 18px;
   height: 18px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, rgba(147, 112, 219, 1), rgba(255, 182, 193, 1));
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 0 15px rgba(147, 112, 219, 0.6);
   transition: all 0.3s ease;
 }
 
 .control-slider::-webkit-slider-thumb:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 25px rgba(102, 126, 234, 0.9);
+  box-shadow: 0 0 25px rgba(147, 112, 219, 0.9);
 }
 
 .control-value {
   font-size: 14px;
   font-weight: 700;
-  color: #667eea;
+  color: #9370db;
   text-align: center;
 }
 
@@ -731,7 +739,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 8px;
   padding: 12px 28px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, rgba(147, 112, 219, 0.9), rgba(255, 182, 193, 0.9));
   border: none;
   border-radius: 12px;
   color: #ffffff;
@@ -739,12 +747,12 @@ onUnmounted(() => {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 20px rgba(147, 112, 219, 0.4);
 }
 
 .enter-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 8px 30px rgba(147, 112, 219, 0.6);
 }
 
 .enter-button:active {

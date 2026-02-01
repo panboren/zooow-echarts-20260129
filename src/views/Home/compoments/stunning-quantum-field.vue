@@ -148,20 +148,20 @@ let fieldTime = 0
 
 // 量子指标
 const quantumMetrics = ref([
-  { icon: '⚛️', label: '哈密顿量', value: '3.14159', unit: 'GeV', color: '#667eea' },
-  { icon: '🌀', label: '拉格朗日量', value: '2.71828', unit: 'GeV', color: '#f093fb' },
-  { icon: '⚡', label: '场能', value: '1.61803', unit: 'GeV', color: '#43e97b' },
-  { icon: '🌊', label: '波函数', value: '0.99873', unit: 'Ψ', color: '#4facfe' }
+  { icon: '⚛️', label: '哈密顿量', value: '3.14159', unit: 'GeV', color: '#C850FF' },
+  { icon: '🌀', label: '拉格朗日量', value: '2.71828', unit: 'GeV', color: '#50C8FF' },
+  { icon: '⚡', label: '场能', value: '1.61803', unit: 'GeV', color: '#FF78C8' },
+  { icon: '🌊', label: '波函数', value: '0.99873', unit: 'Ψ', color: '#78FFB4' }
 ])
 
 // 获取光晕样式
 const getHaloStyle = (i: number) => {
   const colors = [
-    'rgba(102, 126, 234, 0.06)',
-    'rgba(240, 147, 251, 0.06)',
-    'rgba(67, 233, 123, 0.06)',
-    'rgba(79, 172, 254, 0.06)',
-    'rgba(254, 225, 64, 0.06)'
+    'rgba(200, 80, 255, 0.10)',
+    'rgba(80, 200, 255, 0.10)',
+    'rgba(255, 120, 200, 0.10)',
+    'rgba(120, 255, 180, 0.10)',
+    'rgba(255, 180, 80, 0.10)'
   ]
   const size = 150 + i * 35
   return {
@@ -181,12 +181,18 @@ const getHaloStyle = (i: number) => {
 const getVortexStyle = (i: number) => {
   const angle = (i / 25) * Math.PI * 2
   const distance = 50 + Math.random() * 200
+  const colors = [
+    'rgba(200, 80, 255, 0.5)',
+    'rgba(80, 200, 255, 0.5)',
+    'rgba(255, 120, 200, 0.5)'
+  ]
+  const color = colors[i % colors.length]
   return {
     left: `calc(50% + ${Math.cos(angle) * distance}px)`,
     top: `calc(50% + ${Math.sin(angle) * distance}px)`,
     width: `${20 + Math.random() * 30}px`,
     height: `${20 + Math.random() * 30}px`,
-    background: `radial-gradient(circle, rgba(102, 126, 234, 0.4), transparent)`,
+    background: `radial-gradient(circle, ${color}, transparent)`,
     filter: 'blur(8px)',
     animation: `vortex-spin ${10 + Math.random() * 10}s linear infinite`,
     animationDelay: `${i * 0.4}s`
@@ -217,7 +223,7 @@ const getFlowStyle = (i: number) => {
     left: '0',
     width: '100%',
     height: '1.5px',
-    background: `linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.5), rgba(240, 147, 251, 0.5), transparent)`,
+    background: `linear-gradient(90deg, transparent, rgba(200, 80, 255, 0.6), rgba(80, 200, 255, 0.6), transparent)`,
     filter: `blur(${Math.random() * 2 + 1}px)`,
     animation: `flow-move ${12 + i * 3}s ease-in-out infinite`,
     animationDelay: `${i * 1.2}s`,
@@ -262,11 +268,11 @@ const renderItem = (params: CustomSeriesRenderItemParams, api: any): CustomSerie
   const radius = 3 + intensity * 25
   const opacity = 0.1 + intensity * 0.7 * (coherence.value / 100)
 
-  // 根据维度计算颜色
-  const color = dimension.value === 1 ? `rgba(102, 126, 234, ${opacity})`
-    : dimension.value === 2 ? `rgba(240, 147, 251, ${opacity})`
-    : dimension.value === 3 ? `rgba(67, 233, 123, ${opacity})`
-    : `rgba(254, 225, 64, ${opacity})`
+  // 根据维度计算颜色（更鲜艳的紫蓝配色）
+  const color = dimension.value === 1 ? `rgba(200, 80, 255, ${opacity})`
+    : dimension.value === 2 ? `rgba(80, 200, 255, ${opacity})`
+    : dimension.value === 3 ? `rgba(255, 120, 200, ${opacity})`
+    : `rgba(120, 255, 180, ${opacity})`
 
   return {
     type: 'circle',
@@ -277,13 +283,13 @@ const renderItem = (params: CustomSeriesRenderItemParams, api: any): CustomSerie
     },
     style: {
       fill: color,
-      stroke: color.replace(/[\d.]+\)$/, '0.3)'),
-      lineWidth: 1
+      stroke: color.replace(/[\d.]+\)$/, '0.4)'),
+      lineWidth: 1.5
     },
     emphasis: {
       style: {
-        fill: color.replace(/[\d.]+\)$/, '0.9)'),
-        shadowBlur: 20,
+        fill: color.replace(/[\d.]+\)$/, '0.95)'),
+        shadowBlur: 25,
         shadowColor: color
       }
     }
@@ -402,11 +408,11 @@ const initQuantumFieldChart = () => {
       max: 100,
       inRange: {
         color: [
-          'rgba(102, 126, 234, 0.1)',
-          'rgba(102, 126, 234, 0.3)',
-          'rgba(240, 147, 251, 0.4)',
-          'rgba(67, 233, 123, 0.5)',
-          'rgba(254, 225, 64, 0.6)'
+          'rgba(200, 80, 255, 0.15)',
+          'rgba(200, 80, 255, 0.35)',
+          'rgba(80, 200, 255, 0.45)',
+          'rgba(255, 120, 200, 0.55)',
+          'rgba(120, 255, 180, 0.65)'
         ]
       }
     },
@@ -464,8 +470,8 @@ const animateInteraction = () => {
       100
     )
 
-    gradient.addColorStop(0, 'rgba(102, 126, 234, 0.05)')
-    gradient.addColorStop(0.5, 'rgba(240, 147, 251, 0.03)')
+    gradient.addColorStop(0, 'rgba(200, 80, 255, 0.08)')
+    gradient.addColorStop(0.5, 'rgba(80, 200, 255, 0.05)')
     gradient.addColorStop(1, 'transparent')
 
     ctx.fillStyle = gradient
@@ -596,19 +602,19 @@ onUnmounted(() => {
   min-height: 1300px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 10% 90%, rgba(102, 126, 234, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 10%, rgba(240, 147, 251, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 10% 90%, rgba(200, 80, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 10%, rgba(80, 200, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 120, 200, 0.10) 0%, transparent 60%),
     linear-gradient(135deg, #020208 0%, #060612 20%, #0a0a1c 40%, #060612 70%, #020208 100%);
   padding: 36px;
   box-sizing: border-box;
   border-radius: 36px;
   box-shadow:
     0 60px 180px rgba(0, 0, 0, 1),
-    0 0 200px rgba(102, 126, 234, 0.15),
-    0 0 300px rgba(240, 147, 251, 0.1),
+    0 0 200px rgba(200, 80, 255, 0.18),
+    0 0 300px rgba(80, 200, 255, 0.12),
     inset 0 4px 0 rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(102, 126, 234, 0.25);
+  border: 2px solid rgba(200, 80, 255, 0.30);
 }
 
 /* 量子场光晕 */
@@ -746,8 +752,8 @@ onUnmounted(() => {
   gap: 18px;
   color: #ffffff;
   text-shadow:
-    0 0 35px rgba(102, 126, 234, 0.85),
-    0 0 70px rgba(240, 147, 251, 0.65);
+    0 0 35px rgba(200, 80, 255, 0.90),
+    0 0 70px rgba(80, 200, 255, 0.70);
 }
 
 .title-icon {
@@ -771,13 +777,13 @@ onUnmounted(() => {
 
 .title-badge {
   padding: 10px 30px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(240, 147, 251, 0.85));
+  background: linear-gradient(135deg, rgba(200, 80, 255, 0.85), rgba(80, 200, 255, 0.85));
   border-radius: 26px;
   font-size: 16px;
   font-weight: 800;
   backdrop-filter: blur(12px);
   border: 2px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.55);
+  box-shadow: 0 10px 40px rgba(200, 80, 255, 0.60);
   letter-spacing: 3px;
 }
 
@@ -787,7 +793,7 @@ onUnmounted(() => {
   margin: 0;
   letter-spacing: 4px;
   text-transform: uppercase;
-  text-shadow: 0 0 25px rgba(102, 126, 234, 0.65);
+  text-shadow: 0 0 25px rgba(200, 80, 255, 0.70);
 }
 
 /* 量子指标 */
@@ -801,7 +807,7 @@ onUnmounted(() => {
 .metric-card {
   position: relative;
   background: rgba(10, 10, 25, 0.8);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(200, 80, 255, 0.35);
   border-radius: 20px;
   padding: 20px 24px;
   overflow: hidden;
@@ -809,7 +815,7 @@ onUnmounted(() => {
   backdrop-filter: blur(20px);
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.7),
-    0 0 60px rgba(102, 126, 234, 0.15);
+    0 0 60px rgba(200, 80, 255, 0.18);
   display: flex;
   align-items: center;
   gap: 16px;
@@ -822,21 +828,21 @@ onUnmounted(() => {
   left: 0;
   width: 3px;
   height: 100%;
-  background: linear-gradient(180deg, #667eea, #764ba2, #f093fb);
+  background: linear-gradient(180deg, #C850FF, #50C8FF, #FF78C8);
   border-radius: 20px 0 0 20px;
 }
 
 .metric-card:hover {
   transform: translateY(-10px) scale(1.03);
-  border-color: rgba(102, 126, 234, 0.6);
+  border-color: rgba(200, 80, 255, 0.65);
   box-shadow:
     0 30px 70px rgba(0, 0, 0, 0.8),
-    0 0 80px rgba(102, 126, 234, 0.3);
+    0 0 80px rgba(200, 80, 255, 0.35);
 }
 
 .metric-icon {
   font-size: 36px;
-  filter: drop-shadow(0 0 12px rgba(102, 126, 234, 0.7));
+  filter: drop-shadow(0 0 12px rgba(200, 80, 255, 0.75));
 }
 
 .metric-info {
@@ -885,23 +891,23 @@ onUnmounted(() => {
   flex: 1;
   min-height: 600px;
   background: rgba(8, 8, 20, 0.7);
-  border: 2px solid rgba(102, 126, 234, 0.3);
+  border: 2px solid rgba(200, 80, 255, 0.35);
   border-radius: 28px;
   padding: 28px;
   margin-bottom: 28px;
   backdrop-filter: blur(25px);
   box-shadow:
     0 35px 100px rgba(0, 0, 0, 0.8),
-    0 0 120px rgba(102, 126, 234, 0.2);
+    0 0 120px rgba(200, 80, 255, 0.22);
   transition: all 0.4s ease;
   overflow: hidden;
 }
 
 .quantum-field-chart-wrapper:hover {
-  border-color: rgba(102, 126, 234, 0.6);
+  border-color: rgba(200, 80, 255, 0.65);
   box-shadow:
     0 45px 120px rgba(0, 0, 0, 0.9),
-    0 0 180px rgba(102, 126, 234, 0.35);
+    0 0 180px rgba(200, 80, 255, 0.40);
 }
 
 .chart-frame {
@@ -932,6 +938,7 @@ onUnmounted(() => {
 .deco-circle {
   position: absolute;
   transform-origin: center;
+  border-color: rgba(200, 80, 255, 0.18) !important;
 }
 
 @keyframes deco-rotate {
@@ -947,12 +954,12 @@ onUnmounted(() => {
   gap: 28px;
   padding: 28px 36px;
   background: rgba(8, 8, 20, 0.85);
-  border: 2px solid rgba(102, 126, 234, 0.35);
+  border: 2px solid rgba(200, 80, 255, 0.40);
   border-radius: 24px;
   backdrop-filter: blur(25px);
   box-shadow:
     0 25px 70px rgba(0, 0, 0, 0.7),
-    0 0 80px rgba(102, 126, 234, 0.2);
+    0 0 80px rgba(200, 80, 255, 0.22);
 }
 
 .control-section {
@@ -994,7 +1001,7 @@ onUnmounted(() => {
   height: 6px;
   -webkit-appearance: none;
   appearance: none;
-  background: rgba(102, 126, 234, 0.3);
+  background: rgba(200, 80, 255, 0.35);
   border-radius: 3px;
   outline: none;
   cursor: pointer;
@@ -1006,22 +1013,22 @@ onUnmounted(() => {
   appearance: none;
   width: 16px;
   height: 16px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #C850FF, #50C8FF);
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(102, 126, 234, 0.8);
+  box-shadow: 0 0 15px rgba(200, 80, 255, 0.85);
   transition: all 0.3s ease;
 }
 
 .quantum-slider::-webkit-slider-thumb:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 20px rgba(102, 126, 234, 1);
+  box-shadow: 0 0 20px rgba(200, 80, 255, 1);
 }
 
 .control-value {
   font-size: 13px;
   font-weight: 800;
-  color: #667eea;
+  color: #C850FF;
   text-align: right;
   min-width: 45px;
   white-space: nowrap;
@@ -1052,50 +1059,50 @@ onUnmounted(() => {
 }
 
 .primary-btn {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #C850FF, #50C8FF);
   color: #ffffff;
-  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.65);
+  box-shadow: 0 8px 32px rgba(200, 80, 255, 0.70);
 }
 
 .primary-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.85);
+  box-shadow: 0 12px 40px rgba(200, 80, 255, 0.90);
 }
 
 .secondary-btn {
-  background: rgba(240, 147, 251, 0.2);
-  color: #f093fb;
-  border: 1px solid rgba(240, 147, 251, 0.4);
+  background: rgba(80, 200, 255, 0.25);
+  color: #50C8FF;
+  border: 1px solid rgba(80, 200, 255, 0.45);
 }
 
 .secondary-btn:hover {
-  background: rgba(240, 147, 251, 0.3);
+  background: rgba(80, 200, 255, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(240, 147, 251, 0.4);
+  box-shadow: 0 8px 32px rgba(80, 200, 255, 0.45);
 }
 
 .accent-btn {
-  background: rgba(79, 172, 254, 0.2);
-  color: #4facfe;
-  border: 1px solid rgba(79, 172, 254, 0.4);
+  background: rgba(255, 120, 200, 0.25);
+  color: #FF78C8;
+  border: 1px solid rgba(255, 120, 200, 0.45);
 }
 
 .accent-btn:hover {
-  background: rgba(79, 172, 254, 0.3);
+  background: rgba(255, 120, 200, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 8px 32px rgba(255, 120, 200, 0.45);
 }
 
 .quantum-btn {
-  background: rgba(67, 233, 123, 0.2);
-  color: #43e97b;
-  border: 1px solid rgba(67, 233, 123, 0.4);
+  background: rgba(120, 255, 180, 0.25);
+  color: #78FFB4;
+  border: 1px solid rgba(120, 255, 180, 0.45);
 }
 
 .quantum-btn:hover {
-  background: rgba(67, 233, 123, 0.3);
+  background: rgba(120, 255, 180, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(67, 233, 123, 0.4);
+  box-shadow: 0 8px 32px rgba(120, 255, 180, 0.45);
 }
 
 /* 响应式 */

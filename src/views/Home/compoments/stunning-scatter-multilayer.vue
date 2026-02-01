@@ -110,11 +110,11 @@ const particles = ref< Array<{ style: Record<string, string> }> >([])
 const generateParticles = () => {
   const particleCount = 90
   const colors = [
-    'rgba(102, 126, 234, 0.6)',
-    'rgba(240, 147, 251, 0.6)',
-    'rgba(67, 233, 123, 0.6)',
-    'rgba(79, 172, 254, 0.6)',
-    'rgba(254, 225, 64, 0.5)'
+    'rgba(200, 80, 255, 0.7)',
+    'rgba(80, 200, 255, 0.7)',
+    'rgba(255, 120, 200, 0.7)',
+    'rgba(120, 255, 180, 0.7)',
+    'rgba(255, 184, 77, 0.6)'
   ]
 
   for (let i = 0; i < particleCount; i++) {
@@ -165,86 +165,86 @@ const scatterData = generateScatterData()
 
 // 图表配置
 const chartOption = computed(() => {
-  // 定义8层透明渐变配色方案
+  // 定义8层透明渐变配色方案（紫蓝粉色系）
   const colorThemes = [
-    // 聚类A - 紫色系
+    // 聚类A - 亮紫色系
     {
-      baseColor: '102, 126, 234',
+      baseColor: '200, 80, 255',
       stops: [
-        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
-        { offset: 0.15, color: 'rgba(102, 126, 234, 0.75)' },
-        { offset: 0.30, color: 'rgba(118, 75, 162, 0.80)' },
-        { offset: 0.45, color: 'rgba(240, 147, 251, 0.73)' },
-        { offset: 0.60, color: 'rgba(102, 126, 234, 0.77)' },
-        { offset: 0.75, color: 'rgba(118, 75, 162, 0.81)' },
-        { offset: 0.88, color: 'rgba(102, 126, 234, 0.74)' },
-        { offset: 1, color: 'rgba(118, 75, 162, 0.68)' }
+        { offset: 0, color: 'rgba(255, 255, 255, 0.70)' },
+        { offset: 0.15, color: 'rgba(200, 80, 255, 0.82)' },
+        { offset: 0.30, color: 'rgba(157, 80, 255, 0.86)' },
+        { offset: 0.45, color: 'rgba(255, 120, 200, 0.78)' },
+        { offset: 0.60, color: 'rgba(200, 80, 255, 0.84)' },
+        { offset: 0.75, color: 'rgba(157, 80, 255, 0.88)' },
+        { offset: 0.88, color: 'rgba(200, 80, 255, 0.80)' },
+        { offset: 1, color: 'rgba(157, 80, 255, 0.75)' }
       ],
-      shadowColor: 'rgba(102, 126, 234, 0.9)',
-      borderColor: 'rgba(255, 255, 255, 0.55)'
-    },
-    // 聚类B - 粉色系
-    {
-      baseColor: '240, 147, 251',
-      stops: [
-        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
-        { offset: 0.15, color: 'rgba(240, 147, 251, 0.75)' },
-        { offset: 0.30, color: 'rgba(245, 87, 108, 0.80)' },
-        { offset: 0.45, color: 'rgba(254, 225, 64, 0.73)' },
-        { offset: 0.60, color: 'rgba(255, 159, 67, 0.77)' },
-        { offset: 0.75, color: 'rgba(240, 147, 251, 0.81)' },
-        { offset: 0.88, color: 'rgba(245, 87, 108, 0.74)' },
-        { offset: 1, color: 'rgba(240, 147, 251, 0.68)' }
-      ],
-      shadowColor: 'rgba(240, 147, 251, 0.9)',
-      borderColor: 'rgba(255, 255, 255, 0.55)'
-    },
-    // 聚类C - 绿色系
-    {
-      baseColor: '67, 233, 123',
-      stops: [
-        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
-        { offset: 0.15, color: 'rgba(67, 233, 123, 0.75)' },
-        { offset: 0.30, color: 'rgba(56, 249, 215, 0.80)' },
-        { offset: 0.45, color: 'rgba(79, 172, 254, 0.73)' },
-        { offset: 0.60, color: 'rgba(0, 242, 254, 0.77)' },
-        { offset: 0.75, color: 'rgba(67, 233, 123, 0.81)' },
-        { offset: 0.88, color: 'rgba(56, 249, 215, 0.74)' },
-        { offset: 1, color: 'rgba(67, 233, 123, 0.68)' }
-      ],
-      shadowColor: 'rgba(67, 233, 123, 0.9)',
+      shadowColor: 'rgba(200, 80, 255, 0.95)',
       borderColor: 'rgba(255, 255, 255, 0.60)'
     },
-    // 聚类D - 青色系
+    // 聚类B - 亮蓝色系
     {
-      baseColor: '79, 172, 254',
+      baseColor: '80, 200, 255',
       stops: [
-        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
-        { offset: 0.15, color: 'rgba(79, 172, 254, 0.75)' },
-        { offset: 0.30, color: 'rgba(0, 242, 254, 0.80)' },
-        { offset: 0.45, color: 'rgba(67, 233, 123, 0.73)' },
-        { offset: 0.60, color: 'rgba(56, 249, 215, 0.77)' },
-        { offset: 0.75, color: 'rgba(79, 172, 254, 0.81)' },
-        { offset: 0.88, color: 'rgba(0, 242, 254, 0.74)' },
-        { offset: 1, color: 'rgba(79, 172, 254, 0.68)' }
+        { offset: 0, color: 'rgba(255, 255, 255, 0.70)' },
+        { offset: 0.15, color: 'rgba(80, 200, 255, 0.82)' },
+        { offset: 0.30, color: 'rgba(50, 180, 255, 0.86)' },
+        { offset: 0.45, color: 'rgba(120, 255, 180, 0.78)' },
+        { offset: 0.60, color: 'rgba(80, 200, 255, 0.84)' },
+        { offset: 0.75, color: 'rgba(50, 180, 255, 0.88)' },
+        { offset: 0.88, color: 'rgba(80, 200, 255, 0.80)' },
+        { offset: 1, color: 'rgba(50, 180, 255, 0.75)' }
       ],
-      shadowColor: 'rgba(79, 172, 254, 0.9)',
+      shadowColor: 'rgba(80, 200, 255, 0.95)',
       borderColor: 'rgba(255, 255, 255, 0.60)'
     },
-    // 聚类E - 金色系
+    // 聚类C - 粉红色系
     {
-      baseColor: '254, 225, 64',
+      baseColor: '255, 120, 200',
       stops: [
-        { offset: 0, color: 'rgba(255, 255, 255, 0.65)' },
-        { offset: 0.15, color: 'rgba(254, 225, 64, 0.75)' },
-        { offset: 0.30, color: 'rgba(255, 159, 67, 0.80)' },
-        { offset: 0.45, color: 'rgba(250, 112, 154, 0.73)' },
-        { offset: 0.60, color: 'rgba(245, 87, 108, 0.77)' },
-        { offset: 0.75, color: 'rgba(254, 225, 64, 0.81)' },
-        { offset: 0.88, color: 'rgba(255, 159, 67, 0.74)' },
-        { offset: 1, color: 'rgba(254, 225, 64, 0.68)' }
+        { offset: 0, color: 'rgba(255, 255, 255, 0.70)' },
+        { offset: 0.15, color: 'rgba(255, 120, 200, 0.82)' },
+        { offset: 0.30, color: 'rgba(255, 80, 180, 0.86)' },
+        { offset: 0.45, color: 'rgba(255, 184, 77, 0.78)' },
+        { offset: 0.60, color: 'rgba(255, 120, 200, 0.84)' },
+        { offset: 0.75, color: 'rgba(255, 80, 180, 0.88)' },
+        { offset: 0.88, color: 'rgba(255, 120, 200, 0.80)' },
+        { offset: 1, color: 'rgba(255, 80, 180, 0.75)' }
       ],
-      shadowColor: 'rgba(254, 225, 64, 0.9)',
+      shadowColor: 'rgba(255, 120, 200, 0.95)',
+      borderColor: 'rgba(255, 255, 255, 0.60)'
+    },
+    // 聚类D - 青绿色系
+    {
+      baseColor: '120, 255, 180',
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.70)' },
+        { offset: 0.15, color: 'rgba(120, 255, 180, 0.82)' },
+        { offset: 0.30, color: 'rgba(80, 255, 200, 0.86)' },
+        { offset: 0.45, color: 'rgba(80, 200, 255, 0.78)' },
+        { offset: 0.60, color: 'rgba(120, 255, 180, 0.84)' },
+        { offset: 0.75, color: 'rgba(80, 255, 200, 0.88)' },
+        { offset: 0.88, color: 'rgba(120, 255, 180, 0.80)' },
+        { offset: 1, color: 'rgba(80, 255, 200, 0.75)' }
+      ],
+      shadowColor: 'rgba(120, 255, 180, 0.95)',
+      borderColor: 'rgba(255, 255, 255, 0.60)'
+    },
+    // 聚类E - 橙金色系
+    {
+      baseColor: '255, 184, 77',
+      stops: [
+        { offset: 0, color: 'rgba(255, 255, 255, 0.70)' },
+        { offset: 0.15, color: 'rgba(255, 184, 77, 0.82)' },
+        { offset: 0.30, color: 'rgba(255, 150, 50, 0.86)' },
+        { offset: 0.45, color: 'rgba(255, 120, 200, 0.78)' },
+        { offset: 0.60, color: 'rgba(255, 184, 77, 0.84)' },
+        { offset: 0.75, color: 'rgba(255, 150, 50, 0.88)' },
+        { offset: 0.88, color: 'rgba(255, 184, 77, 0.80)' },
+        { offset: 1, color: 'rgba(255, 150, 50, 0.75)' }
+      ],
+      shadowColor: 'rgba(255, 184, 77, 0.95)',
       borderColor: 'rgba(255, 255, 255, 0.65)'
     }
   ]
@@ -273,7 +273,7 @@ const chartOption = computed(() => {
         `
       },
       backgroundColor: 'rgba(26, 26, 46, 0.98)',
-      borderColor: 'rgba(102, 126, 234, 0.6)',
+      borderColor: 'rgba(200, 80, 255, 0.70)',
       borderWidth: 2,
       borderRadius: 16,
       padding: [16, 20],
@@ -317,7 +317,7 @@ const chartOption = computed(() => {
       },
       axisLine: {
         lineStyle: {
-          color: 'rgba(102, 126, 234, 0.5)',
+          color: 'rgba(200, 80, 255, 0.55)',
           width: 1.5
         }
       },
@@ -328,7 +328,7 @@ const chartOption = computed(() => {
       },
       splitLine: {
         lineStyle: {
-          color: 'rgba(102, 126, 234, 0.18)',
+          color: 'rgba(200, 80, 255, 0.20)',
           type: 'dashed',
           width: 1
         }
@@ -346,7 +346,7 @@ const chartOption = computed(() => {
       },
       axisLine: {
         lineStyle: {
-          color: 'rgba(102, 126, 234, 0.5)',
+          color: 'rgba(200, 80, 255, 0.55)',
           width: 1.5
         }
       },
@@ -357,7 +357,7 @@ const chartOption = computed(() => {
       },
       splitLine: {
         lineStyle: {
-          color: 'rgba(102, 126, 234, 0.18)',
+          color: 'rgba(200, 80, 255, 0.20)',
           type: 'dashed',
           width: 1
         }
