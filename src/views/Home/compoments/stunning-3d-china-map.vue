@@ -29,6 +29,17 @@
     <!-- 地图容器 -->
     <div class="map-wrapper">
       <div class="map-frame">
+        <!-- 装饰光效 -->
+        <div class="map-decorations">
+          <div class="decoration-ring ring-1"></div>
+          <div class="decoration-ring ring-2"></div>
+          <div class="decoration-ring ring-3"></div>
+          <div class="corner-decoration corner-tl"></div>
+          <div class="corner-decoration corner-tr"></div>
+          <div class="corner-decoration corner-bl"></div>
+          <div class="corner-decoration corner-br"></div>
+        </div>
+
         <div ref="chinaMap" class="china-3d-map"></div>
 
         <!-- 3D控制面板 -->
@@ -46,7 +57,7 @@
               <span class="label-icon">📊</span>
               <span>柱状图</span>
             </label>
-            <input v-model="showBars" type="checkbox" class="toggle-switch" />
+            <input v-model="showBars" type="checkbox" class="toggle-switch" checked />
           </div>
 
           <div class="control-group">
@@ -239,10 +250,10 @@ const initChinaMap = () => {
 const buildChartOption = (): EChartsOption => {
   const maxValue = Math.max(...provinceData.value.map(item => item.value))
 
-  // 生成lines数据(柱体)
+  // 生成lines数据(柱体) - 大幅增大高度系数使柱子非常明显
   const lineData = showBars.value ? provinceData.value.map(item => {
     const coord = item.coord
-    const height = item.value * 0.00012 // 调整柱子高度比例,增强3D感
+    const height = item.value * 0.004 // 增大到0.004
     return {
       coords: [
         coord,
@@ -254,7 +265,7 @@ const buildChartOption = (): EChartsOption => {
   // 生成scatter数据(柱顶)
   const scatterData = showBars.value ? provinceData.value.map(item => {
     const coord = item.coord
-    const height = item.value * 0.00012
+    const height = item.value * 0.004
     return [coord[0], coord[1] + height]
   }) : []
 
@@ -275,10 +286,10 @@ const buildChartOption = (): EChartsOption => {
       y: 0.5,
       r: 0.8,
       colorStops: [
-        { offset: 0, color: '#0f286f' },
-        { offset: 0.4, color: '#0D2468' },
-        { offset: 0.7, color: '#0a1a4f' },
-        { offset: 1, color: '#061239' }
+        { offset: 0, color: 'rgba(15,40,111,0.71)' },
+        { offset: 0.4, color: 'rgba(13,36,104,0.7)' },
+        { offset: 0.7, color: 'rgba(10,26,79,0.68)' },
+        { offset: 1, color: 'rgba(6,18,57,0.66)' }
       ],
       global: false
     },
@@ -330,68 +341,123 @@ const buildChartOption = (): EChartsOption => {
         layoutSize: '95%',
         layoutCenter: ['50%', '50%'],
         itemStyle: {
-          areaColor: '#1a4ba0',
-          borderColor: '#4dabf7',
-          borderWidth: 2.5,
-          shadowColor: 'rgba(77, 171, 247, 0.8)',
-          shadowBlur: 15
+          areaColor: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: '#1e4fba' },
+              { offset: 0.5, color: '#1a4ba0' },
+              { offset: 1, color: '#153d8f' }
+            ],
+            global: false
+          },
+          borderColor: '#7dd3fc',
+          borderWidth: 3,
+          shadowColor: 'rgba(125, 211, 252, 1)',
+          shadowBlur: 25,
+          shadowOffsetX: 0,
+          shadowOffsetY: 8
         },
         emphasis: {
           itemStyle: {
-            areaColor: '#2257c0',
-            borderColor: '#74c0fc',
-            borderWidth: 3,
-            shadowColor: 'rgba(116, 192, 252, 1)',
-            shadowBlur: 20
+            areaColor: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: '#2b6cb0' },
+                { offset: 0.5, color: '#2257c0' },
+                { offset: 1, color: '#1e4fba' }
+              ],
+              global: false
+            },
+            borderColor: '#a5f3fc',
+            borderWidth: 4,
+            shadowColor: 'rgba(165, 243, 252, 1)',
+            shadowBlur: 30
           },
           label: {
             show: false,
-            color: '#d0ebff',
-            fontSize: 14,
+            color: '#e0f2fe',
+            fontSize: 15,
             fontWeight: 'bold',
-            textShadowColor: 'rgba(0,0,0,0.8)',
-            textShadowBlur: 4
+            textShadowColor: 'rgba(0,0,0,0.9)',
+            textShadowBlur: 6,
+            textShadowOffsetY: 2
           }
         },
         zlevel: 3
       },
       {
-        // 底层地图(形成3D效果) - 增强深度
-        map: 'china',
-        aspectScale: 0.9,
-        roam: false,
-        layoutSize: '95%',
-        layoutCenter: ['50%', '53%'],
-        itemStyle: {
-          areaColor: '#0a1a4f',
-          borderColor: '#2c5282',
-          borderWidth: 1.5,
-          shadowColor: 'rgba(44, 82, 130, 0.6)',
-          shadowBlur: 10
-        },
-        silent: true,
-        zlevel: 1
-      },
-      {
-        // 添加中间层增强3D立体感
+        // 中间层 - 增强立体感
         map: 'china',
         aspectScale: 0.9,
         roam: false,
         layoutSize: '95%',
         layoutCenter: ['50%', '51.5%'],
         itemStyle: {
-          areaColor: '#122b6b',
-          borderColor: '#3182ce',
-          borderWidth: 2
+          areaColor: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: '#153d8f' },
+              { offset: 1, color: '#0f2a6b' }
+            ],
+            global: false
+          },
+          borderColor: '#5ea9f5',
+          borderWidth: 2.5,
+          shadowColor: 'rgba(94, 169, 245, 0.6)',
+          shadowBlur: 20,
+          shadowOffsetY: 4
         },
         silent: true,
         zlevel: 2
+      },
+      {
+        // 底层地图 - 增强深度
+        map: 'china',
+        aspectScale: 0.9,
+        roam: false,
+        layoutSize: '95%',
+        layoutCenter: ['50%', '53%'],
+        itemStyle: {
+          areaColor: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: '#0f2a6b' },
+              { offset: 1, color: '#081a4a' }
+            ],
+            global: false
+          },
+          borderColor: '#3b82f6',
+          borderWidth: 2,
+          shadowColor: 'rgba(59, 130, 246, 0.4)',
+          shadowBlur: 15,
+          shadowOffsetY: 2
+        },
+        silent: true,
+        zlevel: 1
       }
     ],
     series: [
       {
-        // 柱体(lines) - 增强渐变和光效
+        // 柱体(lines) - 完全按照参考代码
         type: 'lines',
+        coordinateSystem: 'geo',
+        geoIndex: 0,
         zlevel: 5,
         effect: {
           show: false,
@@ -401,36 +467,37 @@ const buildChartOption = (): EChartsOption => {
           symbolSize: 5
         },
         lineStyle: {
-          width: 10,
+          width: 18,
           color: {
             type: 'linear',
             x: 0,
             y: 0,
             x2: 0,
             y2: 1.5,
-            colorStops: [
-              { offset: 0, color: '#8B7355' },
-              { offset: 0.3, color: '#D4AF37' },
-              { offset: 0.5, color: '#FFD700' },
-              { offset: 0.7, color: '#FFF8DC' },
-              { offset: 1, color: '#ffffff' }
-            ],
+            colorStops: [{
+              offset: 0,
+              color: '#ff4757'
+            }, {
+              offset: 0.5,
+              color: '#ffa502'
+            }, {
+              offset: 1,
+              color: '#2ed573'
+            }],
             global: false
           },
-          opacity: 0.95,
-          shadowColor: 'rgba(255, 215, 0, 0.8)',
-          shadowBlur: 8,
-          shadowOffsetY: 4
+          opacity: 1
         },
         label: {
           show: false,
-          position: 'end'
+          position: 'end',
+          formatter: '245'
         },
         silent: true,
         data: lineData
       },
       {
-        // 柱顶(scatter) - 增强光效
+        // 柱顶(scatter) - 超级光效
         type: 'scatter',
         coordinateSystem: 'geo',
         geoIndex: 0,
@@ -442,62 +509,49 @@ const buildChartOption = (): EChartsOption => {
             const province = provinceData.value[params.dataIndex]
             return province?.value || ''
           },
-          padding: [6, 10],
-          backgroundColor: 'rgba(0, 63, 94, 0.95)',
-          borderRadius: 6,
+          padding: [4, 8],
+          backgroundColor: '#003F5E',
+          borderRadius: 5,
           borderColor: '#67F0EF',
-          borderWidth: 1.5,
-          color: '#67F0EF',
-          fontSize: 13,
-          fontWeight: 'bold',
-          shadowColor: 'rgba(103, 240, 239, 0.8)',
-          shadowBlur: 10
+          borderWidth: 1,
+          color: '#67F0EF'
         },
         symbol: 'circle',
-        symbolSize: [10, 5],
+        symbolSize: [20, 10],
         itemStyle: {
-          color: '#D4AF37',
-          opacity: 0.8,
-          shadowColor: 'rgba(212, 175, 55, 1)',
-          shadowBlur: 15,
-          shadowOffsetY: 3
+          color: '#2ed573',
+          opacity: 1,
+          borderColor: '#ffa502',
+          borderWidth: 3,
+          shadowColor: 'rgba(255, 215, 0, 0.8)',
+          shadowBlur: 15
         },
         silent: true,
         data: scatterData
       },
       {
-        // 脉冲效果(effectScatter) - 增强动画
+        // 脉冲效果(effectScatter) - 完全按照参考代码
         type: 'effectScatter',
         coordinateSystem: 'geo',
         geoIndex: 0,
         symbol: 'circle',
-        symbolSize: 5,
+        symbolSize: 4,
         showEffectOn: 'render',
         rippleEffect: {
           brushType: 'fill',
-          scale: 12,
-          number: 3,
-          period: 4
+          scale: 10
         },
         hoverAnimation: true,
         label: {
           formatter: (params: any) => params.data[2],
           position: 'right',
-          color: '#E3F2FD',
-          fontSize: 15,
-          fontWeight: 'bold',
-          distance: 12,
-          show: showLabels.value,
-          backgroundColor: 'rgba(13, 36, 104, 0.85)',
-          padding: [4, 8],
-          borderRadius: 4,
-          borderColor: 'rgba(77, 171, 247, 0.5)',
-          borderWidth: 1
+          color: '#B7E3FF',
+          fontSize: 14,
+          distance: 10,
+          show: showLabels.value
         },
         itemStyle: {
-          color: '#FFEB3B',
-          shadowColor: 'rgba(255, 235, 59, 1)',
-          shadowBlur: 20
+          color: '#FEF134'
         },
         zlevel: 6,
         data: scatterData3
@@ -522,18 +576,28 @@ const closeDetail = () => {
   selectedProvince.value = null
 }
 
-// 获取粒子样式
+// 获取粒子样式 - 增强多样性和光效
 const getParticleStyle = (i: number) => {
-  const size = Math.random() * 3 + 1
+  const size = Math.random() * 4 + 1
+  const colors = [
+    'rgba(102, 126, 234, 0.8)',
+    'rgba(240, 147, 251, 0.8)',
+    'rgba(67, 233, 123, 0.8)',
+    'rgba(255, 215, 0, 0.7)',
+    'rgba(125, 211, 252, 0.8)',
+    'rgba(255, 235, 59, 0.7)'
+  ]
+  const color = colors[Math.floor(Math.random() * colors.length)]
   return {
     width: `${size}px`,
     height: `${size}px`,
     left: `${Math.random() * 100}%`,
     top: `${Math.random() * 100}%`,
-    background: `radial-gradient(circle, rgba(102, 126, 234, 0.8), transparent)`,
-    animation: `particle-float ${Math.random() * 10 + 5}s ease-in-out infinite`,
-    animationDelay: `${Math.random() * 5}s`,
-    opacity: Math.random() * 0.5 + 0.2
+    background: `radial-gradient(circle, ${color}, transparent)`,
+    boxShadow: `0 0 ${size * 2}px ${color}`,
+    animation: `particle-float ${Math.random() * 12 + 6}s ease-in-out infinite`,
+    animationDelay: `${Math.random() * 6}s`,
+    opacity: Math.random() * 0.6 + 0.3
   }
 }
 
@@ -561,7 +625,7 @@ onUnmounted(() => {
 .china-3d-map-container {
   position: relative;
   width: 100%;
-  min-height: 1100px;
+  min-height: 1400px;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.2) 0%, transparent 55%),
@@ -569,7 +633,6 @@ onUnmounted(() => {
     radial-gradient(ellipse at 50% 50%, rgba(67, 233, 123, 0.1) 0%, transparent 65%),
     radial-gradient(ellipse at 30% 30%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
     linear-gradient(135deg, #030311 0%, #080818 15%, #0d0d25 40%, #080818 75%, #030311 100%);
-  padding: 36px;
   box-sizing: border-box;
   border-radius: 36px;
   box-shadow:
@@ -621,24 +684,25 @@ onUnmounted(() => {
   border-radius: 50%;
   will-change: transform, opacity;
   backdrop-filter: blur(1px);
+  filter: contrast(1.2) brightness(1.1);
 }
 
 @keyframes particle-float {
   0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.2;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.3;
   }
   25% {
-    transform: translate(28px, -22px) scale(1.3);
-    opacity: 0.6;
+    transform: translate(35px, -28px) scale(1.4) rotate(90deg);
+    opacity: 0.7;
   }
   50% {
-    transform: translate(-22px, 28px) scale(0.9);
-    opacity: 0.4;
+    transform: translate(-28px, 35px) scale(0.8) rotate(180deg);
+    opacity: 0.5;
   }
   75% {
-    transform: translate(22px, 22px) scale(1.1);
-    opacity: 0.5;
+    transform: translate(28px, 28px) scale(1.2) rotate(270deg);
+    opacity: 0.6;
   }
 }
 
@@ -669,13 +733,26 @@ onUnmounted(() => {
 .title-icon {
   font-size: 52px;
   animation: title-icon-float 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(102, 126, 234, 1));
 }
 
 @keyframes title-icon-float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-8px) rotate(5deg); }
-  50% { transform: translateY(0) rotate(0deg); }
-  75% { transform: translateY(-8px) rotate(-5deg); }
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 20px rgba(102, 126, 234, 1));
+  }
+  25% {
+    transform: translateY(-10px) rotate(5deg) scale(1.05);
+    filter: drop-shadow(0 0 30px rgba(102, 126, 234, 1));
+  }
+  50% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 20px rgba(102, 126, 234, 1));
+  }
+  75% {
+    transform: translateY(-10px) rotate(-5deg) scale(1.05);
+    filter: drop-shadow(0 0 30px rgba(102, 126, 234, 1));
+  }
 }
 
 .title-text {
@@ -738,17 +815,17 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 22px 26px;
+  padding: 24px 28px;
   background:
-    linear-gradient(135deg, rgba(10, 10, 25, 0.9), rgba(20, 20, 40, 0.85)),
-    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1), transparent 50%);
-  border: 1.5px solid rgba(102, 126, 234, 0.4);
-  border-radius: 22px;
-  backdrop-filter: blur(25px);
+    linear-gradient(135deg, rgba(10, 10, 25, 0.92), rgba(20, 20, 40, 0.88)),
+    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.12), transparent 50%);
+  border: 2px solid rgba(102, 126, 234, 0.45);
+  border-radius: 24px;
+  backdrop-filter: blur(30px);
   box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.75),
-    0 0 60px rgba(102, 126, 234, 0.2),
-    inset 0 2px 0 rgba(255, 255, 255, 0.05);
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 0 60px rgba(102, 126, 234, 0.25),
+    inset 0 2px 0 rgba(255, 255, 255, 0.06);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
@@ -761,7 +838,7 @@ onUnmounted(() => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
   transition: left 0.6s ease;
 }
 
@@ -769,45 +846,70 @@ onUnmounted(() => {
   left: 100%;
 }
 
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea, #f093fb, #43e97b);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.stat-card:hover::after {
+  transform: scaleX(1);
+}
+
 .stat-card:hover {
-  transform: translateY(-10px) scale(1.03);
-  border-color: rgba(102, 126, 234, 0.7);
+  transform: translateY(-12px) scale(1.03);
+  border-color: rgba(102, 126, 234, 0.75);
   box-shadow:
-    0 35px 80px rgba(0, 0, 0, 0.85),
-    0 0 100px rgba(102, 126, 234, 0.35),
+    0 35px 80px rgba(0, 0, 0, 0.9),
+    0 0 100px rgba(102, 126, 234, 0.4),
     inset 0 2px 0 rgba(255, 255, 255, 0.1);
 }
 
 .stat-icon {
-  font-size: 38px;
-  filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.8));
+  font-size: 40px;
+  filter: drop-shadow(0 0 18px rgba(102, 126, 234, 0.9));
   animation: icon-bounce 2s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes icon-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(5deg); }
 }
 
 .stat-content {
   flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .stat-label {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 2.5px;
   margin-bottom: 6px;
 }
 
 .stat-value {
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 900;
-  text-shadow: 0 0 25px currentColor;
+  text-shadow: 0 0 28px currentColor;
   font-family: 'SF Mono', 'Monaco', monospace;
   letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff, #e8e8e8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px currentColor);
 }
 
 /* 地图容器 - 增强视觉 */
@@ -815,13 +917,13 @@ onUnmounted(() => {
   position: relative;
   z-index: 10;
   flex: 1;
-  min-height: 700px;
+  min-height: 950px;
 }
 
 .map-frame {
   width: 100%;
   height: 100%;
-  min-height: 650px;
+  min-height: 900px;
   background:
     linear-gradient(135deg, rgba(5, 5, 15, 0.85), rgba(15, 15, 35, 0.8)),
     radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.05), transparent 70%);
@@ -845,19 +947,130 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 5px;
   background: linear-gradient(90deg,
     transparent 0%,
-    rgba(102, 126, 234, 0.8) 20%,
-    rgba(240, 147, 251, 0.8) 50%,
-    rgba(102, 126, 234, 0.8) 80%,
+    rgba(102, 126, 234, 0.8) 15%,
+    rgba(240, 147, 251, 0.8) 40%,
+    rgba(67, 233, 123, 0.8) 50%,
+    rgba(240, 147, 251, 0.8) 60%,
+    rgba(102, 126, 234, 0.8) 85%,
     transparent 100%);
-  animation: frame-glow 3s ease-in-out infinite;
+  animation: frame-glow 2.5s ease-in-out infinite;
 }
 
 @keyframes frame-glow {
-  0%, 100% { opacity: 0.6; }
+  0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
+}
+
+.map-frame::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(102, 126, 234, 0.6) 15%,
+    rgba(240, 147, 251, 0.6) 40%,
+    rgba(67, 233, 123, 0.6) 50%,
+    rgba(240, 147, 251, 0.6) 60%,
+    rgba(102, 126, 234, 0.6) 85%,
+    transparent 100%);
+  animation: frame-glow 2.5s ease-in-out infinite 1.25s;
+}
+
+/* 地图装饰光效 */
+.map-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.decoration-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  animation: ring-pulse 4s ease-in-out infinite;
+}
+
+.ring-1 {
+  width: 60%;
+  height: 60%;
+  animation-delay: 0s;
+}
+
+.ring-2 {
+  width: 75%;
+  height: 75%;
+  animation-delay: 1s;
+  border-color: rgba(240, 147, 251, 0.2);
+}
+
+.ring-3 {
+  width: 90%;
+  height: 90%;
+  animation-delay: 2s;
+  border-color: rgba(67, 233, 123, 0.15);
+}
+
+@keyframes ring-pulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+.corner-decoration {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 3px solid rgba(102, 126, 234, 0.3);
+}
+
+.corner-tl {
+  top: 15px;
+  left: 15px;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 12px 0 0 0;
+}
+
+.corner-tr {
+  top: 15px;
+  right: 15px;
+  border-left: none;
+  border-bottom: none;
+  border-radius: 0 12px 0 0;
+}
+
+.corner-bl {
+  bottom: 15px;
+  left: 15px;
+  border-right: none;
+  border-top: none;
+  border-radius: 0 0 0 12px;
+}
+
+.corner-br {
+  bottom: 15px;
+  right: 15px;
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 12px 0;
 }
 
 .map-frame:hover {
@@ -873,44 +1086,65 @@ onUnmounted(() => {
 .china-3d-map {
   width: 100%;
   height: 100%;
-  min-height: 600px;
+  min-height: 840px;
 }
 
 /* 控制面板 - 增强视觉 */
 .control-panel {
   position: absolute;
   top: 28px;
-  right: 28px;
+  left: 28px;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   padding: 20px 24px;
   background:
-    linear-gradient(135deg, rgba(8, 8, 20, 0.97), rgba(18, 18, 35, 0.94)),
-    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1), transparent 50%);
-  border: 2.5px solid rgba(102, 126, 234, 0.6);
+    linear-gradient(135deg, rgba(8, 8, 20, 0.98), rgba(18, 18, 35, 0.95)),
+    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.12), transparent 50%);
+  border: 2.5px solid rgba(102, 126, 234, 0.65);
   border-radius: 22px;
   backdrop-filter: blur(30px);
   box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.85),
-    0 0 80px rgba(102, 126, 234, 0.35),
-    inset 0 2px 0 rgba(255, 255, 255, 0.05);
+    0 25px 70px rgba(0, 0, 0, 0.88),
+    0 0 80px rgba(102, 126, 234, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.06);
   z-index: 100;
   pointer-events: auto;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.control-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  animation: panel-shine 4s ease-in-out infinite;
+}
+
+@keyframes panel-shine {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
 }
 
 .control-panel:hover {
-  border-color: rgba(102, 126, 234, 0.8);
+  border-color: rgba(102, 126, 234, 0.85);
   box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.9),
-    0 0 100px rgba(102, 126, 234, 0.45);
+    0 30px 80px rgba(0, 0, 0, 0.92),
+    0 0 100px rgba(102, 126, 234, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08);
 }
 
 .control-group {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 .control-label {
@@ -919,29 +1153,29 @@ onUnmounted(() => {
   gap: 8px;
   font-size: 13px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.98);
+  color: rgba(255, 255, 255, 1);
   white-space: nowrap;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .label-icon {
   font-size: 16px;
-  filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.8));
+  filter: drop-shadow(0 0 8px rgba(102, 126, 234, 1));
 }
 
 .toggle-switch {
   width: 48px;
   height: 26px;
   appearance: none;
-  background: rgba(102, 126, 234, 0.5);
+  background: rgba(102, 126, 234, 0.55);
   border-radius: 13px;
   position: relative;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 2.5px solid rgba(102, 126, 234, 0.4);
+  border: 2.5px solid rgba(102, 126, 234, 0.5);
   box-shadow:
-    inset 0 2px 4px rgba(0, 0, 0, 0.4),
-    0 2px 8px rgba(0, 0, 0, 0.2);
+    inset 0 2px 4px rgba(0, 0, 0, 0.5),
+    0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .toggle-switch::after {
@@ -951,12 +1185,12 @@ onUnmounted(() => {
   left: 3px;
   width: 16px;
   height: 16px;
-  background: linear-gradient(135deg, #ffffff, #e0e0e0);
+  background: linear-gradient(135deg, #ffffff, #e8e8e8);
   border-radius: 50%;
   transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.4),
-    0 0 10px rgba(255, 255, 255, 0.5);
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    0 0 15px rgba(255, 255, 255, 0.6);
 }
 
 .toggle-switch:checked {
@@ -964,16 +1198,16 @@ onUnmounted(() => {
   border-color: #667eea;
   box-shadow:
     inset 0 2px 4px rgba(0, 0, 0, 0.2),
-    0 2px 12px rgba(102, 126, 234, 0.6),
-    0 0 20px rgba(102, 126, 234, 0.3);
+    0 2px 15px rgba(102, 126, 234, 0.7),
+    0 0 25px rgba(102, 126, 234, 0.4);
 }
 
 .toggle-switch:checked::after {
   left: 27px;
-  background: linear-gradient(135deg, #ffffff, #f5f5f5);
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.3),
-    0 0 15px rgba(255, 255, 255, 0.8);
+    0 2px 10px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 255, 255, 1);
 }
 
 .refresh-btn {
@@ -982,7 +1216,7 @@ onUnmounted(() => {
   gap: 8px;
   padding: 12px 24px;
   background: linear-gradient(135deg, #43e97b, #38f9d7);
-  border: none;
+  border: 2px solid rgba(67, 233, 123, 0.3);
   border-radius: 14px;
   font-size: 14px;
   font-weight: 800;
@@ -990,26 +1224,47 @@ onUnmounted(() => {
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow:
-    0 8px 32px rgba(67, 233, 123, 0.7),
-    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    0 8px 32px rgba(67, 233, 123, 0.75),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25);
   text-transform: uppercase;
   letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+.refresh-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.refresh-btn:hover::before {
+  transform: scaleX(1);
 }
 
 .refresh-btn:hover {
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(67, 233, 123, 0.5);
   box-shadow:
-    0 12px 45px rgba(67, 233, 123, 0.9),
-    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    0 12px 45px rgba(67, 233, 123, 0.95),
+    inset 0 2px 0 rgba(255, 255, 255, 0.35);
 }
 
 .refresh-btn:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(-2px) scale(0.98);
 }
 
 .btn-icon {
   font-size: 16px;
   animation: refresh-spin 2s linear infinite paused;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
 }
 
 .refresh-btn:hover .btn-icon {
@@ -1029,17 +1284,35 @@ onUnmounted(() => {
   width: 340px;
   background:
     linear-gradient(135deg, rgba(8, 8, 20, 0.97), rgba(18, 18, 35, 0.94)),
-    radial-gradient(circle at 80% 20%, rgba(102, 126, 234, 0.1), transparent 50%);
-  border: 2.5px solid rgba(102, 126, 234, 0.6);
+    radial-gradient(circle at 80% 20%, rgba(102, 126, 234, 0.15), transparent 50%);
+  border: 2.5px solid rgba(102, 126, 234, 0.7);
   border-radius: 24px;
   padding: 26px;
   backdrop-filter: blur(30px);
   box-shadow:
     0 25px 70px rgba(0, 0, 0, 0.85),
-    0 0 80px rgba(102, 126, 234, 0.35),
-    inset 0 2px 0 rgba(255, 255, 255, 0.05);
+    0 0 80px rgba(102, 126, 234, 0.4),
+    0 0 40px rgba(240, 147, 251, 0.2),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08);
   z-index: 20;
   animation: detail-slide-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.province-detail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: detail-shine 3s ease-in-out infinite;
+}
+
+@keyframes detail-shine {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
 }
 
 @keyframes detail-slide-in {
@@ -1058,19 +1331,25 @@ onUnmounted(() => {
   align-items: center;
   gap: 12px;
   padding-bottom: 18px;
-  border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+  border-bottom: 2.5px solid rgba(102, 126, 234, 0.4);
   margin-bottom: 18px;
 }
 
 .detail-icon {
   font-size: 32px;
-  filter: drop-shadow(0 0 12px rgba(102, 126, 234, 0.9));
+  filter: drop-shadow(0 0 12px rgba(102, 126, 234, 1));
   animation: detail-icon-pulse 2s ease-in-out infinite;
 }
 
 @keyframes detail-icon-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 12px rgba(102, 126, 234, 1));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 18px rgba(102, 126, 234, 1));
+  }
 }
 
 .detail-title {
@@ -1079,15 +1358,19 @@ onUnmounted(() => {
   font-weight: 900;
   color: #ffffff;
   text-shadow:
-    0 0 25px rgba(102, 126, 234, 0.9),
+    0 0 30px rgba(102, 126, 234, 1),
     0 2px 4px rgba(0, 0, 0, 0.5);
   letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #ffffff, #e0e0e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .close-btn {
   width: 36px;
   height: 36px;
-  border: 2.5px solid rgba(240, 147, 251, 0.3);
+  border: 2.5px solid rgba(240, 147, 251, 0.4);
   border-radius: 50%;
   background: rgba(240, 147, 251, 0.15);
   color: #f093fb;
@@ -1098,14 +1381,18 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 4px 12px rgba(240, 147, 251, 0.2);
+  box-shadow:
+    0 4px 12px rgba(240, 147, 251, 0.3),
+    0 0 20px rgba(240, 147, 251, 0.2);
 }
 
 .close-btn:hover {
   background: rgba(240, 147, 251, 0.3);
-  border-color: rgba(240, 147, 251, 0.6);
+  border-color: rgba(240, 147, 251, 0.7);
   transform: scale(1.15) rotate(90deg);
-  box-shadow: 0 6px 20px rgba(240, 147, 251, 0.4);
+  box-shadow:
+    0 6px 20px rgba(240, 147, 251, 0.5),
+    0 0 30px rgba(240, 147, 251, 0.4);
 }
 
 .close-btn:active {
@@ -1122,23 +1409,42 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  border: 1px solid rgba(102, 126, 234, 0.15);
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 12px;
+  border: 1.5px solid rgba(102, 126, 234, 0.2);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, #667eea, #f093fb);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.detail-row:hover::before {
+  transform: scaleY(1);
 }
 
 .detail-row:hover {
-  background: rgba(102, 126, 234, 0.1);
-  border-color: rgba(102, 126, 234, 0.3);
-  transform: translateX(4px);
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.4);
+  transform: translateX(6px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
 }
 
 .detail-label {
   font-size: 14px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.8);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -1147,8 +1453,10 @@ onUnmounted(() => {
   font-size: 17px;
   font-weight: 900;
   font-family: 'SF Mono', 'Monaco', monospace;
-  text-shadow: 0 0 18px currentColor;
+  text-shadow: 0 0 20px currentColor;
   letter-spacing: -0.5px;
+  position: relative;
+  z-index: 1;
 }
 
 /* 响应式 */
@@ -1160,7 +1468,7 @@ onUnmounted(() => {
 
 @media (max-width: 900px) {
   .china-3d-map-container {
-    min-height: 1000px;
+    min-height: 1200px;
     padding: 24px;
   }
 
@@ -1196,13 +1504,21 @@ onUnmounted(() => {
   }
 
   .china-3d-map {
-    min-height: 500px;
+    min-height: 700px;
+  }
+
+  .map-wrapper {
+    min-height: 800px;
+  }
+
+  .map-frame {
+    min-height: 750px;
   }
 }
 
 @media (max-width: 600px) {
   .china-3d-map-container {
-    min-height: 900px;
+    min-height: 1100px;
     padding: 20px;
   }
 
@@ -1217,6 +1533,18 @@ onUnmounted(() => {
   .subtitle {
     font-size: 14px;
     letter-spacing: 3px;
+  }
+
+  .china-3d-map {
+    min-height: 600px;
+  }
+
+  .map-wrapper {
+    min-height: 700px;
+  }
+
+  .map-frame {
+    min-height: 650px;
   }
 }
 </style>
