@@ -184,17 +184,25 @@ const initChinaMap = () => {
 }
 
 const buildChartOption = (): EChartsOption => {
-  // 生成飞线数据 - Top5省份之间的连接
+  // 生成飞线数据 - Top5省份之间的连接,每条线有不同颜色
   const flyingLineData = showFlyingLines.value ? (() => {
     const top5 = provinceData.value.slice(0, 5)
     const lines: any[] = []
+    const colors = ['#ff6b6b', '#ffd93d', '#4ecdc4', '#4facfe', '#a855f7']
+    
     for (let i = 0; i < top5.length; i++) {
       for (let j = i + 1; j < top5.length; j++) {
+        const colorIndex = (i + j) % colors.length
+        const value = (top5[i].value + top5[j].value) / 2
         lines.push({
           fromName: top5[i].name,
           toName: top5[j].name,
           coords: [top5[i].coord, top5[j].coord],
-          value: (top5[i].value + top5[j].value) / 2
+          value: value,
+          lineStyle: {
+            color: colors[colorIndex],
+            opacity: 0.6 + (value / 1000) * 0.4
+          }
         })
       }
     }
@@ -369,26 +377,16 @@ const buildChartOption = (): EChartsOption => {
         zlevel: 4,
         effect: {
           show: true,
-          period: 6,
-          trailLength: 0.7,
-          color: '#4ecdc4',
-          symbol: 'pin',
-          symbolSize: 8
+          period: 4,
+          trailLength: 0.5,
+          color: '#ffffff',
+          symbol: 'arrow',
+          symbolSize: 6
         },
         lineStyle: {
-          width: 2,
-          color: {
-            type: 'linear',
-            x: 0, y: 0, x2: 1, y2: 0,
-            colorStops: [
-              { offset: 0, color: '#ff6b6b' },
-              { offset: 0.5, color: '#ffd93d' },
-              { offset: 1, color: '#4ecdc4' }
-            ],
-            global: false
-          },
-          curveness: 0.3,
-          opacity: 0.8
+          width: 1.5,
+          curveness: 0.2,
+          opacity: 0.6
         },
         label: {
           show: false
@@ -400,11 +398,11 @@ const buildChartOption = (): EChartsOption => {
         coordinateSystem: 'geo',
         geoIndex: 0,
         symbol: 'circle',
-        symbolSize: 8,
+        symbolSize: 5,
         showEffectOn: 'render',
         rippleEffect: {
           brushType: 'fill',
-          scale: 15
+          scale: 8
         },
         label: {
           formatter: (params: any) => params.data.name,
