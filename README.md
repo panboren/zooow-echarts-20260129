@@ -4,6 +4,24 @@
 
 现代化企业级后台管理系统框架
 
+```bash
+# 进入 Nginx 目录后
+cd C:\BtSoft\nginx
+
+# 启动 Nginx
+start nginx
+
+# 或
+nginx.exe
+
+# 停止 Nginx
+nginx.exe -s stop
+
+# 重载配置
+nginx.exe -s reload
+
+```
+
 [Vue 3] · [TypeScript] · [Vite] · [Element Plus] · [Pinia]
 
 [![](https://img.shields.io/badge/Vue-3.5-42b883)](https://vuejs.org/)
