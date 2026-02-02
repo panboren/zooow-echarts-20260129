@@ -625,7 +625,7 @@ onUnmounted(() => {
 .china-3d-map-container {
   position: relative;
   width: 100%;
-  min-height: 1400px;
+  min-height: 1200px;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.2) 0%, transparent 55%),

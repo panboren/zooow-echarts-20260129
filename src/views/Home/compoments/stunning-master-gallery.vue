@@ -371,6 +371,11 @@
           <LazyChart :component="StunningChinaMap3D" />
         </div>
       </div>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="Ultra3DChinaMap" />
+        </div>
+      </div>
     </div>
 
     <!-- 底部信息 -->
@@ -413,7 +418,7 @@ const animateNumber = (start, end, duration, callback) => {
 onMounted(() => {
   // 延迟启动动画
   setTimeout(() => {
-    animateNumber(0, 64, 2500, (value) => {
+    animateNumber(0, 65, 2500, (value) => {
       animatedStats.value.components = value
     })
     animateNumber(0, 22, 2200, (value) => {
@@ -428,6 +433,11 @@ onMounted(() => {
 // 使用 defineAsyncComponent 懒加载所有图表组件
 const StunningChinaMap3D = defineAsyncComponent({
   loader: () => import('./stunning-3d-china-map.vue'),
+  delay: 200,
+  timeout: 30000
+})
+const Ultra3DChinaMap = defineAsyncComponent({
+  loader: () => import('./ultra-3d-china-map.vue'),
   delay: 200,
   timeout: 30000
 })
