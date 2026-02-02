@@ -2,22 +2,33 @@
   <div class="china-3d-map-container">
     <!-- 背景粒子效果 -->
     <div class="background-particles">
-      <div v-for="i in 200" :key="`particle-${i}`" class="particle" :style="getParticleStyle(i)"></div>
+      <div v-for="i in 250" :key="`particle-${i}`" class="particle" :style="getParticleStyle(i)"></div>
+    </div>
+
+    <!-- 极光背景 -->
+    <div class="aurora-background">
+      <div class="aurora aurora-1"></div>
+      <div class="aurora aurora-2"></div>
     </div>
 
     <!-- 标题区域 -->
     <div class="header-section">
-      <h1 class="main-title">
-        <span class="title-icon">🌍</span>
-        <span class="title-text">中国3D地图</span>
-        <span class="title-badge">CHINA 3D MAP</span>
-      </h1>
-      <p class="subtitle">ECharts · 伪3D · 柱状地图 · 数据可视化</p>
+      <div class="title-decoration left"></div>
+      <div class="title-content">
+        <h1 class="main-title">
+          <span class="title-icon">🌍</span>
+          <span class="title-text">中国3D地图</span>
+          <span class="title-badge">CHINA 3D MAP</span>
+        </h1>
+        <p class="subtitle">ECharts · 伪3D · 柱状地图 · 数据可视化</p>
+      </div>
+      <div class="title-decoration right"></div>
     </div>
 
     <!-- 数据统计面板 -->
     <div class="data-panel">
       <div v-for="(item, index) in dataStats" :key="index" class="stat-card">
+        <div class="card-glow" :style="{ background: item.glow }"></div>
         <div class="stat-icon">{{ item.icon }}</div>
         <div class="stat-content">
           <div class="stat-label">{{ item.label }}</div>
@@ -190,10 +201,34 @@ const updateDataStats = () => {
   const minValue = sortedData[sortedData.length - 1]?.value || 0
 
   dataStats.value = [
-    { icon: '📊', label: '总数据量', value: totalValue.toLocaleString(), color: '#667eea' },
-    { icon: '📈', label: '平均值', value: avgValue.toLocaleString(), color: '#f093fb' },
-    { icon: '⭐', label: '最高值', value: `${sortedData[0]?.name}: ${maxValue}`, color: '#43e97b' },
-    { icon: '🎯', label: '最低值', value: `${sortedData[sortedData.length - 1]?.name}: ${minValue}`, color: '#4facfe' }
+    { 
+      icon: '📊', 
+      label: '总数据量', 
+      value: totalValue.toLocaleString(), 
+      color: '#667eea',
+      glow: 'linear-gradient(135deg, rgba(102, 126, 234, 0.4), transparent)'
+    },
+    { 
+      icon: '📈', 
+      label: '平均值', 
+      value: avgValue.toLocaleString(), 
+      color: '#f093fb',
+      glow: 'linear-gradient(135deg, rgba(240, 147, 251, 0.4), transparent)'
+    },
+    { 
+      icon: '⭐', 
+      label: '最高值', 
+      value: `${sortedData[0]?.name}: ${maxValue}`, 
+      color: '#43e97b',
+      glow: 'linear-gradient(135deg, rgba(67, 233, 123, 0.4), transparent)'
+    },
+    { 
+      icon: '🎯', 
+      label: '最低值', 
+      value: `${sortedData[sortedData.length - 1]?.name}: ${minValue}`, 
+      color: '#4facfe',
+      glow: 'linear-gradient(135deg, rgba(79, 172, 254, 0.4), transparent)'
+    }
   ]
 }
 
@@ -530,16 +565,16 @@ const buildChartOption = (): EChartsOption => {
         data: scatterData
       },
       {
-        // 脉冲效果(effectScatter) - 完全按照参考代码
+        // 脉冲效果(effectScatter) - 多彩渐变
         type: 'effectScatter',
         coordinateSystem: 'geo',
         geoIndex: 0,
         symbol: 'circle',
-        symbolSize: 4,
+        symbolSize: 5,
         showEffectOn: 'render',
         rippleEffect: {
           brushType: 'fill',
-          scale: 10
+          scale: 8
         },
         hoverAnimation: true,
         label: {
@@ -551,7 +586,9 @@ const buildChartOption = (): EChartsOption => {
           show: showLabels.value
         },
         itemStyle: {
-          color: '#FEF134'
+          color: '#FEF134',
+          shadowColor: 'rgba(255, 215, 0, 0.8)',
+          shadowBlur: 20
         },
         zlevel: 6,
         data: scatterData3
@@ -578,14 +615,16 @@ const closeDetail = () => {
 
 // 获取粒子样式 - 增强多样性和光效
 const getParticleStyle = (i: number) => {
-  const size = Math.random() * 4 + 1
+  const size = Math.random() * 3 + 1.5
   const colors = [
-    'rgba(102, 126, 234, 0.8)',
-    'rgba(240, 147, 251, 0.8)',
-    'rgba(67, 233, 123, 0.8)',
-    'rgba(255, 215, 0, 0.7)',
-    'rgba(125, 211, 252, 0.8)',
-    'rgba(255, 235, 59, 0.7)'
+    'rgba(102, 126, 234, 0.9)',
+    'rgba(240, 147, 251, 0.9)',
+    'rgba(67, 233, 123, 0.9)',
+    'rgba(255, 215, 0, 0.85)',
+    'rgba(125, 211, 252, 0.9)',
+    'rgba(255, 235, 59, 0.85)',
+    'rgba(255, 107, 107, 0.8)',
+    'rgba(78, 205, 196, 0.9)'
   ]
   const color = colors[Math.floor(Math.random() * colors.length)]
   return {
@@ -594,10 +633,10 @@ const getParticleStyle = (i: number) => {
     left: `${Math.random() * 100}%`,
     top: `${Math.random() * 100}%`,
     background: `radial-gradient(circle, ${color}, transparent)`,
-    boxShadow: `0 0 ${size * 2}px ${color}`,
-    animation: `particle-float ${Math.random() * 12 + 6}s ease-in-out infinite`,
-    animationDelay: `${Math.random() * 6}s`,
-    opacity: Math.random() * 0.6 + 0.3
+    boxShadow: `0 0 ${size * 2.5}px ${color}`,
+    animation: `particle-float ${Math.random() * 15 + 8}s ease-in-out infinite`,
+    animationDelay: `${Math.random() * 8}s`,
+    opacity: Math.random() * 0.5 + 0.4
   }
 }
 
@@ -679,6 +718,47 @@ onUnmounted(() => {
   overflow: hidden;
 }
 
+/* 极光背景 */
+.aurora-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.aurora {
+  position: absolute;
+  width: 200%;
+  height: 400%;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.08;
+  animation: aurora-move 20s ease-in-out infinite;
+}
+
+.aurora-1 {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  top: -100%;
+  left: -50%;
+  animation-delay: 0s;
+}
+
+.aurora-2 {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+  top: -200%;
+  left: -100%;
+  animation-delay: -10s;
+}
+
+@keyframes aurora-move {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(20%, 10%) rotate(180deg); }
+}
+
 .particle {
   position: absolute;
   border-radius: 50%;
@@ -690,19 +770,19 @@ onUnmounted(() => {
 @keyframes particle-float {
   0%, 100% {
     transform: translate(0, 0) scale(1) rotate(0deg);
-    opacity: 0.3;
+    opacity: 0.4;
   }
   25% {
-    transform: translate(35px, -28px) scale(1.4) rotate(90deg);
-    opacity: 0.7;
+    transform: translate(30px, -25px) scale(1.5) rotate(90deg);
+    opacity: 0.8;
   }
   50% {
-    transform: translate(-28px, 35px) scale(0.8) rotate(180deg);
-    opacity: 0.5;
+    transform: translate(-25px, 30px) scale(0.7) rotate(180deg);
+    opacity: 0.6;
   }
   75% {
-    transform: translate(28px, 28px) scale(1.2) rotate(270deg);
-    opacity: 0.6;
+    transform: translate(25px, 25px) scale(1.3) rotate(270deg);
+    opacity: 0.7;
   }
 }
 
@@ -710,24 +790,38 @@ onUnmounted(() => {
 .header-section {
   position: relative;
   z-index: 10;
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.main-title {
-  font-size: 48px;
-  font-weight: 900;
-  margin: 0 0 14px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  gap: 30px;
+  margin-bottom: 36px;
+}
+
+.title-decoration {
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.6), rgba(240, 147, 251, 0.6), transparent);
+}
+
+.title-content {
+  flex: 1;
+  text-align: center;
+}
+
+.main-title {
+  font-size: 52px;
+  font-weight: 900;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
   color: #ffffff;
   text-shadow:
-    0 0 40px rgba(102, 126, 234, 0.9),
-    0 0 80px rgba(240, 147, 251, 0.7),
+    0 0 50px rgba(102, 126, 234, 1),
+    0 0 100px rgba(240, 147, 251, 0.8),
     0 4px 8px rgba(0, 0, 0, 0.5);
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 
 .title-icon {
@@ -815,20 +909,35 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 24px 28px;
+  padding: 26px 32px;
   background:
-    linear-gradient(135deg, rgba(10, 10, 25, 0.92), rgba(20, 20, 40, 0.88)),
-    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.12), transparent 50%);
-  border: 2px solid rgba(102, 126, 234, 0.45);
-  border-radius: 24px;
-  backdrop-filter: blur(30px);
+    linear-gradient(135deg, rgba(10, 10, 25, 0.94), rgba(20, 20, 40, 0.9)),
+    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.15), transparent 50%);
+  border: 2.5px solid rgba(102, 126, 234, 0.55);
+  border-radius: 26px;
+  backdrop-filter: blur(35px);
   box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.8),
-    0 0 60px rgba(102, 126, 234, 0.25),
-    inset 0 2px 0 rgba(255, 255, 255, 0.06);
+    0 25px 60px rgba(0, 0, 0, 0.85),
+    0 0 80px rgba(102, 126, 234, 0.35),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
+}
+
+.card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.4s ease;
+}
+
+.stat-card:hover .card-glow {
+  opacity: 1;
 }
 
 .stat-card::before {
