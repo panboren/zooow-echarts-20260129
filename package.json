@@ -37,6 +37,7 @@
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
     "echarts": "^6.0.0",
+    "echarts-gl": "^2.0.9",
     "element-plus": "^2.9.1",
     "gsap": "^3.14.2",
     "jsencrypt": "^3.3.2",

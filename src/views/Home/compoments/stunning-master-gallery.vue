@@ -6,7 +6,7 @@
         <span class="title-icon">🎨</span>
         <span>ECharts 精美图表现场</span>
       </h1>
-      <p class="gallery-subtitle">63个超酷炫图表组件 - 完整展示</p>
+      <p class="gallery-subtitle">64个超酷炫图表组件 - 完整展示</p>
     </div>
 
     <!-- 统计卡片 -->
@@ -360,6 +360,19 @@
       </div>
     </div>
 
+    <!-- 第十四批：3D地理系列 -->
+    <div  class="section">
+      <h2 class="section-title">
+        <span class="title-badge">09</span>
+        3D 地理系列
+      </h2>
+      <div class="row">
+        <div class="chart-card full-width">
+          <LazyChart :component="StunningChinaMap3D" />
+        </div>
+      </div>
+    </div>
+
     <!-- 底部信息 -->
 <!--    <div class="gallery-footer">
       <div class="footer-info">
@@ -400,10 +413,10 @@ const animateNumber = (start, end, duration, callback) => {
 onMounted(() => {
   // 延迟启动动画
   setTimeout(() => {
-    animateNumber(0, 63, 2500, (value) => {
+    animateNumber(0, 64, 2500, (value) => {
       animatedStats.value.components = value
     })
-    animateNumber(0, 21, 2200, (value) => {
+    animateNumber(0, 22, 2200, (value) => {
       animatedStats.value.series = value
     })
     animateNumber(0, 27, 2000, (value) => {
@@ -413,6 +426,11 @@ onMounted(() => {
 })
 
 // 使用 defineAsyncComponent 懒加载所有图表组件
+const StunningChinaMap3D = defineAsyncComponent({
+  loader: () => import('./stunning-3d-china-map.vue'),
+  delay: 200,
+  timeout: 30000
+})
 const StunningPie = defineAsyncComponent({
   loader: () => import('./stunning-pie.vue'),
   delay: 200,
